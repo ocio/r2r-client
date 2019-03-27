@@ -5,7 +5,7 @@ import { View, Text } from 'react-native'
 export default function App() {
     return (
         <ViewStyled width="50%">
-            <Text>Hello, wow!</Text>
+            <TextStyled>Hello, wow!</TextStyled>
         </ViewStyled>
     )
 }
@@ -13,9 +13,11 @@ export default function App() {
 const ViewStyled = styled(View)`
     padding: 32px;
     background-color: hotpink;
-    font-size: 24px;
-    border-radius: 4px;
     width: ${props => props.width};
+`
+
+const TextStyled = styled(Text)`
+    font-size: 24px;
     &:hover {
         color: ${'red'};
     }
