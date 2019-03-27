@@ -1,14 +1,13 @@
 {
     "name": "r2r-client",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "private": true,
     "dependencies": {
         "@emotion/core": "^10.0.10",
-        "@emotion/native": "^10.0.10",
+        "@emotion/styled": "^10.0.10",
         "react": "^16.8.5",
-        "react-art": "^16.8.5",
         "react-dom": "^16.8.5",
-        "react-native-web": "^0.9.9"
+        "react-native-web": "^0.11.2"
     },
     "devDependencies": {
         "react-scripts": "2.1.8"
