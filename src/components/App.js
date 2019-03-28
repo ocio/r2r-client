@@ -1,11 +1,13 @@
 import React from 'react'
-import styled from '@emotion/styled'
+import styled from 'styled'
+// import styled from '@emotion/native'
 import { View, Text } from 'react-native'
 
 export default function App() {
     return (
         <ViewStyled width="50%">
-            <TextStyled>Hello, wow!</TextStyled>
+            <TextStyled>Hello!</TextStyled>
+            <Text>world!</Text>
         </ViewStyled>
     )
 }
@@ -22,3 +24,4 @@ const TextStyled = styled(Text)`
         color: ${'red'};
     }
 `
+// console.log(imageBase, TextStyled)
