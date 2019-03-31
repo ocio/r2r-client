@@ -1,8 +1,7 @@
 // import React from 'react'
-import styled from 'styled'
-import View from 'components/native/View'
+import styled from '@emotion/styled'
 
-const Container = styled(View)`
+const Container = styled.div`
     width: 100%;
     height: 100%;
 `

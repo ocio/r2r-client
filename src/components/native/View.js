@@ -1,3 +1,4 @@
+// import React from 'react'
 import { View } from 'react-native'
 
-export default View
+export default View //React.createElement('div', null)

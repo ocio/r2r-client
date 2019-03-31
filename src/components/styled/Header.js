@@ -1,8 +1,7 @@
 // import React from 'react'
-import styled from 'styled'
-import View from 'components/native/View'
+import styled from '@emotion/styled'
 
-const Header = styled(View)`
+const Header = styled.div`
     pointer-events: all;
 `
 

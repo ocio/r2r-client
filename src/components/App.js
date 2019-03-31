@@ -1,10 +1,9 @@
 import React from 'react'
-import WebView from 'components/native/WebView'
+import WebView from 'components/styled/WebView'
 import Container from 'components/styled/Container'
 import Content from 'components/styled/Content'
 import Header from 'components/styled/Header'
 import Window from 'components/styled/Window'
-import Text from 'components/native/Text'
 
 export default function App() {
     return (
@@ -12,21 +11,21 @@ export default function App() {
             <WebView onClick={() => alert('Webview')} />
             <Content>
                 <Header onClick={() => alert('Header')}>
-                    <Text>Hola</Text>
-                    <Text>Hola</Text>
-                    <Text>Hola</Text>
-                    <Text>Hola</Text>
-                    <Text>Hola</Text>
-                    <Text>Hola</Text>
-                    <Text>Hola</Text>
+                    <div>Hola</div>
+                    <div>Hola</div>
+                    <div>Hola</div>
+                    <div>Hola</div>
+                    <div>Hola</div>
+                    <div>Hola</div>
+                    <div>Hola</div>
                 </Header>
-                <Window width="1000px" height="600px">
-                    <Text onClick={() => alert('Window')}>Clickme</Text>
-                    <Text>Hola</Text>
-                    <Text>Hola</Text>
-                    <Text>Hola</Text>
-                    <Text>Hola</Text>
-                    <Text>Hola</Text>
+                <Window width="700px" height="800px">
+                    <div onClick={() => alert('Window')}>Clickme</div>
+                    <div>Hola</div>
+                    <div>Hola</div>
+                    <div>Hola</div>
+                    <div>Hola</div>
+                    <div>Hola</div>
                 </Window>
             </Content>
         </Container>

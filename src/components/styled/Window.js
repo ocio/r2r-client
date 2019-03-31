@@ -1,6 +1,5 @@
 import React from 'react'
-import styled from 'styled'
-import View from 'components/native/View'
+import styled from '@emotion/styled'
 
 export default function Window({ width, height, children }) {
     return (
@@ -12,7 +11,7 @@ export default function Window({ width, height, children }) {
     )
 }
 
-const Container = styled(View)`
+const Container = styled.div`
     width: 100%;
     height: 100%;
     display: flex;
@@ -22,11 +21,11 @@ const Container = styled(View)`
     pointer-events: none;
 `
 
-const Content = styled(View)`
+const Content = styled.div`
     width: ${p => p.width};
     height: ${p => p.height};
-    background-image: url('assets/window.png');
+    background-image: url('assets/window-left-top.png');
     background-repeat: no-repeat;
-    background-size: 100% 100%;
+    /* background-size: 100% 100%; */
     pointer-events: all;
 `
