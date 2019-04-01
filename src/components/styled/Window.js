@@ -134,11 +134,7 @@ export const WindowClose = styled.div`
     }
 `
 
-export function WindowTitle({ children }) {
-    return <WindowTitleContainer>{children}</WindowTitleContainer>
-}
-
-const WindowTitleContainer = styled.div`
+export const WindowTitle = styled.div`
     width: 370px;
     height: 80px;
     line-height: 80px;
@@ -150,6 +146,15 @@ const WindowTitleContainer = styled.div`
     margin: 0 auto;
     text-align: center;
     color: white;
+`
+
+export const WindowContent = styled.div`
+    width: calc(100% - 50px);
+    margin: 25px;
+    /* background: red; */
+    max-height: calc(100% - (205px + 25px));
+    overflow-y: auto;
+    position: relative;
 `
 
 export const WindowButtons = styled.div`

@@ -6,6 +6,7 @@ import Header from 'components/styled/Header'
 import Window, {
     WindowTitle,
     WindowClose,
+    WindowContent,
     WindowButtons
 } from 'components/styled/Window'
 import { ButtonGreen, ButtonRed } from 'components/styled/Button'
@@ -27,14 +28,34 @@ export default function App() {
                 <Window>
                     <WindowTitle>Players</WindowTitle>
                     <WindowClose onClick={() => console.log('closa')} />
-                    <div>
+                    <WindowContent>
                         <div onClick={() => alert('Window')}>Clickme</div>
                         <div>Hola</div>
                         <div>Hola</div>
                         <div>Hola</div>
                         <div>Hola</div>
                         <div>Hola</div>
-                    </div>
+                        <div>Hola</div>
+                        <div>Hola</div>
+                        <div>Hola</div>
+                        <div>Hola</div>
+                        <div>Hola</div>
+                        <div>Hola</div>
+                        <div>Hola</div>
+                        <div>Hola</div>
+                        <div>Hola</div>
+                        <div>Hola</div>
+                        <div>Hola</div>
+                        <div>Hola</div>
+                        <div>Hola</div>
+                        <div>Hola</div>
+                        <div>Hola</div>
+                        <div>Hola</div>
+                        <div>Hola</div>
+                        <div>Hola</div>
+                        <div>Hola</div>
+                        <div>Adios</div>
+                    </WindowContent>
                     <WindowButtons>
                         <ButtonGreen onClick={() => console.log('OK')}>
                             Ok

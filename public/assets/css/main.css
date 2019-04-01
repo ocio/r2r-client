@@ -9,6 +9,7 @@ body {
     overflow: hidden;
     cursor: default;
     user-select: none;
+    font-family: 'Lalezar', cursive;
 }
 * {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
