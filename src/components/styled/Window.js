@@ -155,6 +155,18 @@ export const WindowContent = styled.div`
     max-height: calc(100% - (205px + 25px));
     overflow-y: auto;
     position: relative;
+    &::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background-color: transparent;
+    }
+    &::-webkit-scrollbar {
+        width: 12px;
+        background-color: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background-color: rgba(209, 102, 77, 0.4);
+    }
 `
 
 export const WindowButtons = styled.div`
