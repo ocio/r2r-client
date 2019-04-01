@@ -8,6 +8,7 @@
         "react-dom": "^16.8.5"
     },
     "devDependencies": {
+        "babel-plugin-emotion": "^10.0.9",
         "react-scripts": "2.1.8"
     },
     "scripts": {

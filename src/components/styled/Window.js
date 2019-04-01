@@ -1,10 +1,22 @@
 import React from 'react'
 import styled from '@emotion/styled'
 
-export default function Window({ width, height, children }) {
+export default function Window({
+    width = WIDTH,
+    height = HEIGHT,
+    maxWidth = window.innerWidth,
+    maxHeight = window.innerHeight,
+    scale = 1,
+    children
+}) {
+    const scaleWidth = (maxWidth / width) * 0.95
+    const scaleHeight = (maxHeight / height) * 0.95
+    if (scaleWidth < scale) scale = scaleWidth
+    if (scaleHeight < scale) scale = scaleHeight
+    // console.log({ scale, width, height, maxWidth, maxHeight })
     return (
         <Container>
-            <Background width={width} height={height}>
+            <Background width={width} height={height} scale={scale}>
                 <Background0 width={width} height={height} />
                 <Background1 />
                 <Background2 />
@@ -33,10 +45,20 @@ const Container = styled.div`
 `
 
 const Background = styled.div`
-    width: ${p => p.width};
-    height: ${p => p.height};
-    position: relative;
+    width: ${p => p.width}px;
+    height: ${p => p.height}px;
+    transform: scale(${p => p.scale});
+    position: absolute;
     pointer-events: all;
+`
+
+const Background0 = styled.div`
+    width: calc(${p => p.width}px - 80px);
+    height: calc(${p => p.height}px - 80px);
+    top: 40px;
+    left: 40px;
+    position: absolute;
+    background-color: #ffe7cd;
 `
 
 const Background1 = styled.div`
@@ -78,15 +100,6 @@ const Background4 = styled.div`
     background-repeat: repeat-y;
 `
 
-const Background0 = styled.div`
-    width: calc(${p => p.width} - 80px);
-    height: calc(${p => p.height} - 80px);
-    top: 40px;
-    left: 40px;
-    position: absolute;
-    background-color: #ffe7cd;
-`
-
 const Corners = styled.div`
     width: 100%;
     height: 100%;
@@ -103,5 +116,51 @@ const Content = styled.div`
     height: 100%;
     position: absolute;
     top: 0;
-    bottom: 0;
+    left: 0;
+`
+
+export const WindowClose = styled.div`
+    width: 77px;
+    height: 69px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-image: url('assets/window-close.png');
+    right: -15px;
+    &:active {
+        top: 2px;
+        right: -13px;
+    }
+`
+
+export function WindowTitle({ children }) {
+    return <WindowTitleContainer>{children}</WindowTitleContainer>
+}
+
+const WindowTitleContainer = styled.div`
+    width: 370px;
+    height: 80px;
+    line-height: 80px;
+    font-size: 30px;
+    top: -5px;
+    background-image: url('assets/window-title.png');
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+    color: white;
+`
+
+export const WindowButtons = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    bottom: 75px;
+    position: absolute;
+    width: 100%;
+    & > * {
+        margin-left: 30px;
+    }
+    & > *:first-child {
+        margin-left: 0;
+    }
 `
