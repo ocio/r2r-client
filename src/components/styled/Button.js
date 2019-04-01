@@ -19,10 +19,18 @@ export const Button = styled.button`
     }
 `
 
-export function ButtonRed({ children }) {
-    return <Button image="assets/button-red.png">{children}</Button>
+export function ButtonRed({ children, ...props }) {
+    return (
+        <Button {...props} image="assets/img/button-red.png">
+            {children}
+        </Button>
+    )
 }
 
-export function ButtonGreen({ children }) {
-    return <Button image="assets/button-green.png">{children}</Button>
+export function ButtonGreen({ children, ...props }) {
+    return (
+        <Button {...props} image="assets/img/button-green.png">
+            {children}
+        </Button>
+    )
 }

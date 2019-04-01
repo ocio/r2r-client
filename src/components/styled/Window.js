@@ -67,7 +67,7 @@ const Background1 = styled.div`
     left: ${WIDTH / 2}px;
     top: 0;
     position: absolute;
-    background-image: url('assets/window-top.png');
+    background-image: url('assets/img/window-top.png');
     background-repeat: repeat-x;
 `
 const Background2 = styled.div`
@@ -76,7 +76,7 @@ const Background2 = styled.div`
     left: ${WIDTH / 2}px;
     bottom: 0;
     position: absolute;
-    background-image: url('assets/window-bottom.png');
+    background-image: url('assets/img/window-bottom.png');
     background-repeat: repeat-x;
 `
 
@@ -86,7 +86,7 @@ const Background3 = styled.div`
     left: 0;
     bottom: ${HEIGHT / 2}px;
     position: absolute;
-    background-image: url('assets/window-left.png');
+    background-image: url('assets/img/window-left.png');
     background-repeat: repeat-y;
 `
 
@@ -96,7 +96,7 @@ const Background4 = styled.div`
     right: 0;
     bottom: ${HEIGHT / 2}px;
     position: absolute;
-    background-image: url('assets/window-right.png');
+    background-image: url('assets/img/window-right.png');
     background-repeat: repeat-y;
 `
 
@@ -104,9 +104,10 @@ const Corners = styled.div`
     width: 100%;
     height: 100%;
     position: relative;
-    background-image: url('assets/window-left-top.png'),
-        url('assets/window-right-top.png'), url('assets/window-left-bottom.png'),
-        url('assets/window-right-bottom.png');
+    background-image: url('assets/img/window-left-top.png'),
+        url('assets/img/window-right-top.png'),
+        url('assets/img/window-left-bottom.png'),
+        url('assets/img/window-right-bottom.png');
     background-position: left top, right top, left bottom, right bottom;
     background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
 `
@@ -125,7 +126,7 @@ export const WindowClose = styled.div`
     position: absolute;
     top: 0;
     right: 0;
-    background-image: url('assets/window-close.png');
+    background-image: url('assets/img/window-close.png');
     right: -15px;
     &:active {
         top: 2px;
@@ -141,9 +142,10 @@ const WindowTitleContainer = styled.div`
     width: 370px;
     height: 80px;
     line-height: 80px;
-    font-size: 30px;
+    font-size: 35px;
     top: -5px;
-    background-image: url('assets/window-title.png');
+    font-family: 'Allan';
+    background-image: url('assets/img/window-title.png');
     position: relative;
     margin: 0 auto;
     text-align: center;
@@ -158,9 +160,9 @@ export const WindowButtons = styled.div`
     position: absolute;
     width: 100%;
     & > * {
-        margin-left: 30px;
+        margin-left: 50px;
     }
-    & > *:first-child {
+    & > *:first-of-type {
         margin-left: 0;
     }
 `

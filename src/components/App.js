@@ -25,7 +25,7 @@ export default function App() {
                     <div>Hola</div>
                 </Header>
                 <Window>
-                    <WindowTitle>Mola</WindowTitle>
+                    <WindowTitle>Players</WindowTitle>
                     <WindowClose onClick={() => console.log('closa')} />
                     <div>
                         <div onClick={() => alert('Window')}>Clickme</div>
@@ -36,7 +36,9 @@ export default function App() {
                         <div>Hola</div>
                     </div>
                     <WindowButtons>
-                        <ButtonGreen>Ok</ButtonGreen>
+                        <ButtonGreen onClick={() => console.log('OK')}>
+                            Ok
+                        </ButtonGreen>
                         <ButtonRed>Cancel</ButtonRed>
                     </WindowButtons>
                 </Window>
