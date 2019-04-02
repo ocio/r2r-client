@@ -2,6 +2,7 @@ import React from 'react'
 import Window, { WindowTitle, WindowContent } from 'components/styled/Window'
 import styled from '@emotion/styled'
 import Div from 'components/styled/Div'
+import ThreeDots from 'components/animations/ThreeDots'
 import { COLOR } from 'const/styles'
 
 export default function ChooseNickName() {
@@ -32,7 +33,7 @@ export default function ChooseNickName() {
                         </TableRow>
                         <TableRow>
                             <TableCol>
-                                <Div color={COLOR.RED}>Seler</Div>
+                                <ThreeDots>Waiting for player</ThreeDots>
                             </TableCol>
                             <TableCol>Ok</TableCol>
                         </TableRow>
