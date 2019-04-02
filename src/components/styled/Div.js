@@ -1,21 +1,19 @@
 import React from 'react'
 import styled from '@emotion/styled'
 
-export default function Div(props) {
-    let css = ''
-    Object.keys(props) /*.sort()*/
-        .forEach(property => {
-            if (property in document.body.style)
-                css += `${property}: ${props[property]};\n`
-        })
+export default function Div({ children, ...props }) {
+    const css = Object.keys(props) /*.sort()*/
+        .filter(property => property in document.body.style)
+        .map(property => `${property}: ${props[property]};`)
+        .join('\n')
 
     return (
         <DivStyled css={css} {...props}>
-            {props.children}
+            {children}
         </DivStyled>
     )
 }
 
 const DivStyled = styled.div`
-    ${p => p.css}
+    ${property => property.css}
 `
