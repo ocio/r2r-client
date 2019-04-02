@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from '@emotion/styled'
+import { COLOR } from 'const/styles'
 
 export default function Window({
     width = WIDTH,
@@ -149,10 +150,11 @@ export const WindowTitle = styled.div`
 `
 
 export const WindowContent = styled.div`
+    color: ${COLOR.BROWN_DARK};
     width: calc(100% - 50px);
     margin: 25px;
     /* background: red; */
-    max-height: calc(100% - (205px + 25px));
+    /* max-height: calc(100% - (205px + 25px)); */
     overflow-y: auto;
     position: relative;
     &::-webkit-scrollbar-track {

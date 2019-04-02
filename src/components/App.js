@@ -4,12 +4,18 @@ import Container from 'components/styled/Container'
 import Content from 'components/styled/Content'
 import Header from 'components/styled/Header'
 import Window, {
-    WindowTitle,
-    WindowClose,
+    // WindowTitle,
+    // WindowClose,
     WindowContent,
     WindowButtons
 } from 'components/styled/Window'
-import { ButtonGreen, ButtonRed } from 'components/styled/Button'
+import {
+    ButtonGreen
+    // ButtonRed
+} from 'components/styled/Button'
+import Div from 'components/styled/Div'
+import Input from 'components/styled/Input'
+import Label from 'components/styled/Label'
 
 export default function App() {
     return (
@@ -25,42 +31,20 @@ export default function App() {
                     <div>Hola</div>
                     <div>Hola</div>
                 </Header>
-                <Window>
-                    <WindowTitle>Players</WindowTitle>
-                    <WindowClose onClick={() => console.log('closa')} />
+                <Window height={400}>
+                    {/* <WindowTitle></WindowTitle> */}
+                    {/* <WindowClose onClick={() => console.log('closa')} /> */}
                     <WindowContent>
-                        <div onClick={() => alert('Window')}>Clickme</div>
-                        <div>Hola</div>
-                        <div>Hola</div>
-                        <div>Hola</div>
-                        <div>Hola</div>
-                        <div>Hola</div>
-                        <div>Hola</div>
-                        <div>Hola</div>
-                        <div>Hola</div>
-                        <div>Hola</div>
-                        <div>Hola</div>
-                        <div>Hola</div>
-                        <div>Hola</div>
-                        <div>Hola</div>
-                        <div>Hola</div>
-                        <div>Hola</div>
-                        <div>Hola</div>
-                        <div>Hola</div>
-                        <div>Hola</div>
-                        <div>Hola</div>
-                        <div>Hola</div>
-                        <div>Hola</div>
-                        <div>Hola</div>
-                        <div>Hola</div>
-                        <div>Hola</div>
-                        <div>Adios</div>
+                        <Div padding="100px">
+                            <Label>Choose your NickName</Label>
+                            <Input width="100%" />
+                        </Div>
                     </WindowContent>
                     <WindowButtons>
                         <ButtonGreen onClick={() => console.log('OK')}>
-                            Ok
+                            Go!
                         </ButtonGreen>
-                        <ButtonRed>Cancel</ButtonRed>
+                        {/* <ButtonRed>Cancel</ButtonRed> */}
                     </WindowButtons>
                 </Window>
             </Content>

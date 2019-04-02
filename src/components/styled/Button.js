@@ -6,7 +6,7 @@ export const Button = styled.button`
     height: 49px;
     line-height: 58px;
     font-family: 'Lalezar', cursive;
-    font-size: 20px;
+    font-size: 22px;
     text-shadow: 1px 1px rgba(0, 0, 0, 0.4);
     letter-spacing: 0.5px;
     background-image: url(${p => p.image});
