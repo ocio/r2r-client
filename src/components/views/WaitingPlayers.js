@@ -35,7 +35,7 @@ export default function ChooseNickName() {
                             <TableCol>
                                 <ThreeDots>Waiting for player</ThreeDots>
                             </TableCol>
-                            <TableCol>Ok</TableCol>
+                            <TableCol />
                         </TableRow>
                     </Table>
                 </Div>
