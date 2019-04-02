@@ -2,6 +2,7 @@ import React from 'react'
 import Window, { WindowTitle, WindowContent } from 'components/styled/Window'
 import styled from '@emotion/styled'
 import Div from 'components/styled/Div'
+import { COLOR } from 'const/styles'
 
 export default function ChooseNickName() {
     return (
@@ -12,19 +13,28 @@ export default function ChooseNickName() {
                 <Div padding="30px">
                     <Table>
                         <TableRow>
-                            <TableColLeft>Enzo</TableColLeft>
-                            <TableColRight>Ok</TableColRight>
+                            <TableCol>
+                                <Div color={COLOR.BLUE}>Enzo</Div>
+                            </TableCol>
+                            <TableCol>Ok</TableCol>
                         </TableRow>
                         <TableRow>
-                            <TableColLeft>Agus</TableColLeft>
-                            <TableColRight>Ok</TableColRight>
+                            <TableCol>
+                                <Div color={COLOR.RED}>Agustin Jamardo</Div>
+                            </TableCol>
+                            <TableCol>Ok</TableCol>
                         </TableRow>
                         <TableRow>
-                            <TableColLeft>Roly</TableColLeft>
-                            <TableColRight>Ok</TableColRight>
+                            <TableCol>
+                                <Div color={COLOR.RED}>Roly</Div>
+                            </TableCol>
+                            <TableCol>Ok</TableCol>
                         </TableRow>
                         <TableRow>
-                            <TableColLeft>Seler</TableColLeft>
+                            <TableCol>
+                                <Div color={COLOR.RED}>Seler</Div>
+                            </TableCol>
+                            <TableCol>Ok</TableCol>
                         </TableRow>
                     </Table>
                 </Div>
@@ -34,28 +44,26 @@ export default function ChooseNickName() {
 }
 
 const Table = styled.div`
-    /* display: table; */
+    display: table;
+    border-collapse: collapse;
     width: 100%;
 `
 const TableRow = styled.div`
-    /* display: table-row; */
-    border-top: 5px dotted #f89101;
+    display: table-row;
+    background-image: url('assets/img/line-dot.png');
+    background-repeat: repeat-x;
     &:last-of-type {
-        border-bottom: 5px dotted #f89101;
+        background-image: url('assets/img/line-dot.png'),
+            url('assets/img/line-dot.png');
+        background-position: top, bottom;
+    }
+    &:last-of-type > div {
+        padding: 12px 0 6px 0;
     }
 `
-const TableColLeft = styled.div`
-    /* display: table-cell; */
-    display: inline-block;
+const TableCol = styled.div`
+    display: table-cell;
     font-size: 25px;
     line-height: 50px;
-    margin: 6px 0 0 0;
-`
-
-const TableColRight = styled.div`
-    /* display: table-cell; */
-    float: right;
-    font-size: 25px;
-    line-height: 50px;
-    margin: 6px 0 0 0;
+    padding: 12px 0 0 0;
 `
