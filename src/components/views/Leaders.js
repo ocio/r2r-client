@@ -1,5 +1,4 @@
 import React from 'react'
-import styled from '@emotion/styled'
 import Div from 'components/styled/Div'
 import { COLOR } from 'const/styles'
 import Window, {
@@ -8,6 +7,7 @@ import Window, {
     WindowClose
 } from 'components/styled/Window'
 import { Table, TableRow, TableCol } from 'components/styled/Table'
+import IconImage from 'components/styled/IconImage'
 
 export default function ChooseNickName() {
     return (
@@ -98,17 +98,6 @@ export default function ChooseNickName() {
         </Window>
     )
 }
-
-const IconImage = styled.div`
-    position: relative;
-    background-image: url(${p => p.url});
-    background-repeat: no-repeat;
-    background-size: ${p => p.size};
-    width: ${p => p.size};
-    height: ${p => p.size};
-    text-align: right;
-    display: inline-block;
-`
 
 // const CheckIcon = styled.div`
 //     position: relative;

@@ -22,6 +22,7 @@ export const TableRow = styled.div`
 export const TableCol = styled.div`
     display: table-cell;
     font-size: 25px;
+    line-height: 50px;
     padding: 12px 0 0 0;
     text-align: ${p => p.align || 'left'};
 `

@@ -1,10 +1,10 @@
 import React from 'react'
-import styled from '@emotion/styled'
 import Div from 'components/styled/Div'
 import ThreeDots from 'components/animations/ThreeDots'
 import { COLOR } from 'const/styles'
 import Window, { WindowTitle, WindowContent } from 'components/styled/Window'
 import { Table, TableRow, TableCol } from 'components/styled/Table'
+import IconImage from 'components/styled/IconImage'
 
 export default function ChooseNickName() {
     return (
@@ -15,33 +15,21 @@ export default function ChooseNickName() {
                 <Div padding="30px">
                     <Table>
                         <TableRow>
-                            <TableCol>
-                                <Div color={COLOR.BLUE}>Enzo</Div>
-                            </TableCol>
-                            <TableCol>
-                                <CheckIcon />
-                            </TableCol>
+                            <Player color={COLOR.BLUE}>Enzo</Player>
+                            <CheckIcon />
                         </TableRow>
                         <TableRow>
-                            <TableCol>
-                                <Div color={COLOR.RED}>Agustin Jamardo</Div>
-                            </TableCol>
-                            <TableCol>
-                                <CheckIcon />
-                            </TableCol>
+                            <Player color={COLOR.RED}>Agustin Jamardo</Player>
+                            <CheckIcon />
                         </TableRow>
                         <TableRow>
-                            <TableCol>
-                                <Div color={COLOR.RED}>Roly</Div>
-                            </TableCol>
-                            <TableCol>
-                                <CheckIcon />
-                            </TableCol>
+                            <Player color={COLOR.RED}>Roly</Player>
+                            <CheckIcon />
                         </TableRow>
                         <TableRow>
-                            <TableCol>
+                            <Player>
                                 <ThreeDots>Waiting for player</ThreeDots>
-                            </TableCol>
+                            </Player>
                             <TableCol />
                         </TableRow>
                     </Table>
@@ -51,11 +39,20 @@ export default function ChooseNickName() {
     )
 }
 
-const CheckIcon = styled.div`
-    position: relative;
-    background: url('assets/img/icon-check.png') no-repeat;
-    width: 29px;
-    height: 28px;
-    top: 5px;
-    text-align: right;
-`
+function Player({ children, color }) {
+    return (
+        <TableCol>
+            <Div color={color}>{children}</Div>
+        </TableCol>
+    )
+}
+
+function CheckIcon() {
+    return (
+        <TableCol>
+            <Div padding-top="5px">
+                <IconImage size="28px" url="assets/img/icon-check.png" />
+            </Div>
+        </TableCol>
+    )
+}
