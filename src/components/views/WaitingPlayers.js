@@ -8,7 +8,7 @@ import { Table, TableRow, TableCol } from 'components/styled/Table'
 
 export default function ChooseNickName() {
     return (
-        <Window>
+        <Window height="550">
             <WindowTitle>Players</WindowTitle>
             {/* <WindowClose onClick={() => console.log('closa')} /> */}
             <WindowContent>
@@ -53,7 +53,7 @@ export default function ChooseNickName() {
 
 const CheckIcon = styled.div`
     position: relative;
-    background: url('assets/img/check.png') no-repeat;
+    background: url('assets/img/icon-check.png') no-repeat;
     width: 29px;
     height: 28px;
     top: 5px;
