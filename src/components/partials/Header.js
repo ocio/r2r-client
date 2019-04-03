@@ -15,6 +15,12 @@ export default function Header() {
 const HeaderSytled = styled.div`
     pointer-events: all;
     padding: 30px;
+    height: 35px;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.1) 0%,
+        rgba(0, 0, 0, 0) 100%
+    );
     & > * {
         float: right;
         margin-left: 30px;

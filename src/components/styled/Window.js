@@ -139,7 +139,7 @@ export const WindowTitle = styled.div`
     width: 370px;
     height: 80px;
     line-height: 80px;
-    font-size: 35px;
+    font-size: 40px;
     top: -5px;
     font-family: 'Allan';
     background-image: url('assets/img/window-title.png');
