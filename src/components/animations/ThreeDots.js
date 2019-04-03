@@ -4,10 +4,10 @@ import styled from '@emotion/styled'
 // https://css-tricks.com/animating-the-content-property/
 
 export default function ThreeDots({ children, ...props }) {
-    const [dots, changeDots] = useState(1)
+    const [dots, changeDots] = useState(0)
     useEffect(() => {
         const interval = setInterval(() => {
-            changeDots(dots < 3 ? dots + 1 : 1)
+            changeDots(dots < 3 ? dots + 1 : 0)
         }, 500)
         return () => clearInterval(interval)
     })
