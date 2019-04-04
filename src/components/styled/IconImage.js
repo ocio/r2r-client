@@ -7,7 +7,7 @@ const IconImage = styled.div`
     background-size: ${p => p.size};
     width: ${p => p.size};
     height: ${p => p.size};
-    text-align: right;
+    top: calc(${p => p.size} / 4);
     display: inline-block;
 `
 

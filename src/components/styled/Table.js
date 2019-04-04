@@ -1,3 +1,4 @@
+import React from 'react'
 import styled from '@emotion/styled'
 
 export const Table = styled.div`
@@ -5,6 +6,10 @@ export const Table = styled.div`
     border-collapse: collapse;
     width: 100%;
 `
+export const TableHead = styled.div`
+    display: table-header-group;
+`
+
 export const TableRow = styled.div`
     display: table-row;
     background-image: url('assets/img/line-dot.png');
@@ -15,14 +20,35 @@ export const TableRow = styled.div`
             url('assets/img/line-dot.png');
         background-position: top, bottom;
     }
-    &:last-of-type > div {
-        padding: 12px 0 6px 0;
-    }
 `
 export const TableCol = styled.div`
     display: table-cell;
-    font-size: 25px;
-    line-height: 50px;
-    padding: 12px 0 0 0;
+    vertical-align: middle;
     text-align: ${p => p.align || 'left'};
 `
+
+export function TableText({ children, color, ...props }) {
+    return (
+        <TableCol {...props}>
+            <TableColText color={color}>{children}</TableColText>
+        </TableCol>
+    )
+}
+
+const TableColText = styled.div`
+    font-size: 25px;
+    height: 42px;
+    line-height: 42px;
+    color: ${p => p.color || 'inherit'};
+    padding-top: 8px;
+`
+
+export function TableIcon({ children, ...props }) {
+    return (
+        <TableCol {...props}>
+            <TableColIcon>{children}</TableColIcon>
+        </TableCol>
+    )
+}
+
+const TableColIcon = styled.div``

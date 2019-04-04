@@ -3,7 +3,13 @@ import Div from 'components/styled/Div'
 import ThreeDots from 'components/animations/ThreeDots'
 import { COLOR } from 'const/styles'
 import Window, { WindowTitle, WindowContent } from 'components/styled/Window'
-import { Table, TableRow, TableCol } from 'components/styled/Table'
+import {
+    Table,
+    TableRow,
+    TableCol,
+    TableText,
+    TableIcon
+} from 'components/styled/Table'
 import IconImage from 'components/styled/IconImage'
 
 export default function ChooseNickName() {
@@ -15,21 +21,23 @@ export default function ChooseNickName() {
                 <Div padding="30px">
                     <Table>
                         <TableRow>
-                            <Player color={COLOR.BLUE}>Enzo</Player>
+                            <TableText color={COLOR.BLUE}>Enzo</TableText>
                             <CheckIcon />
                         </TableRow>
                         <TableRow>
-                            <Player color={COLOR.RED}>Agustin Jamardo</Player>
+                            <TableText color={COLOR.RED}>
+                                Agustin Jamardo
+                            </TableText>
                             <CheckIcon />
                         </TableRow>
                         <TableRow>
-                            <Player color={COLOR.RED}>Roly</Player>
-                            <CheckIcon />
+                            <TableText color={COLOR.RED}>Roly</TableText>
+                            <TableCol />
                         </TableRow>
                         <TableRow>
-                            <Player>
+                            <TableText>
                                 <ThreeDots>Waiting for player</ThreeDots>
-                            </Player>
+                            </TableText>
                             <TableCol />
                         </TableRow>
                     </Table>
@@ -39,20 +47,10 @@ export default function ChooseNickName() {
     )
 }
 
-function Player({ children, color }) {
-    return (
-        <TableCol>
-            <Div color={color}>{children}</Div>
-        </TableCol>
-    )
-}
-
 function CheckIcon() {
     return (
-        <TableCol>
-            <Div padding-top="5px">
-                <IconImage size="28px" url="assets/img/icon-check.png" />
-            </Div>
-        </TableCol>
+        <TableIcon align="right">
+            <IconImage size="28px" url="assets/img/icon-check.png" />
+        </TableIcon>
     )
 }

@@ -6,7 +6,13 @@ import Window, {
     WindowContent,
     WindowClose
 } from 'components/styled/Window'
-import { Table, TableRow, TableCol } from 'components/styled/Table'
+import {
+    Table,
+    TableHead,
+    TableRow,
+    TableCol,
+    TableText
+} from 'components/styled/Table'
 import IconImage from 'components/styled/IconImage'
 
 export default function ChooseNickName() {
@@ -17,80 +23,44 @@ export default function ChooseNickName() {
             <WindowContent>
                 <Div padding="30px">
                     <Table>
-                        <TableRow>
+                        <TableHead>
                             <TableCol />
                             <TableCol />
-                            <TableCol align="center">
-                                <IconImage
-                                    size="38px"
-                                    url="assets/img/icon-clock.png"
-                                />
-                                <Div font-size="16px" color="#d5ab7d">
-                                    Units
-                                </Div>
-                            </TableCol>
-                            <TableCol align="center">
-                                <IconImage
-                                    size="38px"
-                                    url="assets/img/icon-power.png"
-                                />
-                                <Div font-size="16px" color="#d5ab7d">
-                                    Recluitment Power
-                                </Div>
-                            </TableCol>
-                            <TableCol align="center">
-                                <IconImage
-                                    size="38px"
-                                    url="assets/img/icon-kills.png"
-                                />
-                                <Div font-size="16px" color="#d5ab7d">
-                                    Kills
-                                </Div>
-                            </TableCol>
+                            <Icon url="assets/img/icon-clock.png">Units</Icon>
+                            <Icon url="assets/img/icon-power.png">
+                                Recluitment Power
+                            </Icon>
+                            <Icon url="assets/img/icon-kills.png">Kills</Icon>
+                        </TableHead>
+                        <TableRow>
+                            <TableText>#1</TableText>
+                            <TableText color={COLOR.BLUE}>Enzo</TableText>
+                            <TableText align="center">1000</TableText>
+                            <TableText align="center">45</TableText>
+                            <TableText align="center">71</TableText>
                         </TableRow>
                         <TableRow>
-                            <TableCol>
-                                <Div>#1</Div>
-                            </TableCol>
-                            <TableCol>
-                                <Div color={COLOR.BLUE}>Enzo</Div>
-                            </TableCol>
-                            <TableCol align="center">1000</TableCol>
-                            <TableCol align="center">45</TableCol>
-                            <TableCol align="center">71</TableCol>
+                            <TableText>#2</TableText>
+                            <TableText color={COLOR.RED}>
+                                Agustin Jamardo Chenlo
+                            </TableText>
+                            <TableText align="center">314</TableText>
+                            <TableText align="center">131</TableText>
+                            <TableText align="center">71</TableText>
                         </TableRow>
                         <TableRow>
-                            <TableCol>
-                                <Div>#2</Div>
-                            </TableCol>
-                            <TableCol>
-                                <Div color={COLOR.RED}>Agustin Jamardo</Div>
-                            </TableCol>
-                            <TableCol align="center">345</TableCol>
-                            <TableCol align="center">45</TableCol>
-                            <TableCol align="center">71</TableCol>
+                            <TableText>#3</TableText>
+                            <TableText color={COLOR.RED}>Roly</TableText>
+                            <TableText align="center">314</TableText>
+                            <TableText align="center">131</TableText>
+                            <TableText align="center">71</TableText>
                         </TableRow>
                         <TableRow>
-                            <TableCol>
-                                <Div>#3</Div>
-                            </TableCol>
-                            <TableCol>
-                                <Div color={COLOR.RED}>Roly</Div>
-                            </TableCol>
-                            <TableCol align="center">213</TableCol>
-                            <TableCol align="center">45</TableCol>
-                            <TableCol align="center">71</TableCol>
-                        </TableRow>
-                        <TableRow>
-                            <TableCol>
-                                <Div>#4</Div>
-                            </TableCol>
-                            <TableCol>
-                                <Div color={COLOR.RED}>Selo</Div>
-                            </TableCol>
-                            <TableCol align="center">213</TableCol>
-                            <TableCol align="center">45</TableCol>
-                            <TableCol align="center">71</TableCol>
+                            <TableText>#4</TableText>
+                            <TableText color={COLOR.RED}>Selo</TableText>
+                            <TableText align="center">314</TableText>
+                            <TableText align="center">131</TableText>
+                            <TableText align="center">71</TableText>
                         </TableRow>
                     </Table>
                 </Div>
@@ -99,11 +69,13 @@ export default function ChooseNickName() {
     )
 }
 
-// const CheckIcon = styled.div`
-//     position: relative;
-//     background: url('assets/img/icon-check.png') no-repeat;
-//     width: 29px;
-//     height: 28px;
-//     top: 5px;
-//     text-align: right;
-// `
+function Icon({ children, url }) {
+    return (
+        <TableCol align="center">
+            <IconImage size="38px" url={url} />
+            <Div font-size="16px" color="#d5ab7d">
+                {children}
+            </Div>
+        </TableCol>
+    )
+}

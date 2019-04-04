@@ -4,7 +4,7 @@ import Container from 'components/styled/Container'
 import Content from 'components/styled/Content'
 import Header from 'components/partials/Header'
 // import ChooseNickName from 'components/views/ChooseNickName'
-import WaitingPlayers from 'components/views/WaitingPlayers'
+// import WaitingPlayers from 'components/views/WaitingPlayers'
 import Leaders from 'components/views/Leaders'
 
 export default function App() {
@@ -13,8 +13,9 @@ export default function App() {
             <WebView onClick={() => alert('Webview')} />
             <Content>
                 <Header />
+                {/* <ChooseNickName /> */}
                 <Leaders />
-                <WaitingPlayers />
+                {/* <WaitingPlayers /> */}
             </Content>
         </Container>
     )
