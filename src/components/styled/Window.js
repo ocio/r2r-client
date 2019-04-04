@@ -136,11 +136,11 @@ export const WindowClose = styled.div`
 `
 
 export const WindowTitle = styled.div`
-    width: 370px;
-    height: 80px;
-    line-height: 80px;
+    width: 460px;
+    height: 107px;
+    line-height: 107px;
     font-size: 40px;
-    top: -5px;
+    top: -30px;
     font-family: 'Allan';
     background-image: url('assets/img/window-title.png');
     position: relative;

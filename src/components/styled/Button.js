@@ -38,3 +38,11 @@ export function ButtonGreen({ children, ...props }) {
         </Button>
     )
 }
+
+export function ButtonBrown({ children, ...props }) {
+    return (
+        <Button {...props} image="assets/img/button-brown.png">
+            {children}
+        </Button>
+    )
+}

@@ -5,6 +5,9 @@ import Score from 'components/styled/Score'
 export default function Header() {
     return (
         <HeaderSytled>
+            <Score icon="assets/img/icon-score.png" highlight={true}>
+                1341
+            </Score>
             <Score icon="assets/img/icon-kills.png">71</Score>
             <Score icon="assets/img/icon-power.png">45</Score>
             <Score icon="assets/img/icon-clock.png">1000</Score>

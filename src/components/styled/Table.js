@@ -25,6 +25,7 @@ export const TableCol = styled.div`
     display: table-cell;
     vertical-align: middle;
     text-align: ${p => p.align || 'left'};
+    width: ${p => p.width || 'auto'};
 `
 
 export function TableText({ children, color, ...props }) {

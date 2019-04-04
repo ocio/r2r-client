@@ -16,7 +16,6 @@ export default function ChooseNickName() {
     return (
         <Window height="550">
             <WindowTitle>Players</WindowTitle>
-            {/* <WindowClose onClick={() => console.log('closa')} /> */}
             <WindowContent>
                 <Div padding="30px">
                     <Table>

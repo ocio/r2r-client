@@ -1,9 +1,10 @@
 import React from 'react'
 import styled from '@emotion/styled'
 
-export default function Score({ children, icon }) {
+export default function Score({ children, icon, highlight = false }) {
+    const highlightUrl = highlight ? '-highlight' : ''
     return (
-        <ScoreStyled>
+        <ScoreStyled highlightUrl={highlightUrl}>
             <Icon url={icon} />
             <div>{children}</div>
         </ScoreStyled>
@@ -14,8 +15,8 @@ const ScoreStyled = styled.div`
     position: relative;
     min-width: 117px;
     height: 38px;
-    background-image: url('assets/img/score-left.png'),
-        url('assets/img/score-right.png');
+    background-image: url('assets/img/score-left${p => p.highlightUrl}.png'),
+        url('assets/img/score-right${p => p.highlightUrl}.png');
     background-position-x: left, right;
     background-repeat: no-repeat, no-repeat;
     line-height: 38px;
