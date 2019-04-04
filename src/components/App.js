@@ -5,7 +5,8 @@ import Content from 'components/styled/Content'
 import Header from 'components/partials/Header'
 // import ChooseNickName from 'components/views/ChooseNickName'
 // import WaitingPlayers from 'components/views/WaitingPlayers'
-import Leaders from 'components/views/Leaders'
+import Recruiting from 'components/views/Recruiting'
+// import Leaders from 'components/views/Leaders'
 
 export default function App() {
     return (
@@ -14,8 +15,9 @@ export default function App() {
             <Content>
                 <Header />
                 {/* <ChooseNickName /> */}
-                <Leaders />
+                <Recruiting />
                 {/* <WaitingPlayers /> */}
+                {/* <Leaders /> */}
             </Content>
         </Container>
     )

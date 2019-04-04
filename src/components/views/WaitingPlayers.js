@@ -12,7 +12,7 @@ import {
 } from 'components/styled/Table'
 import IconImage from 'components/styled/IconImage'
 
-export default function ChooseNickName() {
+export default function WaitingPlayers() {
     return (
         <Window height="550">
             <WindowTitle>Players</WindowTitle>

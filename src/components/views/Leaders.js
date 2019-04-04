@@ -17,13 +17,13 @@ import {
 import IconImage from 'components/styled/IconImage'
 import { ButtonBrown } from 'components/styled/Button'
 
-export default function ChooseNickName() {
+export default function Leaders() {
     return (
         <Window width="1000" height="600">
             <WindowTitle>Leaders</WindowTitle>
             <WindowClose onClick={() => console.log('closa')} />
             <WindowContent>
-                <Div padding="30px">
+                <Div padding="0 30px 30px 30px">
                     <Table>
                         <TableHead>
                             <TableCol width="50px" />
