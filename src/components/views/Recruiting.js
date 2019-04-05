@@ -9,11 +9,11 @@ export default function Recruiting() {
     return (
         <Window>
             <WindowTitle>Recruiting Phase</WindowTitle>
-            <WindowContent margin="0 25px">
+            <WindowContent height="365px" margin="0 25px">
                 <RecruitingBar
                     width="100%"
                     nickname="Agus"
-                    color={'#ff2626'}
+                    color={COLOR.RED}
                     metters="313 m"
                     units="1213"
                     power="212"
@@ -35,13 +35,16 @@ export default function Recruiting() {
                     power="21"
                 />
                 <RecruitingBar
-                    width="35%"
+                    width="30%"
                     nickname="Selonidas is a long nick"
                     color={COLOR.RED}
                     metters="0 m"
                     units="0"
                     power="821"
                 />
+            </WindowContent>
+            <WindowContent>
+                <button>Click</button>
             </WindowContent>
         </Window>
     )
@@ -50,7 +53,7 @@ export default function Recruiting() {
 function RecruitingBar({ nickname, metters, units, power, color, width }) {
     return (
         <ContainerBar>
-            <HeaderBar width={width}>
+            <HeaderBar>
                 <HeaderLeft color={color}>{nickname}</HeaderLeft>
                 <HeaderRight>
                     <IconImage
@@ -61,13 +64,17 @@ function RecruitingBar({ nickname, metters, units, power, color, width }) {
                     {power}
                 </HeaderRight>
             </HeaderBar>
-            <BackgroundBar width={width}>
-                <Bar color={color} width={`calc(100% - ${rightBarWidth})`}>
+            <BackgroundBar>
+                <Bar color={color} width={`calc(${width} - ${rightBarWidth})`}>
                     {metters}
                 </Bar>
-                <RightBar color={color}>
-                    <IconImage url="assets/img/icon-units.png" size="24px" />
-                    {units}
+                <RightBar>
+                    <IconImage
+                        url="assets/img/icon-units.png"
+                        size="24px"
+                        topDivision="5"
+                    />
+                    <RightBarValue>{units}</RightBarValue>
                 </RightBar>
             </BackgroundBar>
         </ContainerBar>
@@ -81,7 +88,7 @@ const ContainerBar = styled.div`
 `
 
 const HeaderBar = styled.div`
-    width: ${p => p.width};
+    width: 100%;
 `
 const HeaderLeft = styled.div`
     float: left;
@@ -90,11 +97,6 @@ const HeaderLeft = styled.div`
     line-height: 22px;
     padding-left: 8px;
     color: ${p => p.color};
-    letter-spacing: 0.5px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    width: 75px;
 `
 const HeaderRight = styled.div`
     float: right;
@@ -111,7 +113,7 @@ const BackgroundBar = styled.div`
     clear: both;
     position: relative;
     background: green;
-    width: ${p => p.width};
+    width: 100%;
     border-radius: 40px;
     box-sizing: border-box;
     background-color: ${COLOR.BACKGROUND_WINDOW_DARK};
@@ -122,11 +124,13 @@ const RightBar = styled.div`
     top: 0;
     right: 0;
     height: 100%;
-    color: ${p => p.color};
-    /* font-family: 'Allan'; */
-    font-size: 24px;
-    line-height: 48px;
     margin-right: 8px;
     width: ${rightBarWidth};
     text-align: center;
+`
+
+const RightBarValue = styled.span`
+    color: ${COLOR.BROWN};
+    font-size: 24px;
+    line-height: 52px;
 `

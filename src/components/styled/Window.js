@@ -152,6 +152,7 @@ export const WindowTitle = styled.div`
 export const WindowContent = styled.div`
     color: ${COLOR.BROWN_DARK};
     width: calc(100% - 50px);
+    height: ${p => p.height || 'auto'};
     margin: ${p => p.margin || '25px'};
     /* background: red; */
     /* max-height: calc(100% - (205px + 25px)); */
