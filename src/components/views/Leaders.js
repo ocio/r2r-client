@@ -28,7 +28,7 @@ export default function Leaders() {
                         <TableHead>
                             <TableCol width="50px" />
                             <TableCol />
-                            <Icon url="assets/img/icon-clock.png">Units</Icon>
+                            <Icon url="assets/img/icon-units.png">Units</Icon>
                             <Icon url="assets/img/icon-power.png">
                                 Recruitment Power
                             </Icon>
@@ -94,7 +94,11 @@ function Icon({ children, url }) {
     return (
         <TableCol align="center" width="17%">
             <IconImage size="40px" url={url} />
-            <Div font-size="16px" color="#d5ab7d" letter-spacing="1px">
+            <Div
+                font-size="16px"
+                color={COLOR.BROWN_LIGHT}
+                letter-spacing="1px"
+            >
                 {children}
             </Div>
         </TableCol>

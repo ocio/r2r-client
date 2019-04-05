@@ -59,7 +59,7 @@ const Background0 = styled.div`
     top: 40px;
     left: 40px;
     position: absolute;
-    background-color: #ffe7cd;
+    background-color: ${COLOR.BACKGROUND_WINDOW};
 `
 
 const Background1 = styled.div`
@@ -152,7 +152,7 @@ export const WindowTitle = styled.div`
 export const WindowContent = styled.div`
     color: ${COLOR.BROWN_DARK};
     width: calc(100% - 50px);
-    margin: 25px;
+    margin: ${p => p.margin || '25px'};
     /* background: red; */
     /* max-height: calc(100% - (205px + 25px)); */
     overflow-y: auto;

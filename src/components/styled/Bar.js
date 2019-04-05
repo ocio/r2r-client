@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from '@emotion/styled'
+import { COLOR } from 'const/styles'
 
 export default function Bar({ children, color, width }) {
     return (
@@ -18,7 +19,7 @@ const BarContainer = styled.div`
     background: ${p => p.color};
     border-radius: 40px;
     box-sizing: border-box;
-    border: 5px solid #f3cfa8;
+    border: 5px solid ${COLOR.BACKGROUND_WINDOW_DARK};
     overflow: hidden;
 `
 
