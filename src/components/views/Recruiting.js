@@ -2,6 +2,7 @@ import React from 'react'
 import Window, { WindowTitle, WindowContent } from 'components/styled/Window'
 import styled from '@emotion/styled'
 import Div from 'components/styled/Div'
+import Bar from 'components/styled/Bar'
 import { COLOR } from 'const/styles'
 
 export default function Recruiting() {
@@ -10,74 +11,75 @@ export default function Recruiting() {
             <WindowTitle>Recruiting Phase</WindowTitle>
             <WindowContent>
                 <Div padding="10px 30px">
-                    <Bar width="100%" color={'#ff2626'}>
-                        313 m
-                    </Bar>
+                    <RecruitingBar
+                        width="100%"
+                        color={'#ff2626'}
+                        metters="313 m"
+                        units="1213"
+                    />
                 </Div>
                 <Div padding="10px 30px">
-                    <Bar width="50%" color={COLOR.BLUE}>
-                        133 m
-                    </Bar>
+                    <RecruitingBar
+                        width="75%"
+                        color={COLOR.RED}
+                        metters="313 m"
+                        units="63"
+                    />
                 </Div>
                 <Div padding="10px 30px">
-                    <Bar width="20%" color={COLOR.RED}>
-                        0 m
-                    </Bar>
+                    <RecruitingBar
+                        width="50%"
+                        color={COLOR.BLUE}
+                        metters="21 m"
+                        units="321"
+                    />
+                </Div>
+                <Div padding="10px 30px">
+                    <RecruitingBar
+                        width="20%"
+                        color={COLOR.RED}
+                        metters="0 m"
+                        units="0"
+                    />
                 </Div>
             </WindowContent>
         </Window>
     )
 }
 
-function Bar({ children, color, width }) {
+function RecruitingBar({ metters, units, color, width }) {
     return (
-        <BarContainer color={color} width={width}>
-            <BarBackground2 />
-            <BarBackground1 />
-            <BarText>{children}</BarText>
-        </BarContainer>
+        <ContainerBar>
+            <BackgroundBar width={width}>
+                <Bar color={color} width="calc(100% - 50px)">
+                    {metters}
+                </Bar>
+                <RightBar color={color}>{units}</RightBar>
+            </BackgroundBar>
+        </ContainerBar>
     )
 }
 
-const BarContainer = styled.div`
-    width: ${p => p.width};
+const ContainerBar = styled.div`
+    /* clear: both; */
+`
+const BackgroundBar = styled.div`
     position: relative;
-    height: 45px;
-    background: ${p => p.color};
+    background: green;
+    width: ${p => p.width};
     border-radius: 40px;
     box-sizing: border-box;
-    border: 5px solid #f3cfa8;
+    background-color: #f3cfa8;
 `
 
-const BarBackground2 = styled.div`
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0) 0%,
-        rgba(0, 0, 0, 0.2) 100%
-    );
+const RightBar = styled.div`
     position: absolute;
-    border-radius: 40px;
-    left: 0;
     top: 0;
-`
-
-const BarBackground1 = styled.div`
-    background: rgba(255, 255, 255, 0.15);
-    width: calc(100% - 24px);
-    height: 12px;
-    position: absolute;
-    border-radius: 10px;
-    left: 15px;
-    top: 5px;
-`
-
-const BarText = styled.div`
-    color: white;
-    font-size: 22px;
-    padding-right: 20px;
-    padding-top: 1px;
-    text-align: right;
-    text-shadow: 1px 1px black;
+    right: 0;
+    height: 100%;
+    color: ${p => p.color};
+    font-family: 'Allan';
+    font-size: 25px;
+    line-height: 48px;
+    padding-right: 12px;
 `

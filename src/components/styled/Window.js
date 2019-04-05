@@ -10,8 +10,8 @@ export default function Window({
     scale = 1,
     children
 }) {
-    const scaleWidth = (maxWidth / width) * 0.95
-    const scaleHeight = (maxHeight / height) * 0.95
+    const scaleWidth = (maxWidth / width) * 0.9
+    const scaleHeight = (maxHeight / height) * 0.9
     if (scaleWidth < scale) scale = scaleWidth
     if (scaleHeight < scale) scale = scaleHeight
     // console.log({ scale, width, height, maxWidth, maxHeight })
