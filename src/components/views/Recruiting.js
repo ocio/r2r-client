@@ -9,8 +9,9 @@ export default function Recruiting() {
     return (
         <Window>
             <WindowTitle>Recruiting Phase</WindowTitle>
-            <WindowContent height="365px" margin="0 25px">
+            <WindowContent height="370px" margin="0 25px">
                 <RecruitingBar
+                    top="0"
                     width="100%"
                     nickname="Agus"
                     color={COLOR.RED}
@@ -19,6 +20,7 @@ export default function Recruiting() {
                     power="212"
                 />
                 <RecruitingBar
+                    top="90px"
                     width="75%"
                     nickname="Roly"
                     color={COLOR.RED}
@@ -27,6 +29,7 @@ export default function Recruiting() {
                     units="2"
                 />
                 <RecruitingBar
+                    top="180px"
                     width="50%"
                     nickname="Enzo"
                     color={COLOR.BLUE}
@@ -35,6 +38,7 @@ export default function Recruiting() {
                     power="21"
                 />
                 <RecruitingBar
+                    top="270px"
                     width="160px"
                     nickname="Selonidas is a long nick"
                     color={COLOR.RED}
@@ -52,9 +56,9 @@ export default function Recruiting() {
     )
 }
 
-function RecruitingBar({ nickname, metters, units, power, color, width }) {
+function RecruitingBar({ top, nickname, metters, units, power, color, width }) {
     return (
-        <ContainerBar>
+        <ContainerBar top={top}>
             <HeaderBar>
                 <HeaderLeft color={color}>{nickname}</HeaderLeft>
                 <HeaderRight>
@@ -86,7 +90,11 @@ function RecruitingBar({ nickname, metters, units, power, color, width }) {
 const rightBarWidth = '80px'
 
 const ContainerBar = styled.div`
-    padding: 0 30px 20px 30px;
+    padding: 0 30px;
+    position: absolute;
+    width: calc(100% - 60px);
+    top: ${p => p.top};
+    transition: top 0.5s;
 `
 
 const HeaderBar = styled.div`
