@@ -40,7 +40,7 @@ export default function Recruiting() {
                 <RecruitingBar
                     top="270px"
                     width="160px"
-                    nickname="Selonidas is a long nick"
+                    nickname="Selo"
                     color={COLOR.RED}
                     metters="0 m"
                     units="0"
@@ -148,17 +148,18 @@ const RightBarValue = styled.span`
 const Bottom = styled.div`
     text-align: center;
 `
+
 const BigButton = styled.button`
     background-size: 100% auto;
-    width: 128px;
-    height: 91px;
+    width: 127px;
+    height: 90px;
     border: 0;
     outline: 0;
-    background-image: url(assets/img/bigbutton-off.png);
+    background-image: url('assets/img/bigbutton.png');
     background-color: transparent;
     background-repeat: no-repeat;
-    background-position: left bottom;
+    background-position: left -90px;
     &:active {
-        background-image: url(assets/img/bigbutton-on.png);
+        background-position: left 0px;
     }
 `
