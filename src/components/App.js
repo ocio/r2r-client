@@ -5,9 +5,9 @@ import Content from 'components/styled/Content'
 import Header from 'components/partials/Header'
 // import ChooseNickName from 'components/views/ChooseNickName'
 // import WaitingPlayers from 'components/views/WaitingPlayers'
-// import Recruiting from 'components/views/Recruiting'
+import Recruiting from 'components/views/Recruiting'
 // import Leaders from 'components/views/Leaders'
-import Attack from 'components/views/Attack'
+// import SendUnits from 'components/views/SendUnits'
 
 export default function App() {
     return (
@@ -16,10 +16,10 @@ export default function App() {
             <Content>
                 <Header />
                 {/* <ChooseNickName /> */}
-                {/* <Recruiting /> */}
+                <Recruiting />
                 {/* <WaitingPlayers /> */}
                 {/* <Leaders /> */}
-                <Attack />
+                {/* <SendUnits /> */}
             </Content>
         </Container>
     )

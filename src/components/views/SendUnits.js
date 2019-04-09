@@ -6,16 +6,16 @@ import Slider from 'components/styled/Slider'
 import { COLOR } from 'const/styles'
 import { ButtonBrown } from 'components/styled/Button'
 
-export default function Attack() {
+export default function SendUnits() {
     return (
         <Window height={400}>
             <WindowClose />
             <Div width="300px" margin="40px auto 0 auto">
-                <BigInput value="1000" onChange={() => {}} />
+                <BigInput value="750" onChange={() => {}} />
                 <Slider
                     onChange={() => {}}
                     type="range"
-                    min="0"
+                    min="1"
                     max="100"
                     // value="70"
                 />
@@ -69,9 +69,9 @@ const Buttons = styled.div`
     margin-bottom: 20px;
 `
 const Button = styled.button`
-    border: 1px solid ${COLOR.BACKGROUND_WINDOW_DARK};
-    background: ${p =>
-        p.selected ? COLOR.BACKGROUND_WINDOW_DARK : 'transparent'};
+    border: 1px solid
+        ${p => (p.selected ? COLOR.BROWN : COLOR.BACKGROUND_WINDOW_DARK)};
+    background: transparent;
     font-family: 'Lalezar', cursive;
     color: ${p => (p.selected ? COLOR.BROWN : COLOR.BROWN_LIGHT)};
     /* width: 33%; */

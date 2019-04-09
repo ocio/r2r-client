@@ -2,6 +2,7 @@ import React from 'react'
 import Window, { WindowTitle, WindowContent } from 'components/styled/Window'
 import styled from '@emotion/styled'
 import Bar from 'components/styled/Bar'
+import CountDown from 'components/animations/CountDown'
 import { COLOR } from 'const/styles'
 import IconImage from 'components/styled/IconImage'
 
@@ -47,11 +48,10 @@ export default function Recruiting() {
                     power="821"
                 />
             </WindowContent>
-            <WindowContent>
-                <Bottom>
-                    <BigButton />
-                </Bottom>
-            </WindowContent>
+            <Bottom>
+                <BigButton />
+                {/* <CountDown from={1} to={1} /> */}
+            </Bottom>
         </Window>
     )
 }
@@ -147,6 +147,7 @@ const RightBarValue = styled.span`
 
 const Bottom = styled.div`
     text-align: center;
+    margin-top: 20px;
 `
 
 const BigButton = styled.button`
