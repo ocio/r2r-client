@@ -2,6 +2,7 @@ import React from 'react'
 import Window, { WindowClose } from 'components/styled/Window'
 import styled from '@emotion/styled'
 import Div from 'components/styled/Div'
+import Slider from 'components/styled/Slider'
 import { COLOR } from 'const/styles'
 import { ButtonBrown } from 'components/styled/Button'
 
@@ -34,6 +35,28 @@ export default function Attack() {
     )
 }
 
+const BigInput = styled.input`
+    border: 1px solid transparent;
+    outline: none;
+    background-color: transparent;
+    font-family: Allan;
+    font-size: 70px;
+    text-align: center;
+    width: 100%;
+    padding-top: 13px;
+    text-shadow: 3px 3px 0px white, -3px -3px 0px white, 3px -3px 0px white,
+        -3px 3px 0px white;
+    color: ${COLOR.BROWN_DARK};
+    letter-spacing: 1px;
+    margin: 0;
+    padding: 0;
+    height: 80px;
+    margin: 15px 0;
+    &:focus {
+        border: 1px solid ${COLOR.BACKGROUND_WINDOW_DARK};
+    }
+`
+
 const Buttons = styled.div`
     display: flex;
     align-items: center;
@@ -62,44 +85,5 @@ const Button = styled.button`
     outline: none;
     &:nth-child(3n) {
         margin-right: 0;
-    }
-`
-
-const BigInput = styled.input`
-    border: 1px solid transparent;
-    outline: none;
-    background-color: transparent;
-    font-family: Allan;
-    font-size: 70px;
-    text-align: center;
-    width: 100%;
-    padding-top: 13px;
-    text-shadow: 3px 3px 0px white, -3px -3px 0px white, 3px -3px 0px white,
-        -3px 3px 0px white;
-    color: ${COLOR.BROWN_DARK};
-    letter-spacing: 1px;
-    &:focus {
-        border: 1px solid ${COLOR.BACKGROUND_WINDOW_DARK};
-    }
-`
-
-const Slider = styled.input`
-    appearance: none;
-    width: 100%;
-    height: 20px;
-    outline: none;
-    border-radius: 20px;
-    background-color: ${COLOR.BACKGROUND_WINDOW_DARK};
-    margin: 2px 0;
-    &::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        appearance: none;
-        width: 24px;
-        height: 24px;
-        border-radius: 25px;
-        background-color: ${COLOR.BROWN};
-        /* box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.1); */
-        border: 5px solid ${COLOR.BROWN_LIGHT};
-        cursor: pointer;
     }
 `
