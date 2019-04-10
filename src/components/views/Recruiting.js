@@ -1,4 +1,5 @@
 import React from 'react'
+// import { Show } from 'dop-router/react'
 import Window, { WindowTitle, WindowContent } from 'components/styled/Window'
 import styled from '@emotion/styled'
 import Bar from 'components/styled/Bar'
@@ -7,6 +8,7 @@ import { COLOR } from 'const/styles'
 import IconImage from 'components/styled/IconImage'
 
 export default function Recruiting() {
+    // const [ready, setReady] = useState(false)
     return (
         <Window>
             <WindowTitle>Recruiting Phase</WindowTitle>
@@ -51,7 +53,7 @@ export default function Recruiting() {
             <Bottom>
                 {/* <BigButton /> */}
                 <CountDown
-                    from={5}
+                    from={10}
                     to={1}
                     onAnimationEnd={() => console.log('End')}
                 />
