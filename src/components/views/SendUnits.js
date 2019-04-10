@@ -83,7 +83,7 @@ const Button = styled.button`
     margin-right: 9px;
     margin-bottom: 9px;
     outline: none;
-    &:nth-child(3n) {
+    &:nth-of-type(3n) {
         margin-right: 0;
     }
 `

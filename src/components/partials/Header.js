@@ -16,7 +16,7 @@ export default function Header() {
 }
 
 const HeaderSytled = styled.div`
-    pointer-events: all;
+    pointer-events: none;
     padding: 30px;
     height: 35px;
     background: linear-gradient(
@@ -25,6 +25,7 @@ const HeaderSytled = styled.div`
         rgba(0, 0, 0, 0) 100%
     );
     & > * {
+        pointer-events: all;
         float: right;
         margin-left: 30px;
     }
