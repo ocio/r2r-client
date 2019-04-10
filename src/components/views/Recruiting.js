@@ -49,8 +49,12 @@ export default function Recruiting() {
                 />
             </WindowContent>
             <Bottom>
-                <BigButton />
-                {/* <CountDown from={1} to={1} /> */}
+                {/* <BigButton /> */}
+                <CountDown
+                    from={5}
+                    to={1}
+                    onAnimationEnd={() => console.log('End')}
+                />
             </Bottom>
         </Window>
     )
