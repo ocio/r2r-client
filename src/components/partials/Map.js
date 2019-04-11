@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import styled from '@emotion/styled'
-import init from '@ocio/r2r-map'
+import init, { ELEMENT_TYPE } from '@ocio/r2r-map'
 
 export default function Map() {
     const canvasRef = useRef(null)
@@ -9,7 +9,30 @@ export default function Map() {
         const canvas = canvasRef.current
         const ui = uiRef.current
         const API = init({ canvas, ui })
-        // usingApi({ API, canvas, ui })
+
+        API.shallWeStartAttack = function({ idFrom }) {
+            const found = API.getTiles().find(tile => tile.id === idFrom)
+            return found !== undefined && found.type === ELEMENT_TYPE.VILLAGE
+        }
+        API.shallWeAttack = function({ idFrom, idTo }) {
+            const found = API.getTiles().find(tile => tile.id === idTo)
+            return found !== undefined && found.type === ELEMENT_TYPE.COTTAGE
+        }
+        API.getTilesToAttack = function({ idFrom }) {
+            return API.getTiles()
+                .filter(tile => tile.type === ELEMENT_TYPE.COTTAGE)
+                .map(tile => tile.id)
+        }
+        API.onAttack = function({ idFrom, idTo }) {
+            console.log('onAttack', { idFrom, idTo })
+        }
+        API.onSelect = function({ type, id }) {
+            console.log('onSelect', { type, id })
+        }
+        API.onUnselect = function() {
+            console.log('onUnselect')
+        }
+        usingApi({ API, canvas, ui })
     })
     return (
         <Container>
@@ -43,15 +66,6 @@ const UI = styled.div`
 `
 
 function usingApi({ API, ui, canvas }) {
-    // EXAMPLE USING API
-    // EXAMPLE USING API
-    // EXAMPLE USING API
-    // EXAMPLE USING API
-    // EXAMPLE USING API
-    // EXAMPLE USING API
-    // EXAMPLE USING API
-    // EXAMPLE USING API
-
     const village1 = 'village1'
     API.createVillage({ id: village1, col: 0, row: 0 })
     API.changeRecruitmentPower({ idTile: village1, power: 22 })
@@ -148,11 +162,6 @@ function usingApi({ API, ui, canvas }) {
             clearInterval(int)
         }
     }, 10)
-
-    const log = document.createElement('div')
-    log.style.position = 'absolute'
-    log.style.fontSize = '100px'
-    ui.appendChild(log)
 
     API.addDecorativeElements()
 
