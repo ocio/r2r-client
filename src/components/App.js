@@ -5,9 +5,9 @@ import Header from 'components/partials/Header'
 import Map from 'components/partials/Map'
 // import ChooseNickName from 'components/views/ChooseNickName'
 // import WaitingPlayers from 'components/views/WaitingPlayers'
-// import Recruiting from 'components/views/Recruiting'
+import Recruiting from 'components/views/Recruiting'
 // import Leaders from 'components/views/Leaders'
-import SendUnits from 'components/views/SendUnits'
+// import SendUnits from 'components/views/SendUnits'
 // import Info from 'components/views/Info'
 
 export default function App() {
@@ -17,10 +17,10 @@ export default function App() {
             <Content>
                 <Header />
                 {/* <ChooseNickName /> */}
-                {/* <Recruiting /> */}
+                <Recruiting />
                 {/* <WaitingPlayers /> */}
                 {/* <Leaders /> */}
-                <SendUnits />
+                {/* <SendUnits /> */}
                 {/* <Info /> */}
             </Content>
         </Container>

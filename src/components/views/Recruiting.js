@@ -3,7 +3,7 @@ import React from 'react'
 import Window, { WindowTitle, WindowContent } from 'components/styled/Window'
 import styled from '@emotion/styled'
 import Bar from 'components/styled/Bar'
-import CountDown from 'components/animations/CountDown'
+// import CountDown from 'components/animations/CountDown'
 import { COLOR } from 'const/styles'
 import IconImage from 'components/styled/IconImage'
 
@@ -51,12 +51,12 @@ export default function Recruiting() {
                 />
             </WindowContent>
             <Bottom>
-                {/* <BigButton /> */}
-                <CountDown
+                <BigButton />
+                {/* <CountDown
                     from={10}
                     to={1}
                     onAnimationEnd={() => console.log('End')}
-                />
+                /> */}
             </Bottom>
         </Window>
     )
