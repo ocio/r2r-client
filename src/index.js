@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-// import { AppRegistry } from 'react-native'
 import App from 'components/App'
+// import { AppRegistry } from 'react-native'
 // import * as serviceWorker from './serviceWorker'
 
 ReactDOM.render(<App />, document.getElementById('root'))
