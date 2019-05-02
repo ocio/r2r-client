@@ -1,11 +1,9 @@
 import React from 'react'
-import { createObserver } from 'dop'
-import state from 'store/state'
-import Server from 'store/server'
+
 // Components
 import Container from 'components/styled/Container'
 import Content from 'components/styled/Content'
-import Header from 'components/partials/Header'
+// import Header from 'components/partials/Header'
 import Map from 'components/partials/Map'
 import ChooseNickName from 'components/views/ChooseNickName'
 // import WaitingPlayers from 'components/views/WaitingPlayers'
@@ -15,17 +13,12 @@ import ChooseNickName from 'components/views/ChooseNickName'
 // import Info from 'components/views/Info'
 
 export default function App() {
-    const observer = createObserver(async () => {
-        const isLogged = await Server.login('Enzo', 'Josemita')
-        console.log({ connected: state.connected, isLogged })
-    })
-    observer.observeProperty(state, 'connected')
     return (
         <Container>
             <Map onClick={() => alert('Webview')} />
             <Content>
-                <Header />
                 <ChooseNickName />
+                {/* <Header /> */}
                 {/* <Recruiting /> */}
                 {/* <WaitingPlayers /> */}
                 {/* <Leaders /> */}
@@ -35,3 +28,11 @@ export default function App() {
         </Container>
     )
 }
+
+// const observer = createObserver(async () => {
+//     console.log({ connected: state.connected })
+//     if (state.connected) {
+//         console.log(await Server.login('Enzo', 'passwda'))
+//     }
+// })
+// observer.observeProperty(state, 'connected')

@@ -1,34 +1,34 @@
-import React from 'react'
-import Window, {
-    // WindowTitle,
-    // WindowClose,
-    WindowContent,
-    WindowButtons
-} from 'components/styled/Window'
-import {
-    ButtonGreen
-    // ButtonRed
-} from 'components/styled/Button'
+import React, { useState } from 'react'
+import state from 'store/state'
+
+import Window, { WindowContent, WindowButtons } from 'components/styled/Window'
+import { ButtonGreen } from 'components/styled/Button'
 import Div from 'components/styled/Div'
 import Input from 'components/styled/Input'
 import Label from 'components/styled/Label'
 
 export default function ChooseNickName() {
+    const [nickname, setNickname] = useState('')
+    function onPlay() {
+        state.nickname = nickname
+        // connectToServer(nickname)
+    }
     return (
         <Window height={400}>
-            {/* <WindowTitle></WindowTitle> */}
-            {/* <WindowClose onClick={() => console.log('closa')} /> */}
             <WindowContent>
                 <Div padding="100px">
                     <Label>Choose your NickName</Label>
-                    <Input width="100%" />
+                    <Input
+                        width="100%"
+                        value={nickname}
+                        onChange={e => setNickname(e.target.value)}
+                    />
                 </Div>
             </WindowContent>
             <WindowButtons>
-                <ButtonGreen onClick={() => console.log('OK')}>
+                <ButtonGreen disabled={nickname.length < 3} onClick={onPlay}>
                     Play
                 </ButtonGreen>
-                {/* <ButtonRed>Cancel</ButtonRed> */}
             </WindowButtons>
         </Window>
     )

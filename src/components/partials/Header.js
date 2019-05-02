@@ -6,11 +6,11 @@ export default function Header() {
     return (
         <HeaderSytled>
             <Score icon="assets/img/icon-score.png" highlight={true}>
-                1341
+                0
             </Score>
-            <Score icon="assets/img/icon-kills.png">71</Score>
-            <Score icon="assets/img/icon-power.png">45</Score>
-            <Score icon="assets/img/icon-units.png">1000</Score>
+            <Score icon="assets/img/icon-kills.png">0</Score>
+            <Score icon="assets/img/icon-power.png">0</Score>
+            <Score icon="assets/img/icon-units.png">0</Score>
         </HeaderSytled>
     )
 }

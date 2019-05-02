@@ -1,7 +1,8 @@
 import { register } from 'dop'
 
 const state = register({
-    connected: false
+    connected: false,
+    nickname: ''
 })
 
 // window.state = state // useful for development

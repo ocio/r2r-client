@@ -23,25 +23,49 @@ export const Button = styled.button`
     }
 `
 
-export function ButtonRed({ children, ...props }) {
+export function ButtonRed({ children, disabled, ...props }) {
     return (
-        <Button {...props} image="assets/img/button-red.png">
+        <Button
+            disabled={disabled}
+            {...props}
+            image={
+                disabled
+                    ? 'assets/img/button-grey.png'
+                    : 'assets/img/button-red.png'
+            }
+        >
             {children}
         </Button>
     )
 }
 
-export function ButtonGreen({ children, ...props }) {
+export function ButtonGreen({ children, disabled, ...props }) {
     return (
-        <Button {...props} image="assets/img/button-green.png">
+        <Button
+            disabled={disabled}
+            {...props}
+            image={
+                disabled
+                    ? 'assets/img/button-grey.png'
+                    : 'assets/img/button-green.png'
+            }
+        >
             {children}
         </Button>
     )
 }
 
-export function ButtonBrown({ children, ...props }) {
+export function ButtonBrown({ children, disabled, ...props }) {
     return (
-        <Button {...props} image="assets/img/button-brown.png">
+        <Button
+            disabled={disabled}
+            {...props}
+            image={
+                disabled
+                    ? 'assets/img/button-grey.png'
+                    : 'assets/img/button-brown.png'
+            }
+        >
             {children}
         </Button>
     )
