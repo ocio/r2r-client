@@ -1,4 +1,7 @@
 import React from 'react'
+import state from 'store/state'
+
+// Components
 import Div from 'components/styled/Div'
 import ThreeDots from 'components/animations/ThreeDots'
 import { COLOR } from 'const/styles'
@@ -17,7 +20,7 @@ export default function WaitingPlayers() {
         <Window height="550">
             <WindowTitle>Players</WindowTitle>
             <WindowContent>
-                <Div padding="30px">
+                <Div padding="30px" onClick={() => (state.route = 'home')}>
                     <Table>
                         <TableRow>
                             <TableText color={COLOR.BLUE}>Enzo</TableText>

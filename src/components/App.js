@@ -1,38 +1,43 @@
 import React from 'react'
+import { useAutoObserver } from 'dop-react'
+import { Router, Route, routes } from 'router'
+import state from 'store/state'
 
 // Components
 import Container from 'components/styled/Container'
 import Content from 'components/styled/Content'
-// import Header from 'components/partials/Header'
 import Map from 'components/partials/Map'
 import ChooseNickName from 'components/views/ChooseNickName'
-// import WaitingPlayers from 'components/views/WaitingPlayers'
+import WaitingPlayers from 'components/views/WaitingPlayers'
+import Header from 'components/partials/Header'
 // import Recruiting from 'components/views/Recruiting'
-// import Leaders from 'components/views/Leaders'
+import Leaders from 'components/views/Leaders'
 // import SendUnits from 'components/views/SendUnits'
 // import Info from 'components/views/Info'
 
-export default function App() {
+export default React.memo(function App() {
+    const observer = useAutoObserver()
+    observer.observeProperty(state, 'route')
     return (
         <Container>
-            <Map onClick={() => alert('Webview')} />
+            <Map />
             <Content>
-                <ChooseNickName />
-                {/* <Header /> */}
-                {/* <Recruiting /> */}
-                {/* <WaitingPlayers /> */}
-                {/* <Leaders /> */}
-                {/* <SendUnits /> */}
-                {/* <Info /> */}
+                <Router>
+                    <Route if={state.route === routes.home}>
+                        <ChooseNickName />
+                    </Route>
+                    <Route if={state.route === routes.waiting}>
+                        <WaitingPlayers />
+                    </Route>
+                    <Route if={state.route === routes.playing}>
+                        <Header />
+                        {/* <Recruiting /> */}
+                        <Leaders />
+                        {/* <SendUnits /> */}
+                        {/* <Info /> */}
+                    </Route>
+                </Router>
             </Content>
         </Container>
     )
-}
-
-// const observer = createObserver(async () => {
-//     console.log({ connected: state.connected })
-//     if (state.connected) {
-//         console.log(await Server.login('Enzo', 'passwda'))
-//     }
-// })
-// observer.observeProperty(state, 'connected')
+})

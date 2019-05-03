@@ -3,6 +3,12 @@
         "baseUrl": "src/",
         "paths": {
             "*": ["src/*"]
-        }
+        },
+        "plugins": [
+            {
+                "name": "typescript-styled-plugin",
+                "validate": true
+            }
+        ]
     }
 }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import state from 'store/state'
+import { routes } from 'router'
 
 import Window, { WindowContent, WindowButtons } from 'components/styled/Window'
 import { ButtonGreen } from 'components/styled/Button'
@@ -11,7 +12,7 @@ export default function ChooseNickName() {
     const [nickname, setNickname] = useState('')
     function onPlay() {
         state.nickname = nickname
-        // connectToServer(nickname)
+        state.route = routes.waiting
     }
     return (
         <Window height={400}>
