@@ -15,9 +15,8 @@ import Leaders from 'components/views/Leaders'
 // import SendUnits from 'components/views/SendUnits'
 // import Info from 'components/views/Info'
 
-export default React.memo(function App() {
-    const observer = useAutoObserver()
-    observer.observeProperty(state, 'route')
+export default function App() {
+    useAutoObserver()
     return (
         <Container>
             <Map />
@@ -40,4 +39,4 @@ export default React.memo(function App() {
             </Content>
         </Container>
     )
-})
+}
