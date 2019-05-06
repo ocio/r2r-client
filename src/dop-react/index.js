@@ -16,9 +16,9 @@ export function useAutoObserver() {
     const stopCollector = collectGetters()
     const observer = useObserver()
     useEffect(() => {
-        stopCollector().forEach(o => {
+        stopCollector().forEach(o =>
             observer.observeProperty(o.object, o.property)
-        })
+        )
     })
     return observer
 }

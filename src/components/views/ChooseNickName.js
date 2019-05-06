@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { useAutoObserver } from 'dop-react'
 import state from 'store/state'
 import { routes } from 'router'
 
@@ -9,9 +10,8 @@ import Input from 'components/styled/Input'
 import Label from 'components/styled/Label'
 
 export default function ChooseNickName() {
-    const [nickname, setNickname] = useState('')
+    useAutoObserver()
     function onPlay() {
-        state.nickname = nickname
         state.route = routes.waiting
     }
     return (
@@ -21,13 +21,16 @@ export default function ChooseNickName() {
                     <Label>Choose your NickName</Label>
                     <Input
                         width="100%"
-                        value={nickname}
-                        onChange={e => setNickname(e.target.value)}
+                        value={state.nickname}
+                        onChange={e => (state.nickname = e.target.value)}
                     />
                 </Div>
             </WindowContent>
             <WindowButtons>
-                <ButtonGreen disabled={nickname.length < 3} onClick={onPlay}>
+                <ButtonGreen
+                    disabled={state.nickname.length < 3}
+                    onClick={onPlay}
+                >
                     Play
                 </ButtonGreen>
             </WindowButtons>

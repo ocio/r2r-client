@@ -4,7 +4,7 @@ import { routes } from 'router'
 const state = register({
     route: routes.home,
     connected: false,
-    nickname: ''
+    nickname: 'enzo'
 })
 
 // window.state = state // useful for development
