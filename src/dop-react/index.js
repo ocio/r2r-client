@@ -1,5 +1,15 @@
-import { useEffect, useState } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 import { createObserver, collectGetters } from 'dop'
+
+const Context = createContext()
+
+export function StateProvider({ children, state }) {
+    return <Context.Provider value={state}>{children}</Context.Provider>
+}
+
+export function useGlobalState() {
+    return useContext(Context)
+}
 
 export function useObserver() {
     const [value, setValue] = useState(true)

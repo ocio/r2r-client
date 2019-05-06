@@ -1,7 +1,6 @@
 import React from 'react'
-import { useAutoObserver } from 'dop-react'
+import { useAutoObserver, useGlobalState } from 'dop-react'
 import { Router, Route, routes } from 'router'
-import state from 'store/state'
 // Components
 import ChooseNickName from 'components/views/ChooseNickName'
 import WaitingPlayers from 'components/views/WaitingPlayers'
@@ -12,6 +11,7 @@ import Leaders from 'components/views/Leaders'
 // import Info from 'components/views/Info'
 
 function Views() {
+    const state = useGlobalState()
     useAutoObserver()
     return (
         <Router>
