@@ -1,6 +1,5 @@
 import React from 'react'
-import { useAutoObserver } from 'dop-react'
-import state from 'store/state'
+import { useGlobalState, useAutoObserver } from 'dop-react'
 import { routes } from 'router'
 
 import Window, { WindowContent, WindowButtons } from 'components/styled/Window'
@@ -10,6 +9,7 @@ import Input from 'components/styled/Input'
 import Label from 'components/styled/Label'
 
 export default function ChooseNickName() {
+    const state = useGlobalState()
     useAutoObserver()
     function onPlay() {
         state.route = routes.waiting

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useAutoObserver, useGlobalState } from 'dop-react'
+import { useGlobalState, useAutoObserver } from 'dop-react'
 import { Router, Route, routes } from 'router'
 // Components
 import ChooseNickName from 'components/views/ChooseNickName'
