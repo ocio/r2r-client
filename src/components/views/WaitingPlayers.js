@@ -1,5 +1,5 @@
 import React from 'react'
-import { useGlobalState } from 'dop-react'
+// import { useGlobalState } from 'dop-react'
 
 // Components
 import Div from 'components/styled/Div'
@@ -16,12 +16,12 @@ import {
 import IconImage from 'components/styled/IconImage'
 
 export default function WaitingPlayers() {
-    const state = useGlobalState()
+    // const state = useGlobalState()
     return (
         <Window height="550">
             <WindowTitle>Players</WindowTitle>
             <WindowContent>
-                <Div padding="30px" onClick={() => (state.route = 'home')}>
+                <Div padding="30px">
                     <Table>
                         <TableRow>
                             <TableText color={COLOR.BLUE}>Enzo</TableText>

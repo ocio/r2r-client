@@ -1,12 +1,14 @@
 import { register } from 'dop'
 import { routes } from 'router'
 
-const state = register({
-    route: routes.home,
-    connected: false,
+const state = {
+    view: routes.home,
     nickname: ''
-})
+    // get composed() {
+    //     return `${this.route} ${this.nickname}`
+    // },
+}
 
-// window.state = state // useful for development
+// window.getState = () => state['~DOP'].p // useful for development
 
-export default state
+export default register(state)

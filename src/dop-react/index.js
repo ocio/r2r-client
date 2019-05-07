@@ -5,12 +5,14 @@ import React, {
     useState,
     useMemo
 } from 'react'
-import { createObserver, collectGetters } from 'dop'
+import { createObserver, collectGetters, register } from 'dop'
 
 const Context = createContext()
 
 export function StateProvider({ children, state }) {
-    return <Context.Provider value={state}>{children}</Context.Provider>
+    return (
+        <Context.Provider value={register(state)}>{children}</Context.Provider>
+    )
 }
 
 export function useGlobalState() {
@@ -18,8 +20,8 @@ export function useGlobalState() {
 }
 
 export function useObserver() {
-    const [, setState] = useState() // forceUpdate() trick
-    const observer = useMemo(() => createObserver(setState), [])
+    const [, forceUpdate] = useState() // forceUpdate() trick
+    const observer = useMemo(() => createObserver(forceUpdate), [])
     useEffect(() => () => observer.destroy(), [observer])
     return observer
 }
