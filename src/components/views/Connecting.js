@@ -1,6 +1,4 @@
 import React from 'react'
-// import { useGlobalState, useAutoObserver } from 'dop-react'
-// import { connectToServer } from 'store/actions'
 // Components
 import Window, { WindowContent } from 'components/styled/Window'
 import ThreeDots from 'components/animations/ThreeDots'

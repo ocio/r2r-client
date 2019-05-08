@@ -1,0 +1,9 @@
+const ROUTES = {
+    HOME: 'HOME',
+    CONNECTING: 'CONNECTING',
+    CONNECTION_ERROR: 'CONNECTION_ERROR',
+    WAITING: 'WAITING',
+    PLAYING: 'PLAYING'
+}
+
+export default ROUTES

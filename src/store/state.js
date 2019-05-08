@@ -1,8 +1,8 @@
 import { register } from 'dop'
-import { routes } from 'router'
+import ROUTES from 'const/routes'
 
 const state = {
-    view: routes.home,
+    view: ROUTES.HOME,
     nickname: ''
     // get composed() {
     //     return `${this.route} ${this.nickname}`

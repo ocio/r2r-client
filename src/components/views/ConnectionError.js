@@ -1,9 +1,8 @@
 import React from 'react'
-// import { useGlobalState, useAutoObserver } from 'dop-react'
 import { connectToServer } from 'store/actions'
 // Components
 import Window, { WindowContent, WindowButtons } from 'components/styled/Window'
-import { ButtonGreen } from 'components/styled/Button'
+import { ButtonRed } from 'components/styled/Button'
 import Div from 'components/styled/Div'
 import { COLOR } from 'const/styles'
 
@@ -21,9 +20,9 @@ export default function Connecting() {
                 </Div>
             </WindowContent>
             <WindowButtons>
-                <ButtonGreen onClick={() => connectToServer()}>
+                <ButtonRed onClick={() => connectToServer()}>
                     Reconnect
-                </ButtonGreen>
+                </ButtonRed>
             </WindowButtons>
         </Window>
     )
