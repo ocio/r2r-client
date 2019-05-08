@@ -1,5 +1,5 @@
 import React from 'react'
-import { StateProvider } from 'dop-react'
+import { Provider } from 'dop-react'
 import state from 'store/state'
 
 // Components
@@ -10,14 +10,14 @@ import Views from 'components/partials/Views'
 
 function App() {
     return (
-        <StateProvider state={state}>
+        <Provider store={state}>
             <Container>
                 <Map />
                 <Content>
                     <Views />
                 </Content>
             </Container>
-        </StateProvider>
+        </Provider>
     )
 }
 

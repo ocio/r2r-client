@@ -1,5 +1,4 @@
 import React from 'react'
-// import { useGlobalState } from 'dop-react'
 
 // Components
 import Div from 'components/styled/Div'
@@ -16,7 +15,6 @@ import {
 import IconImage from 'components/styled/IconImage'
 
 export default function WaitingPlayers() {
-    // const state = useGlobalState()
     return (
         <Window height="550">
             <WindowTitle>Players</WindowTitle>

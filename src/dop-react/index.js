@@ -1,22 +1,22 @@
-import React, {
-    createContext,
-    useContext,
-    useEffect,
-    useState,
-    useMemo
-} from 'react'
-import { createObserver, collectGetters, register } from 'dop'
+import { useEffect, useState, useMemo } from 'react'
+import { createObserver, collectGetters } from 'dop'
 
-const Context = createContext()
+const stores = {}
 
-export function StateProvider({ children, state }) {
-    return (
-        <Context.Provider value={register(state)}>{children}</Context.Provider>
-    )
+export function Provider({ children, ...props }) {
+    Object.keys(props).forEach(name => {
+        stores[name] = props[name]
+    })
+    return children
 }
 
-export function useGlobalState() {
-    return useContext(Context)
+export function useGlobalState(name) {
+    if (name === undefined) {
+        for (name in stores) {
+            return stores[name]
+        }
+    }
+    return stores[name]
 }
 
 export function useObserver() {
@@ -38,3 +38,16 @@ export function useAutoObserver() {
     )
     return observer
 }
+
+// https://www.reddit.com/r/reactjs/comments/blp0cn/whats_the_point_of_reactcontext/
+// const Context = createContext()
+
+// export function StateProvider({ children, state }) {
+//     return (
+//         <Context.Provider value={register(state)}>{children}</Context.Provider>
+//     )
+// }
+
+// export function useGlobalState() {
+//     return useContext(Context)
+// }
