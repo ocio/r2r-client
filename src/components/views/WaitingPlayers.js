@@ -1,5 +1,4 @@
 import React from 'react'
-
 // Components
 import Div from 'components/styled/Div'
 import ThreeDots from 'components/animations/ThreeDots'

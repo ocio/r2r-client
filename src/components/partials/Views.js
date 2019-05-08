@@ -1,7 +1,7 @@
 import React from 'react'
 import { useGlobalState, useAutoObserver } from 'dop-react'
 import { Router, Route } from 'dop-router/react'
-import ROUTES from 'const/routes'
+import VIEWS from 'const/views'
 // Components
 import ChooseNickName from 'components/views/ChooseNickName'
 import Connecting from 'components/views/Connecting'
@@ -18,19 +18,19 @@ function Views() {
     useAutoObserver()
     return (
         <Router>
-            <Route if={state.view === ROUTES.HOME}>
+            <Route if={state.view === VIEWS.HOME}>
                 <ChooseNickName />
             </Route>
-            <Route if={state.view === ROUTES.CONNECTING}>
+            <Route if={state.view === VIEWS.CONNECTING}>
                 <Connecting />
             </Route>
-            <Route if={state.view === ROUTES.CONNECTION_ERROR}>
+            <Route if={state.view === VIEWS.CONNECTION_ERROR}>
                 <ConnectionError />
             </Route>
-            <Route if={state.view === ROUTES.WAITING}>
+            <Route if={state.view === VIEWS.WAITING}>
                 <WaitingPlayers />
             </Route>
-            <Route if={state.view === ROUTES.PLAYING}>
+            <Route if={state.view === VIEWS.PLAYING}>
                 <Header />
                 {/* <Recruiting /> */}
                 <Leaders />

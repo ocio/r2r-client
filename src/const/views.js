@@ -1,4 +1,4 @@
-const ROUTES = {
+const VIEWS = {
     HOME: 'HOME',
     CONNECTING: 'CONNECTING',
     CONNECTION_ERROR: 'CONNECTION_ERROR',
@@ -6,4 +6,4 @@ const ROUTES = {
     PLAYING: 'PLAYING'
 }
 
-export default ROUTES
+export default VIEWS

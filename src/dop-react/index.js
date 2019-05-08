@@ -10,11 +10,10 @@ export function Provider({ children, ...props }) {
     return children
 }
 
+// https://react-redux.js.org/next/api/hooks#usestore
 export function useGlobalState(name) {
     if (name === undefined) {
-        for (name in stores) {
-            return stores[name]
-        }
+        for (name in stores) return stores[name]
     }
     return stores[name]
 }
