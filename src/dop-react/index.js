@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from 'react'
-import { createObserver, collectGetters } from 'dop'
+import { createObserver, collectGetters, register } from 'dop'
 
 const stores = {}
 
@@ -36,6 +36,14 @@ export function useAutoObserver() {
         [observer, stopCollector]
     )
     return observer
+}
+
+export function useRegister(o) {
+    return useEmpty(() => register(o), useMemo)
+}
+
+function useEmpty(fn, use) {
+    return use(fn, [])
 }
 
 // https://www.reddit.com/r/reactjs/comments/blp0cn/whats_the_point_of_reactcontext/
