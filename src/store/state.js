@@ -4,7 +4,8 @@ import VIEWS from 'const/views'
 const state = {
     view: VIEWS.HOME,
     nickname: '',
-    games: []
+    games: [],
+    game: {}
     // get composed() {
     //     return `${this.route} ${this.nickname}`
     // },

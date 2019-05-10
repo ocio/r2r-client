@@ -38,13 +38,14 @@ export function useAutoObserver() {
     return observer
 }
 
-export function useRegister(o) {
-    return useEmpty(() => register(o), useMemo)
-}
+// NOT WORKING WELL
+// export function useRegister(o) {
+//     return useEmpty(() => register(o), useMemo)
+// }
 
-function useEmpty(fn, use) {
-    return use(fn, [])
-}
+// function useEmpty(fn, use) {
+//     return use(fn, [])
+// }
 
 // https://www.reddit.com/r/reactjs/comments/blp0cn/whats_the_point_of_reactcontext/
 // const Context = createContext()

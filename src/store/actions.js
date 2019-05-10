@@ -1,4 +1,4 @@
-import { connect, createObserver } from 'dop'
+import dop, { connect, createObserver } from 'dop'
 import state from 'store/state'
 import VIEWS from 'const/views'
 
@@ -34,9 +34,13 @@ export async function loginGuest({ nickname }) {
 }
 
 export async function subscribeGame({ game_id }) {
-    const game = await Server.subscribe({ type: 'game', game_id })
-    const observer = createObserver(m => {
-        console.log(JSON.parse(JSON.stringify(game)))
-    })
-    observer.observeAll(game)
+    const gama = {}
+    // const gama = dop.register({})
+    // const gama = state.game
+    const game = await Server.subscribe({ type: 'game', game_id }).into(gama)
+    console.log(game)
+    // const observer = createObserver(m => {
+    //     console.log(JSON.parse(JSON.stringify(game)))
+    // })
+    // observer.observeAll(gama)
 }
