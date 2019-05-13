@@ -1,7 +1,7 @@
-import { register } from 'dop'
+import dop, { register } from 'dop'
 import VIEWS from 'const/views'
 
-const state = {
+const state = register({
     view: VIEWS.HOME,
     nickname: '',
     games: [],
@@ -9,8 +9,9 @@ const state = {
     // get composed() {
     //     return `${this.route} ${this.nickname}`
     // },
-}
+})
 
-// window.getState = () => state['~DOP'].p // useful for development
+window.dop = dop
+window.state = state
 
-export default register(state)
+export default state

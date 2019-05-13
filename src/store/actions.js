@@ -1,4 +1,4 @@
-import dop, { connect, createObserver } from 'dop'
+import { connect, action } from 'dop'
 import state from 'store/state'
 import VIEWS from 'const/views'
 
@@ -10,10 +10,20 @@ export function connectToServer() {
     transport.on('connect', async node => {
         subscribeEndpoints({ node })
     })
-    transport.on('disconnect', n => {
-        // state.view = VIEWS.CONNECTION_ERROR
-        connectToServer()
-    })
+    transport.on(
+        'disconnect',
+        action(n => {
+            resetState()
+            state.view = VIEWS.CONNECTION_ERROR
+            // connectToServer()
+        })
+    )
+}
+
+export async function resetState() {
+    state.game = {}
+    state.games = {}
+    state.player_id = ''
 }
 
 export async function subscribeEndpoints({ node }) {
@@ -34,13 +44,7 @@ export async function loginGuest({ nickname }) {
 }
 
 export async function subscribeGame({ game_id }) {
-    const gama = {}
-    // const gama = dop.register({})
-    // const gama = state.game
-    const game = await Server.subscribe({ type: 'game', game_id }).into(gama)
-    console.log(game)
-    // const observer = createObserver(m => {
-    //     console.log(JSON.parse(JSON.stringify(game)))
-    // })
-    // observer.observeAll(gama)
+    await Server.subscribe({ type: 'game', game_id }).into(state.game)
+    console.log('subscribeGame', JSON.parse(JSON.stringify(state)))
+    state.view = VIEWS.WAITING_PLAYERS
 }

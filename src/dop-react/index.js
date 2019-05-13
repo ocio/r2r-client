@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from 'react'
-import { createObserver, collectGetters, register } from 'dop'
+import { createObserver, collectGetters } from 'dop'
 
 const stores = {}
 
@@ -11,8 +11,8 @@ export function Provider({ children, ...props }) {
 }
 
 // https://react-redux.js.org/next/api/hooks#usestore
-export function useGlobalState(name) {
-    if (name === undefined) {
+export function useGlobalState(name = 'store') {
+    if (stores[name] === undefined) {
         for (name in stores) return stores[name]
     }
     return stores[name]

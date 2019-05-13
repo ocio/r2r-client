@@ -27,7 +27,7 @@ function Views() {
             <Route if={state.view === VIEWS.CONNECTION_ERROR}>
                 <ConnectionError />
             </Route>
-            <Route if={state.view === VIEWS.WAITING}>
+            <Route if={state.view === VIEWS.WAITING_PLAYERS}>
                 <WaitingPlayers />
             </Route>
             <Route if={state.view === VIEWS.PLAYING}>

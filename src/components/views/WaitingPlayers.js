@@ -1,4 +1,5 @@
 import React from 'react'
+import { useGlobalState, useObserver } from 'dop-react'
 // Components
 import Div from 'components/styled/Div'
 import ThreeDots from 'components/animations/ThreeDots'
@@ -14,26 +15,33 @@ import {
 import IconImage from 'components/styled/IconImage'
 
 export default function WaitingPlayers() {
+    const { game, games } = useGlobalState()
+    const observer = useObserver()
+    observer.observeAll(game.players)
+    console.log(observer)
     return (
         <Window height="550">
             <WindowTitle>Players</WindowTitle>
             <WindowContent>
                 <Div padding="30px">
                     <Table>
-                        <TableRow>
-                            <TableText color={COLOR.BLUE}>Enzo</TableText>
-                            <CheckIcon />
-                        </TableRow>
-                        <TableRow>
-                            <TableText color={COLOR.RED}>
-                                Agustin Jamardo
-                            </TableText>
-                            <CheckIcon />
-                        </TableRow>
-                        <TableRow>
-                            <TableText color={COLOR.RED}>Roly</TableText>
-                            <TableCol />
-                        </TableRow>
+                        {Object.keys(game.players).map(player_id => {
+                            return (
+                                <TableRow key={player_id}>
+                                    <TableText
+                                        color={
+                                            games[game.id] === player_id
+                                                ? COLOR.BLUE
+                                                : COLOR.RED
+                                        }
+                                    >
+                                        {game.players[player_id].nickname}
+                                    </TableText>
+                                    <CheckIcon />
+                                    <TableCol />
+                                </TableRow>
+                            )
+                        })}
                         <TableRow>
                             <TableText>
                                 <ThreeDots>Waiting for player</ThreeDots>
