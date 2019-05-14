@@ -2,13 +2,13 @@ import dop, { register } from 'dop'
 import VIEWS from 'const/views'
 
 const state = register({
-    view: VIEWS.HOME,
+    // view: VIEWS.HOME,
     nickname: '',
     games: [],
-    game: {}
-    // get composed() {
-    //     return `${this.route} ${this.nickname}`
-    // },
+    game: {},
+    get view() {
+        return this.game.status || VIEWS.HOME
+    }
 })
 
 window.dop = dop
