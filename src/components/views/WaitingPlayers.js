@@ -1,5 +1,8 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useGlobalState, useObserver } from 'dop-react'
+import { Show } from 'dop-router/react'
+import styled from '@emotion/styled'
+
 // Components
 import Div from 'components/styled/Div'
 import ThreeDots from 'components/animations/ThreeDots'
@@ -17,13 +20,16 @@ import IconImage from 'components/styled/IconImage'
 export default function WaitingPlayers() {
     const { game, games } = useGlobalState()
     const observer = useObserver()
-    observer.observeAll(game.players)
-    console.log(observer)
+    observer.observeProperty(game, 'players_total')
+    observer.observeProperty(game, 'starts_at')
     return (
         <Window height="550">
             <WindowTitle>Players</WindowTitle>
             <WindowContent>
-                <Div padding="30px">
+                <Div padding={game.starts_at === undefined ? '30px' : '0 30px'}>
+                    <Show if={game.starts_at !== undefined}>
+                        <GameStartsIn time={game.starts_at} />
+                    </Show>
                     <Table>
                         {Object.keys(game.players).map(player_id => {
                             return (
@@ -62,3 +68,25 @@ function CheckIcon() {
         </TableIcon>
     )
 }
+
+function GameStartsIn({ time }) {
+    const [n, changeSeconds] = useState(getDiff(time))
+    useEffect(() => {
+        const interval = setTimeout(() => changeSeconds(getDiff(time)), 1000)
+        return () => clearTimeout(interval)
+    })
+    function getDiff(time) {
+        return Math.round((time - Date.now()) / 1000)
+    }
+    return (
+        <GameStartsInStyled>
+            Game starts in {n > 0 ? n - 1 : 0} seconds
+        </GameStartsInStyled>
+    )
+}
+
+const GameStartsInStyled = styled.div`
+    text-align: center;
+    padding-bottom: 30px;
+    color: ${COLOR.BROWN_LIGHT};
+`

@@ -30,7 +30,7 @@ export default function Map() {
             console.log('onSelect', { type, id })
         }
         API.onUnselect = function() {
-            console.log('onUnselect')
+            // console.log('onUnselect')
         }
         usingApi({ API, canvas, ui })
     })

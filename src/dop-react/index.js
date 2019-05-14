@@ -18,33 +18,42 @@ export function useGlobalState(name = 'store') {
     return stores[name]
 }
 
-export function useObserver() {
-    const [, forceUpdate] = useState() // forceUpdate() trick
-    const observer = useMemo(() => createObserver(forceUpdate), [])
+export function useObserver(beforeUpdate) {
+    const [, forceUpdate] = useState(true) // forceUpdate() trick
+    const observer = useEmpty(() => {
+        const isFunction = typeof beforeUpdate == 'function'
+        return createObserver(m => {
+            if (!isFunction || (isFunction && beforeUpdate(m))) {
+                forceUpdate(m)
+            }
+        })
+    }, useMemo)
     useEffect(() => () => observer.destroy(), [observer])
     return observer
 }
 
-export function useAutoObserver() {
-    const observer = useObserver()
+export function useAutoObserver(beforeUpdate, filter) {
+    const observer = useObserver(beforeUpdate)
     const stopCollector = useMemo(() => collectGetters(), [])
-    useEffect(
-        () =>
-            stopCollector().forEach(o =>
+    useEmpty(() => {
+        const isFunction = typeof filter == 'function'
+        stopCollector().forEach(o => {
+            if (!isFunction || (isFunction && filter(o))) {
                 observer.observeProperty(o.object, o.property)
-            ),
-        [observer, stopCollector]
-    )
+            }
+        })
+    }, useEffect)
     return observer
+}
+
+// Hack from: https://twitter.com/_developit/status/1124857230149312513
+function useEmpty(fn, use) {
+    return use(fn, [])
 }
 
 // NOT WORKING WELL
 // export function useRegister(o) {
 //     return useEmpty(() => register(o), useMemo)
-// }
-
-// function useEmpty(fn, use) {
-//     return use(fn, [])
 // }
 
 // https://www.reddit.com/r/reactjs/comments/blp0cn/whats_the_point_of_reactcontext/
