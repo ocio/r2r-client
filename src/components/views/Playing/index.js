@@ -7,7 +7,7 @@ import Content from 'components/styled/Content'
 import Map from 'components/views/Playing/Map'
 
 import Header from 'components/views/Playing/Header'
-import Leaders from 'components/views/Playing/Leaders'
+// import Leaders from 'components/views/Playing/Leaders'
 // import Recruiting from 'components/views/Playing/Recruiting'
 // import SendUnits from 'components/views/Playing/SendUnits'
 // import Info from 'components/views/Playing/Info'
@@ -19,7 +19,7 @@ export default function Playing() {
             <Content>
                 <Header />
                 {/* <Recruiting /> */}
-                <Leaders />
+                {/* <Leaders /> */}
                 {/* <SendUnits /> */}
                 {/* <Info /> */}
             </Content>
