@@ -10,6 +10,9 @@ export function connectToServer() {
     transport.on('connect', async node => {
         subscribeEndpoints({ node })
     })
+    // transport.on('message', async (node, message) => {
+    //     console.log(message)
+    // })
     transport.on(
         'disconnect',
         action(n => {
@@ -39,12 +42,12 @@ export async function loginGuest({ nickname }) {
     state.games = logged.games
     const { game_id, player_index } = await Server.findGame()
     state.games[game_id] = player_index
-    console.log('loginGuest', JSON.parse(JSON.stringify(state)))
+    // console.log('loginGuest', JSON.parse(JSON.stringify(state)))
     subscribeGame({ game_id })
 }
 
 export async function subscribeGame({ game_id }) {
     await Server.subscribe({ type: 'game', game_id }).into(state.game)
-    console.log('subscribeGame', JSON.parse(JSON.stringify(state)))
+    // console.log('subscribeGame', JSON.parse(JSON.stringify(state)))
     state.view = VIEWS.WAITING_PLAYERS
 }

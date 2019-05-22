@@ -7,11 +7,7 @@ import ChooseNickName from 'components/views/ChooseNickName'
 import Connecting from 'components/views/Connecting'
 import ConnectionError from 'components/views/ConnectionError'
 import WaitingPlayers from 'components/views/WaitingPlayers'
-import Header from 'components/partials/Header'
-// import Recruiting from 'components/views/Recruiting'
-import Leaders from 'components/views/Leaders'
-// import SendUnits from 'components/views/SendUnits'
-// import Info from 'components/views/Info'
+import Playing from 'components/views/Playing'
 
 function Views() {
     const state = useGlobalState()
@@ -31,11 +27,7 @@ function Views() {
                 <WaitingPlayers />
             </Route>
             <Route if={state.view === VIEWS.PLAYING}>
-                <Header />
-                {/* <Recruiting /> */}
-                <Leaders />
-                {/* <SendUnits /> */}
-                {/* <Info /> */}
+                <Playing />
             </Route>
         </Router>
     )
