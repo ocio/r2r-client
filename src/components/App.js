@@ -3,7 +3,7 @@ import { Provider } from 'dop-react'
 import state from 'store/state'
 // Components
 import Background from 'components/styled/Background'
-import Views from 'components/partials/Views'
+import Views from 'components/Views'
 
 function App() {
     return (

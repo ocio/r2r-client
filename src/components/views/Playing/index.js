@@ -4,13 +4,13 @@ import React from 'react'
 // styled
 import Container from 'components/styled/Container'
 import Content from 'components/styled/Content'
-import Map from 'components/partials/Map'
+import Map from 'components/views/Playing/Map'
 
-import Header from 'components/partials/Header'
-// import Recruiting from 'components/views/Recruiting'
-// import Leaders from 'components/views/Leaders'
-// import SendUnits from 'components/views/SendUnits'
-// import Info from 'components/views/Info'
+import Header from 'components/views/Playing/Header'
+import Leaders from 'components/views/Playing/Leaders'
+// import Recruiting from 'components/views/Playing/Recruiting'
+// import SendUnits from 'components/views/Playing/SendUnits'
+// import Info from 'components/views/Playing/Info'
 
 export default function Playing() {
     return (
@@ -19,7 +19,7 @@ export default function Playing() {
             <Content>
                 <Header />
                 {/* <Recruiting /> */}
-                {/* <Leaders /> */}
+                <Leaders />
                 {/* <SendUnits /> */}
                 {/* <Info /> */}
             </Content>
