@@ -9,6 +9,16 @@ export default function Map() {
     const canvasRef = useRef(null)
     const uiRef = useRef(null)
     const { game } = useGlobalState()
+    useCreateMap({ canvasRef, uiRef, game })
+    return (
+        <Container>
+            <Canvas ref={canvasRef} />
+            <UI ref={uiRef} />
+        </Container>
+    )
+}
+
+function useCreateMap({ canvasRef, uiRef, game }) {
     useEffect(() => {
         const canvas = canvasRef.current
         const ui = uiRef.current
@@ -48,12 +58,6 @@ export default function Map() {
         API.addDecorativeElements()
         updateBoardState({ API, game })
     })
-    return (
-        <Container>
-            <Canvas ref={canvasRef} />
-            <UI ref={uiRef} />
-        </Container>
-    )
 }
 
 const Container = styled.div`
