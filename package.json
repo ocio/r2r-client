@@ -10,7 +10,8 @@
         "emotion": "^10.0.9",
         "react": "^16.8.5",
         "react-dom": "^16.8.5",
-        "runandrisk-map": "file:../runandrisk-map"
+        "runandrisk-map": "file:../runandrisk-map",
+        "runandrisk-common": "file:../runandrisk-common"
     },
     "devDependencies": {
         "babel-plugin-emotion": "^10.0.9",

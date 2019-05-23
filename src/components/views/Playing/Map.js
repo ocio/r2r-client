@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react'
 import styled from '@emotion/styled'
-import init, { ELEMENT_TYPE } from 'runandrisk-map'
+import init from 'runandrisk-map'
 import { useGlobalState, useObserver } from 'dop-react'
-import { INSTRUCTION } from 'const'
+const { TILE, INSTRUCTION } = require('runandrisk-common/const')
 
 export default function Map() {
     const canvasRef = useRef(null)
@@ -16,15 +16,15 @@ export default function Map() {
         const API = init({ canvas, ui })
         API.shallWeStartAttack = function({ idFrom }) {
             const found = API.getTiles().find(tile => tile.id === idFrom)
-            return found !== undefined && found.type === ELEMENT_TYPE.VILLAGE
+            return found !== undefined && found.type === TILE.VILLAGE
         }
         API.shallWeAttack = function({ idFrom, idTo }) {
             const found = API.getTiles().find(tile => tile.id === idTo)
-            return found !== undefined && found.type === ELEMENT_TYPE.COTTAGE
+            return found !== undefined && found.type === TILE.COTTAGE
         }
         API.getTilesToAttack = function({ idFrom }) {
             return API.getTiles()
-                .filter(tile => tile.type === ELEMENT_TYPE.COTTAGE)
+                .filter(tile => tile.type === TILE.COTTAGE)
                 .map(tile => tile.id)
         }
         API.onAttack = function({ idFrom, idTo }) {
@@ -42,7 +42,7 @@ export default function Map() {
         for (const id in board) {
             const tile = board[id]
             const { col, row, type, power } = tile
-            if (type === 0) API.createCottage({ id, col, row })
+            if (type === TILE.COTTAGE) API.createCottage({ id, col, row })
             else API.createVillage({ id, col, row })
             API.changeRecruitmentPower({ idTile: id, power })
         }
