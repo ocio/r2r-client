@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useGlobalState, useObserver } from 'dop-react'
 import { Show } from 'dop-router/react'
 import styled from '@emotion/styled'
+import { now } from 'runandrisk-common/utils'
 
 // Components
 import Div from 'components/styled/Div'
@@ -70,13 +71,14 @@ function CheckIcon() {
 }
 
 function GameStartsIn({ time }) {
+    console.log(time - now())
     const [n, changeSeconds] = useState(getDiff(time))
     useEffect(() => {
         const interval = setTimeout(() => changeSeconds(getDiff(time)), 1000)
         return () => clearTimeout(interval)
     })
     function getDiff(time) {
-        return Math.round((time - Date.now()) / 1000)
+        return time - now()
     }
     return (
         <GameStartsInStyled>
