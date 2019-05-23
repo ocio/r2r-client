@@ -1,14 +1,15 @@
 import React, { useEffect, useRef } from 'react'
 import styled from '@emotion/styled'
-import init, { ELEMENT_TYPE } from '@ocio/r2r-map'
+import init, { ELEMENT_TYPE } from 'runandrisk-map'
 import { useGlobalState, useObserver } from 'dop-react'
+import { INSTRUCTION } from 'const'
 
 export default function Map() {
     const canvasRef = useRef(null)
     const uiRef = useRef(null)
     const { game } = useGlobalState()
-    const observer = useObserver(m => {})
-    observer.observeProperty(game, 'board')
+    // const observer = useObserver(m => {})
+    // observer.observeProperty(game, 'board')
     useEffect(() => {
         const canvas = canvasRef.current
         const ui = uiRef.current
@@ -36,16 +37,17 @@ export default function Map() {
             // console.log('onUnselect')
         }
 
-        // Creating board
+        // Creating board state
         const board = game.board
         for (const id in board) {
-            const { col, row, type, power } = board[id]
+            const tile = board[id]
+            const { col, row, type, power } = tile
             if (type === 0) API.createCottage({ id, col, row })
             else API.createVillage({ id, col, row })
             API.changeRecruitmentPower({ idTile: id, power })
         }
         API.addDecorativeElements()
-        updateBoardState({ API, ui, canvas, instructions: game.instructions })
+        updateBoardState({ API, game })
     })
     return (
         <Container>
@@ -77,8 +79,21 @@ const UI = styled.div`
     font-family: 'Allan';
     letter-spacing: 0.4px;
 `
-function updateBoardState({ API, ui, canvas, instructions }) {
-    instructions.forEach(instruction => console.log(instruction))
+
+function updateBoardState({ API, game }) {
+    console.log(game.board)
+    game.instructions.forEach(instruction => {
+        console.log(instruction)
+        const [, type, data] = instruction
+        if (type === INSTRUCTION.CONQUEST) {
+            API.addOwnerAsPlayer({
+                idTile: data.tile_id,
+                idOwner: data.player_id,
+                name: 'Enzo'
+            })
+        } else if (type === INSTRUCTION.ADD) {
+        }
+    })
     // const village1 = 'village1'
     // API.createVillage({ id: village1, col: 0, row: 0 })
     // API.changeRecruitmentPower({ idTile: village1, power: 22 })
