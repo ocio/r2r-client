@@ -29,10 +29,10 @@
     display: none;
 }
 
-.tileOwner.player {
+.tileOwner.me {
     background-image: url(/assets/img/title-background-1.png);
 }
-.tileOwner.player > div:last-child {
+.tileOwner.me > div:last-child {
     background-image: url(/assets/img/units-background-1.png);
 }
 
