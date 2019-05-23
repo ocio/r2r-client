@@ -71,7 +71,6 @@ function CheckIcon() {
 }
 
 function GameStartsIn({ time }) {
-    console.log(time - now())
     const [n, changeSeconds] = useState(getDiff(time))
     useEffect(() => {
         const interval = setTimeout(() => changeSeconds(getDiff(time)), 1000)
