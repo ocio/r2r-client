@@ -6,11 +6,13 @@ import { TILE } from 'runandrisk-common/const'
 import { getNicknameFromGame, isMe } from 'store/getters'
 
 export default function Map() {
-    const canvas_ref = useRef(null)
-    const ui_ref = useRef(null)
+    const canvas_ref = useRef()
+    const ui_ref = useRef()
+    const api_ref = useRef()
     const { game } = useGlobalState()
     const pending_mutations = []
     const observerCallBack = mutations => {
+        const API = api_ref.current
         mutations.forEach(mutation =>
             API === undefined
                 ? pending_mutations.push(mutation)
@@ -21,14 +23,12 @@ export default function Map() {
     const observer = useObserver(observerCallBack)
     observer.observeAll(game.board)
 
-    let API
     useEffect(() => {
         const canvas = canvas_ref.current
         const ui = ui_ref.current
-        API = createBoardAndApi({ canvas, ui, game })
+        api_ref.current = createBoardAndApi({ canvas, ui, game })
         observerCallBack(pending_mutations)
     })
-    console.log('render() Map')
     return (
         <Container>
             <Canvas ref={canvas_ref} />
@@ -39,10 +39,11 @@ export default function Map() {
 
 function manageMutation({ mutation, game, API }) {
     if (mutation.prop === 'owner') {
+        const game_id = game.id
         const player_id = mutation.value
         const tile_id = mutation.path[3]
-        const name = getNicknameFromGame({ game, player_id })
-        const addOwner = isMe({ game_id: game.id, player_id })
+        const name = getNicknameFromGame({ player_id })
+        const addOwner = isMe({ game_id, player_id })
             ? API.addOwnerAsMe
             : API.addOwnerAsEnemy
         addOwner({

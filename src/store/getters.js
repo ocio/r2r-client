@@ -1,6 +1,7 @@
 import state from 'store/state'
 
-export function getNicknameFromGame({ game, player_id }) {
+export function getNicknameFromGame({ player_id }) {
+    const game = state.game
     return game.players[player_id].nickname
 }
 
