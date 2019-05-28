@@ -56,7 +56,7 @@ export async function subscribeGame({ game_id }) {
 
 export function updateBoardState({ API, game }) {
     game.instructions.forEach(instruction => {
-        const [, type, data] = instruction
+        const { type, data } = instruction
         if (type === INSTRUCTION.CONQUEST) {
             const player_id = data.player_id
             const name = getNicknameFromGame({ game, player_id })
@@ -69,6 +69,13 @@ export function updateBoardState({ API, game }) {
                 name
             })
         } else if (type === INSTRUCTION.ADD) {
+            const idOwner = data.player_id
+            const idTile = data.tile_id
+            API.changeUnits({
+                idTile,
+                idOwner,
+                units: data.units
+            })
         }
     })
     // const village1 = 'village1'
