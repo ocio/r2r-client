@@ -4,8 +4,8 @@ import styled from '@emotion/styled'
 import init from 'runandrisk-map'
 import { TILE } from 'runandrisk-common/const'
 import { distance } from 'runandrisk-common/board'
-import { getNicknameFromGame, isMe, getGameIndex } from 'store/getters'
-import { selectUnitsToSend } from 'store/actions'
+import { getNicknameFromGame, isMe, getPlayerIndex } from 'store/getters'
+import { selectUnitsToSend, closeGameDialogs } from 'store/actions'
 
 export default function Map() {
     const canvas_ref = useRef()
@@ -72,9 +72,11 @@ function createBoardAndApi({ canvas, ui, game }) {
     const API = init({ canvas, ui })
     const board = game.board
     API.shallWeStartAttack = ({ idFrom }) => {
-        const player_index = getGameIndex({ game_id: game.id })
+        const player_index = getPlayerIndex({ game_id: game.id })
         const units = board[idFrom].units[player_index]
-        return typeof units == 'number' && units > 0
+        const result = typeof units == 'number' && units > 0
+        if (result) closeGameDialogs()
+        return result
         // const found = API.getTiles().find(tile => tile.id === idFrom)
         // return found !== undefined && found.type === TILE.VILLAGE
     }
@@ -93,10 +95,10 @@ function createBoardAndApi({ canvas, ui, game }) {
         selectUnitsToSend({ tile_id_from: idFrom, tile_id_to: idTo })
     }
     API.onSelect = ({ type, id }) => {
-        console.log('onSelect', { type, id })
+        // console.log('onSelect', { type, id })
     }
     API.onUnselect = () => {
-        // console.log('onUnselect')
+        // closeGameDialogs()
     }
     // Generating board
     for (const id in board) {

@@ -13,10 +13,7 @@ function Views() {
     const state = useGlobalState()
     return useAutoObserver()(
         <Router>
-            <Route
-                if={state.view === VIEWS.HOME}
-                fa={console.log('View inner')}
-            >
+            <Route if={state.view === VIEWS.HOME}>
                 <ChooseNickName />
             </Route>
             <Route if={state.view === VIEWS.CONNECTING}>

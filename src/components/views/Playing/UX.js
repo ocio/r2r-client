@@ -1,6 +1,8 @@
 import React from 'react'
-import { useGlobalState, useAutoObserver } from 'dop-react'
+import { useGlobalState, useObserver } from 'dop-react'
 import { Show } from 'dop-router/react'
+import { getMyTileUnits } from 'store/getters'
+import { closeGameDialogs, sendUnits } from 'store/actions'
 
 // components
 import Content from 'components/styled/Content'
@@ -12,13 +14,24 @@ import SendUnits from 'components/views/Playing/SendUnits'
 
 export default function UX() {
     const state = useGlobalState()
-    return useAutoObserver()(
+    const observer = useObserver()
+    observer.observeProperty(state, 'select_units')
+    let units
+    if (state.select_units !== undefined) {
+        const tile_id = state.select_units.tile_id_from
+        units = getMyTileUnits({ tile_id })
+    }
+    return (
         <Content>
             <Header />
             {/* <Recruiting /> */}
             {/* <Leaders /> */}
             <Show if={state.select_units !== undefined}>
-                <SendUnits />
+                <SendUnits
+                    units={units}
+                    onSend={sendUnits}
+                    onClose={closeGameDialogs}
+                />
             </Show>
             {/* <Info /> */}
         </Content>

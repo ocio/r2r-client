@@ -23,11 +23,11 @@ export function connectToServer() {
     )
 }
 
-export async function resetState() {
+export const resetState = action(() => {
     state.game = {}
     state.games = {}
     state.player_id = ''
-}
+})
 
 export async function subscribeEndpoints({ node }) {
     await node.subscribe().into(Server)
@@ -56,6 +56,13 @@ export function selectUnitsToSend({ tile_id_from, tile_id_to }) {
     state.select_units = { tile_id_from, tile_id_to }
 }
 
+export const sendUnits = action(async units => {
+    console.log(state.select_units, units, Server.sendUnits)
+})
+
+export const closeGameDialogs = action(() => {
+    delete state.select_units
+})
 // const village1 = 'village1'
 // API.createVillage({ id: village1, col: 0, row: 0 })
 // API.changeRecruitmentPower({ idTile: village1, power: 22 })

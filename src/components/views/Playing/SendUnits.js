@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Window, { WindowClose } from 'components/styled/Window'
 import styled from '@emotion/styled'
 import Div from 'components/styled/Div'
@@ -6,29 +6,62 @@ import Slider from 'components/styled/Slider'
 import { COLOR } from 'const/styles'
 import { ButtonBrown } from 'components/styled/Button'
 
-export default function SendUnits() {
+export default function SendUnits({ units, onSend, onClose }) {
+    const one = 1
+    const onefourth = Math.round(units / 4)
+    const half = Math.round(units / 2)
+    const minusone = units - 1
+    const threefourth = Math.round((units / 4) * 3)
+    const [n, setN] = useState(half)
+    const setUnits = n => {
+        n = Number(n)
+        if (n > units) setN(units)
+        else if (n < 1) setN(1)
+        else setN(n)
+    }
     return (
         <Window height={400}>
-            <WindowClose />
+            <WindowClose onClick={onClose} />
             <Div width="300px" margin="40px auto 0 auto">
-                <BigInput value="750" onChange={() => {}} />
+                <BigInput value={n} onChange={e => setUnits(e.target.value)} />
                 <Slider
-                    onChange={() => {}}
+                    onChange={e => setUnits(e.target.value)}
                     type="range"
-                    min="1"
-                    max="100"
-                    // value="70"
+                    min={1}
+                    max={units}
+                    value={n}
                 />
                 <Buttons>
-                    <Button>1</Button>
-                    <Button>250</Button>
-                    <Button>500</Button>
-                    <Button selected={true}>750</Button>
-                    <Button>999</Button>
-                    <Button>1000</Button>
+                    <Button selected={n === one} onClick={() => setN(one)}>
+                        One
+                    </Button>
+                    <Button
+                        selected={n === onefourth}
+                        onClick={() => setN(onefourth)}
+                    >
+                        1/4
+                    </Button>
+                    <Button selected={n === half} onClick={() => setN(half)}>
+                        Half
+                    </Button>
+                    <Button
+                        selected={n === threefourth}
+                        onClick={() => setN(threefourth)}
+                    >
+                        3/4
+                    </Button>
+                    <Button
+                        selected={n === minusone}
+                        onClick={() => setN(minusone)}
+                    >
+                        -1
+                    </Button>
+                    <Button selected={n === units} onClick={() => setN(units)}>
+                        Max
+                    </Button>
                 </Buttons>
                 <Div width="180px" margin="0 auto">
-                    <ButtonBrown onChange={() => {}}>Send</ButtonBrown>
+                    <ButtonBrown onClick={() => onSend(n)}>Send</ButtonBrown>
                 </Div>
             </Div>
         </Window>
