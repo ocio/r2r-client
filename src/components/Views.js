@@ -1,5 +1,5 @@
 import React from 'react'
-import { useGlobalState, useAutoObserver } from 'dop-react'
+import { useGlobalState, useObserver } from 'dop-react'
 import { Router, Route } from 'dop-router/react'
 import VIEWS from 'const/views'
 // Components
@@ -11,7 +11,8 @@ import Playing from 'components/views/Playing'
 
 function Views() {
     const state = useGlobalState()
-    useAutoObserver()
+    const observer = useObserver()
+    observer.observeProperty(state, 'view')
     return (
         <Router>
             <Route if={state.view === VIEWS.HOME}>

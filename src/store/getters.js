@@ -8,3 +8,7 @@ export function getNicknameFromGame({ player_id }) {
 export function isMe({ game_id, player_id }) {
     return state.games[game_id] === player_id
 }
+
+export function getGameIndex({ game_id }) {
+    return state.games[game_id]
+}

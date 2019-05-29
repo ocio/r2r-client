@@ -3,6 +3,7 @@ import VIEWS from 'const/views'
 
 const state = register({
     // view: VIEWS.HOME,
+    // select_units: { tile_id_from, tile_id_to }
     nickname: '',
     games: {
         // "Game_L6wLS50M8apDdnRN": "SF"

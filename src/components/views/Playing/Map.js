@@ -3,7 +3,9 @@ import { useGlobalState, useObserver } from 'dop-react'
 import styled from '@emotion/styled'
 import init from 'runandrisk-map'
 import { TILE } from 'runandrisk-common/const'
-import { getNicknameFromGame, isMe } from 'store/getters'
+import { distance } from 'runandrisk-common/board'
+import { getNicknameFromGame, isMe, getGameIndex } from 'store/getters'
+import { selectUnitsToSend } from 'store/actions'
 
 export default function Map() {
     const canvas_ref = useRef()
@@ -11,7 +13,7 @@ export default function Map() {
     const api_ref = useRef()
     const { game } = useGlobalState()
     const pending_mutations = []
-    const observerCallBack = mutations => {
+    const observerCallback = mutations => {
         const API = api_ref.current
         mutations.forEach(mutation =>
             API === undefined
@@ -20,14 +22,14 @@ export default function Map() {
         )
         return false // we don't need to rerender
     }
-    const observer = useObserver(observerCallBack)
+    const observer = useObserver(observerCallback)
     observer.observeAll(game.board)
 
     useEffect(() => {
         const canvas = canvas_ref.current
         const ui = ui_ref.current
         api_ref.current = createBoardAndApi({ canvas, ui, game })
-        observerCallBack(pending_mutations)
+        observerCallback(pending_mutations)
     })
     return (
         <Container>
@@ -38,6 +40,7 @@ export default function Map() {
 }
 
 function manageMutation({ mutation, game, API }) {
+    // Change owner
     if (mutation.prop === 'owner') {
         const game_id = game.id
         const player_id = mutation.value
@@ -52,34 +55,50 @@ function manageMutation({ mutation, game, API }) {
             name
         })
     }
+    // Change units
+    else if (mutation.path[4] === 'units') {
+        const idTile = mutation.path[3]
+        const idOwner = mutation.prop
+        const units = mutation.value
+        API.changeUnits({
+            idTile,
+            idOwner,
+            units
+        })
+    }
 }
 
 function createBoardAndApi({ canvas, ui, game }) {
     const API = init({ canvas, ui })
-    API.shallWeStartAttack = function({ idFrom }) {
-        const found = API.getTiles().find(tile => tile.id === idFrom)
-        return found !== undefined && found.type === TILE.VILLAGE
+    const board = game.board
+    API.shallWeStartAttack = ({ idFrom }) => {
+        const player_index = getGameIndex({ game_id: game.id })
+        const units = board[idFrom].units[player_index]
+        return typeof units == 'number' && units > 0
+        // const found = API.getTiles().find(tile => tile.id === idFrom)
+        // return found !== undefined && found.type === TILE.VILLAGE
     }
-    API.shallWeAttack = function({ idFrom, idTo }) {
-        const found = API.getTiles().find(tile => tile.id === idTo)
-        return found !== undefined && found.type === TILE.COTTAGE
+    API.shallWeAttack = ({ idFrom, idTo }) => {
+        const tile1 = board[idFrom]
+        const tile2 = board[idTo]
+        return distance({ tile1, tile2 }) === 1
     }
-    API.getTilesToAttack = function({ idFrom }) {
+    API.getTilesToAttack = ({ idFrom }) => {
+        const tile1 = board[idFrom]
         return API.getTiles()
-            .filter(tile => tile.type === TILE.COTTAGE)
+            .filter(tile => distance({ tile1, tile2: board[tile.id] }) === 1)
             .map(tile => tile.id)
     }
-    API.onAttack = function({ idFrom, idTo }) {
-        console.log('onAttack', { idFrom, idTo })
+    API.onAttack = ({ idFrom, idTo }) => {
+        selectUnitsToSend({ tile_id_from: idFrom, tile_id_to: idTo })
     }
-    API.onSelect = function({ type, id }) {
-        // console.log('onSelect', { type, id })
+    API.onSelect = ({ type, id }) => {
+        console.log('onSelect', { type, id })
     }
-    API.onUnselect = function() {
+    API.onUnselect = () => {
         // console.log('onUnselect')
     }
     // Generating board
-    const board = game.board
     for (const id in board) {
         const tile = board[id]
         const { col, row, type, power } = tile

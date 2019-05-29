@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import { useGlobalState, useAutoObserver } from 'dop-react'
+import { useGlobalState, useObserver } from 'dop-react'
 import { connectToServer } from 'store/actions'
 // Components
 import Window, { WindowContent, WindowButtons } from 'components/styled/Window'
@@ -11,7 +11,8 @@ import Label from 'components/styled/Label'
 export default function ChooseNickName() {
     const inputEl = useRef(null)
     const state = useGlobalState()
-    useAutoObserver()
+    const observer = useObserver()
+    observer.observeProperty(state, 'nickname')
     useEffect(() => inputEl.current.focus())
     return (
         <Window height={400}>

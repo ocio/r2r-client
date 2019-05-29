@@ -52,30 +52,10 @@ export async function subscribeGame({ game_id }) {
     state.view = VIEWS.WAITING_PLAYERS
 }
 
-// export function updateBoardState({ API, game }) {
-//     game.instructions.forEach(instruction => {
-//         const { type, data } = instruction
-//         if (type === INSTRUCTION.CONQUEST) {
-//             const player_id = data.player_id
-//             const name = getNicknameFromGame({ game, player_id })
-//             const addOwner = isMe({ game_id: game.id, player_id })
-//                 ? API.addOwnerAsMe
-//                 : API.addOwnerAsEnemy
-//             addOwner({
-//                 idTile: data.tile_id,
-//                 idOwner: player_id,
-//                 name
-//             })
-//         } else if (type === INSTRUCTION.ADD) {
-//             const idOwner = data.player_id
-//             const idTile = data.tile_id
-//             API.changeUnits({
-//                 idTile,
-//                 idOwner,
-//                 units: data.units
-//             })
-//         }
-//     })
+export function selectUnitsToSend({ tile_id_from, tile_id_to }) {
+    state.select_units = { tile_id_from, tile_id_to }
+}
+
 // const village1 = 'village1'
 // API.createVillage({ id: village1, col: 0, row: 0 })
 // API.changeRecruitmentPower({ idTile: village1, power: 22 })
