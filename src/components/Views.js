@@ -1,5 +1,5 @@
 import React from 'react'
-import { useGlobalState, useObserver } from 'dop-react'
+import { useGlobalState, useAutoObserver } from 'dop-react'
 import { Router, Route } from 'dop-router/react'
 import VIEWS from 'const/views'
 // Components
@@ -11,11 +11,12 @@ import Playing from 'components/views/Playing'
 
 function Views() {
     const state = useGlobalState()
-    const observer = useObserver()
-    observer.observeProperty(state, 'view')
-    return (
+    return useAutoObserver()(
         <Router>
-            <Route if={state.view === VIEWS.HOME}>
+            <Route
+                if={state.view === VIEWS.HOME}
+                fa={console.log('View inner')}
+            >
                 <ChooseNickName />
             </Route>
             <Route if={state.view === VIEWS.CONNECTING}>

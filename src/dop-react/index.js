@@ -19,16 +19,23 @@ export function useObserver(beforeUpdate) {
 
 export function useAutoObserver(beforeUpdate, filter) {
     const observer = useObserver(beforeUpdate)
-    const stopCollector = useMemo(() => collectGetters(), [])
-    useEmpty(() => {
+    const stopAutoObserver = useMemo(() => {
+        const stopCollector = collectGetters()
         const is_function = typeof filter == 'function'
-        stopCollector().forEach(o => {
-            if (!is_function || (is_function && filter(o))) {
-                observer.observeProperty(o.object, o.property)
+        let cached = false
+        const dispose = component => {
+            if ((cached = !cached)) {
+                stopCollector().forEach(o => {
+                    if (!is_function || (is_function && filter(o)))
+                        observer.observeProperty(o.object, o.property)
+                })
             }
-        })
-    }, useEffect)
-    return observer
+            return component
+        }
+        dispose.observer = observer
+        return dispose
+    }, [filter, observer])
+    return stopAutoObserver
 }
 
 export function useLocalState(object) {

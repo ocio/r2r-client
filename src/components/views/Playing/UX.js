@@ -1,5 +1,5 @@
 import React from 'react'
-import { useGlobalState, useObserver } from 'dop-react'
+import { useGlobalState, useAutoObserver } from 'dop-react'
 import { Show } from 'dop-router/react'
 
 // components
@@ -12,9 +12,7 @@ import SendUnits from 'components/views/Playing/SendUnits'
 
 export default function UX() {
     const state = useGlobalState()
-    const observer = useObserver()
-    observer.observeProperty(state, 'select_units')
-    return (
+    return useAutoObserver()(
         <Content>
             <Header />
             {/* <Recruiting /> */}
