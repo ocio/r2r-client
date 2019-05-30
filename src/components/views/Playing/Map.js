@@ -40,31 +40,30 @@ export default function Map() {
 }
 
 function manageMutation({ mutation, game, API }) {
-    // Change owner
-    if (mutation.prop === 'owner') {
-        const game_id = game.id
-        const player_id = mutation.value
-        const tile_id = mutation.path[3]
-        const name = getNicknameFromGame({ player_id })
-        const addOwner = isMe({ game_id, player_id })
-            ? API.addOwnerAsMe
-            : API.addOwnerAsEnemy
-        addOwner({
-            idTile: tile_id,
-            idOwner: player_id,
-            name
-        })
-    }
     // Change units
-    else if (mutation.path[4] === 'units') {
-        const idTile = mutation.path[3]
-        const idOwner = mutation.prop
-        const units = mutation.value
-        API.changeUnits({
-            idTile,
-            idOwner,
-            units
-        })
+    if (mutation.path[4] === 'owner') {
+        console.log(mutation)
+        // const game_id = game.id
+        // const player_id = mutation.value
+        // const tile_id = mutation.path[3]
+        // const name = getNicknameFromGame({ player_id })
+        // const addOwner = isMe({ game_id, player_id })
+        //     ? API.addOwnerAsMe
+        //     : API.addOwnerAsEnemy
+        // addOwner({
+        //     idTile: tile_id,
+        //     idOwner: player_id,
+        //     name
+        // })
+
+        // const idTile = mutation.path[3]
+        // const idOwner = mutation.prop
+        // const units = mutation.value
+        // API.changeUnits({
+        //     idTile,
+        //     idOwner,
+        //     units
+        // })
     }
 }
 
@@ -73,8 +72,8 @@ function createBoardAndApi({ canvas, ui, game }) {
     const board = game.board
     API.shallWeStartAttack = ({ idFrom }) => {
         const player_index = getPlayerIndex({ game_id: game.id })
-        const units = board[idFrom].units[player_index]
-        const result = typeof units == 'number' && units > 0
+        const owner = board[idFrom].owner[player_index]
+        const result = owner && typeof owner == 'object' && owner.units > 0
         if (result) closeGameDialogs()
         return result
         // const found = API.getTiles().find(tile => tile.id === idFrom)

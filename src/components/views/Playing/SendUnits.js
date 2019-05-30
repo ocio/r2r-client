@@ -13,11 +13,12 @@ export default function SendUnits({ units, onSend, onClose }) {
     const minusone = units - 1
     const threefourth = Math.round((units / 4) * 3)
     const [n, setN] = useState(half)
-    const setUnits = n => {
-        n = Number(n)
-        if (n > units) setN(units)
-        else if (n < 1) setN(1)
-        else setN(n)
+    const setUnits = newn => {
+        newn = Number(newn)
+        if (isNaN(newn)) newn = n
+        if (newn > units) setN(units)
+        else if (newn < 1) setN(1)
+        else setN(newn)
     }
     return (
         <Window height={400}>

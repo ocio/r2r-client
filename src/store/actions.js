@@ -27,6 +27,7 @@ export const resetState = action(() => {
     state.game = {}
     state.games = {}
     state.player_id = ''
+    delete state.select_units
 })
 
 export async function subscribeEndpoints({ node }) {
@@ -57,7 +58,14 @@ export function selectUnitsToSend({ tile_id_from, tile_id_to }) {
 }
 
 export const sendUnits = action(async units => {
-    console.log(state.select_units, units, Server.sendUnits)
+    const { tile_id_from, tile_id_to } = state.select_units
+    const confirmed = await Server.sendUnits({
+        game_id: state.game.id,
+        tile_id_from,
+        tile_id_to,
+        units
+    })
+    console.log(confirmed)
 })
 
 export const closeGameDialogs = action(() => {
