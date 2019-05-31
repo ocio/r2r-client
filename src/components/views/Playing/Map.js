@@ -41,20 +41,38 @@ export default function Map() {
 
 function manageMutation({ mutation, game, API }) {
     // Change units
+    console.log(mutation)
     if (mutation.path[4] === 'owner') {
-        console.log(mutation)
-        // const game_id = game.id
-        // const player_id = mutation.value
-        // const tile_id = mutation.path[3]
-        // const name = getNicknameFromGame({ player_id })
-        // const addOwner = isMe({ game_id, player_id })
-        //     ? API.addOwnerAsMe
-        //     : API.addOwnerAsEnemy
-        // addOwner({
-        //     idTile: tile_id,
-        //     idOwner: player_id,
-        //     name
-        // })
+        const game_id = game.id
+        const tile_id = mutation.path[3]
+        const tile = game.board[tile_id]
+        // const owners =
+        Object.keys(tile.owner)
+            .map(player_index => ({
+                player_index,
+                index: tile.owner[player_index].index,
+                units: tile.owner[player_index].units
+            }))
+            .sort((a, b) => a.index - b.index)
+            .forEach(({ player_index, units }) => {
+                const nickname = getNicknameFromGame({
+                    player_index: player_index
+                })
+                const addOwner = isMe({ game_id, player_index })
+                    ? API.addOwnerAsMe
+                    : API.addOwnerAsEnemy
+                addOwner({
+                    idTile: tile_id,
+                    idOwner: player_index,
+                    name: nickname
+                })
+                API.changeUnits({
+                    idTile: tile_id,
+                    idOwner: player_index,
+                    units
+                })
+                console.log(player_index)
+            })
 
         // const idTile = mutation.path[3]
         // const idOwner = mutation.prop

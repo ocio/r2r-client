@@ -1,12 +1,12 @@
 import state from 'store/state'
 
-export function getNicknameFromGame({ player_id }) {
+export function getNicknameFromGame({ player_index }) {
     const game = state.game
-    return game.players[player_id].nickname
+    return game.players[player_index].nickname
 }
 
-export function isMe({ game_id, player_id }) {
-    return state.games[game_id] === player_id
+export function isMe({ game_id, player_index }) {
+    return state.games[game_id] === player_index
 }
 
 export function getPlayerIndex({ game_id }) {

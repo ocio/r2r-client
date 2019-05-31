@@ -65,7 +65,7 @@ export const sendUnits = action(async units => {
         tile_id_to,
         units
     })
-    console.log(confirmed)
+    closeGameDialogs()
 })
 
 export const closeGameDialogs = action(() => {
