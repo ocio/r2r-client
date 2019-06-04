@@ -1,6 +1,6 @@
 const { GAME_STATUS } = require('runandrisk-common/const')
 
-const VIEWS = {
+export const VIEWS = {
     HOME: 'HOME',
     CONNECTING: 'CONNECTING',
     CONNECTION_ERROR: 'CONNECTION_ERROR',
@@ -8,4 +8,7 @@ const VIEWS = {
     PLAYING: GAME_STATUS.PLAYING
 }
 
-export default VIEWS
+export const VIEWS_PLAYING = {
+    NORMAL: 'NORMAL',
+    SEND_UNITS: 'SEND_UNITS'
+}

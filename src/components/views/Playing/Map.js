@@ -5,7 +5,7 @@ import init from 'runandrisk-map'
 import { TILE } from 'runandrisk-common/const'
 import { distance } from 'runandrisk-common/board'
 import { getNicknameFromGame, isMe, getPlayerIndex } from 'store/getters'
-import { selectUnitsToSend, closeGameDialogs } from 'store/actions'
+import { selectUnitsToSend, closePlayingDialogs } from 'store/actions'
 
 export default function Map() {
     const canvas_ref = useRef()
@@ -41,47 +41,46 @@ export default function Map() {
 
 function manageMutation({ mutation, game, API }) {
     // Change units
-    console.log(mutation)
     if (mutation.path[4] === 'owner') {
         const game_id = game.id
         const tile_id = mutation.path[3]
         const tile = game.board[tile_id]
-        // const owners =
-        Object.keys(tile.owner)
-            .map(player_index => ({
-                player_index,
-                index: tile.owner[player_index].index,
-                units: tile.owner[player_index].units
-            }))
-            .sort((a, b) => a.index - b.index)
-            .forEach(({ player_index, units }) => {
-                const nickname = getNicknameFromGame({
-                    player_index: player_index
+        const player_index = mutation.prop
+        if (mutation.hasOwnProperty('value')) {
+            // const owners =
+            Object.keys(tile.owner)
+                .map(player_index => ({
+                    player_index,
+                    index: tile.owner[player_index].index,
+                    units: tile.owner[player_index].units
+                }))
+                .sort((a, b) => a.index - b.index)
+                .forEach(({ player_index, units }) => {
+                    const nickname = getNicknameFromGame({
+                        player_index: player_index
+                    })
+                    const addOwner = isMe({ game_id, player_index })
+                        ? API.addOwnerAsMe
+                        : API.addOwnerAsEnemy
+                    addOwner({
+                        idTile: tile_id,
+                        idOwner: player_index,
+                        name: nickname
+                    })
+                    API.changeUnits({
+                        idTile: tile_id,
+                        idOwner: player_index,
+                        units
+                    })
                 })
-                const addOwner = isMe({ game_id, player_index })
-                    ? API.addOwnerAsMe
-                    : API.addOwnerAsEnemy
-                addOwner({
-                    idTile: tile_id,
-                    idOwner: player_index,
-                    name: nickname
-                })
-                API.changeUnits({
-                    idTile: tile_id,
-                    idOwner: player_index,
-                    units
-                })
-                console.log(player_index)
+        }
+        // Remove owner
+        else {
+            API.removeOwner({
+                idTile: tile_id,
+                idOwner: player_index
             })
-
-        // const idTile = mutation.path[3]
-        // const idOwner = mutation.prop
-        // const units = mutation.value
-        // API.changeUnits({
-        //     idTile,
-        //     idOwner,
-        //     units
-        // })
+        }
     }
 }
 
@@ -92,7 +91,7 @@ function createBoardAndApi({ canvas, ui, game }) {
         const player_index = getPlayerIndex({ game_id: game.id })
         const owner = board[idFrom].owner[player_index]
         const result = owner && typeof owner == 'object' && owner.units > 0
-        if (result) closeGameDialogs()
+        if (result) closePlayingDialogs()
         return result
         // const found = API.getTiles().find(tile => tile.id === idFrom)
         // return found !== undefined && found.type === TILE.VILLAGE
@@ -115,7 +114,7 @@ function createBoardAndApi({ canvas, ui, game }) {
         // console.log('onSelect', { type, id })
     }
     API.onUnselect = () => {
-        // closeGameDialogs()
+        // closePlayingDialogs()
     }
     // Generating board
     for (const id in board) {

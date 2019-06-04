@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Show } from 'dop-router/react'
 import Window, { WindowClose } from 'components/styled/Window'
 import styled from '@emotion/styled'
 import Div from 'components/styled/Div'
@@ -8,10 +9,10 @@ import { ButtonBrown } from 'components/styled/Button'
 
 export default function SendUnits({ units, onSend, onClose }) {
     const one = 1
-    const onefourth = Math.round(units / 4)
+    const onefourth = Math.ceil(units / 4)
     const half = Math.round(units / 2)
     const minusone = units - 1
-    const threefourth = Math.round((units / 4) * 3)
+    const threefourth = Math.floor((units / 4) * 3)
     const [n, setN] = useState(half)
     const setUnits = newn => {
         newn = Number(newn)
@@ -33,33 +34,51 @@ export default function SendUnits({ units, onSend, onClose }) {
                     value={n}
                 />
                 <Buttons>
-                    <Button selected={n === one} onClick={() => setN(one)}>
-                        One
-                    </Button>
-                    <Button
-                        selected={n === onefourth}
-                        onClick={() => setN(onefourth)}
-                    >
-                        1/4
-                    </Button>
-                    <Button selected={n === half} onClick={() => setN(half)}>
-                        Half
-                    </Button>
-                    <Button
-                        selected={n === threefourth}
-                        onClick={() => setN(threefourth)}
-                    >
-                        3/4
-                    </Button>
-                    <Button
-                        selected={n === minusone}
-                        onClick={() => setN(minusone)}
-                    >
-                        -1
-                    </Button>
-                    <Button selected={n === units} onClick={() => setN(units)}>
-                        Max
-                    </Button>
+                    <Show if={units > 1}>
+                        <Button selected={n === one} onClick={() => setN(one)}>
+                            One
+                        </Button>
+                    </Show>
+                    <Show if={units > 5}>
+                        <Button
+                            selected={n === onefourth}
+                            onClick={() => setN(onefourth)}
+                        >
+                            1/4
+                        </Button>
+                    </Show>
+                    <Show if={units > 2}>
+                        <Button
+                            selected={n === half}
+                            onClick={() => setN(half)}
+                        >
+                            Half
+                        </Button>
+                    </Show>
+                    <Show if={units > 5}>
+                        <Button
+                            selected={n === threefourth}
+                            onClick={() => setN(threefourth)}
+                        >
+                            3/4
+                        </Button>
+                    </Show>
+                    <Show if={units > 5}>
+                        <Button
+                            selected={n === minusone}
+                            onClick={() => setN(minusone)}
+                        >
+                            -1
+                        </Button>
+                    </Show>
+                    <Show if={units > 1}>
+                        <Button
+                            selected={n === units}
+                            onClick={() => setN(units)}
+                        >
+                            Max
+                        </Button>
+                    </Show>
                 </Buttons>
                 <Div width="180px" margin="0 auto">
                     <ButtonBrown onClick={() => onSend(n)}>Send</ButtonBrown>

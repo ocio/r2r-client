@@ -1,6 +1,7 @@
 import { connect, action } from 'dop'
 import state from 'store/state'
-import VIEWS from 'const/views'
+import { VIEWS } from 'const/views'
+import { VIEWS_PLAYING } from 'const/views'
 
 const Server = {}
 
@@ -27,7 +28,7 @@ export const resetState = action(() => {
     state.game = {}
     state.games = {}
     state.player_id = ''
-    delete state.select_units
+    delete state.temp
 })
 
 export async function subscribeEndpoints({ node }) {
@@ -53,23 +54,25 @@ export async function subscribeGame({ game_id }) {
     state.view = VIEWS.WAITING_PLAYERS
 }
 
-export function selectUnitsToSend({ tile_id_from, tile_id_to }) {
-    state.select_units = { tile_id_from, tile_id_to }
-}
+export const selectUnitsToSend = action(({ tile_id_from, tile_id_to }) => {
+    state.view_playing = VIEWS_PLAYING.SEND_UNITS
+    state.temp = { tile_id_from, tile_id_to }
+})
 
 export const sendUnits = action(async units => {
-    const { tile_id_from, tile_id_to } = state.select_units
-    const confirmed = await Server.sendUnits({
+    const { tile_id_from, tile_id_to } = state.temp
+    // const confirmed =
+    await Server.sendUnits({
         game_id: state.game.id,
         tile_id_from,
         tile_id_to,
         units
     })
-    closeGameDialogs()
+    closePlayingDialogs()
 })
 
-export const closeGameDialogs = action(() => {
-    delete state.select_units
+export const closePlayingDialogs = action(() => {
+    state.view_playing = VIEWS_PLAYING.NORMAL
 })
 // const village1 = 'village1'
 // API.createVillage({ id: village1, col: 0, row: 0 })

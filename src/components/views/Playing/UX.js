@@ -2,7 +2,8 @@ import React from 'react'
 import { useGlobalState, useObserver } from 'dop-react'
 import { Show } from 'dop-router/react'
 import { getMyTileUnits } from 'store/getters'
-import { closeGameDialogs, sendUnits } from 'store/actions'
+import { closePlayingDialogs, sendUnits } from 'store/actions'
+import { VIEWS_PLAYING } from 'const/views'
 
 // components
 import Content from 'components/styled/Content'
@@ -15,10 +16,11 @@ import SendUnits from 'components/views/Playing/SendUnits'
 export default function UX() {
     const state = useGlobalState()
     const observer = useObserver()
-    observer.observeProperty(state, 'select_units')
+    observer.observeProperty(state, 'view_playing')
+    console.log(state.view_playing)
     let units
-    if (state.select_units !== undefined) {
-        const tile_id = state.select_units.tile_id_from
+    if (state.view_playing === VIEWS_PLAYING.SEND_UNITS) {
+        const tile_id = state.temp.tile_id_from
         units = getMyTileUnits({ tile_id })
     }
     return (
@@ -26,11 +28,11 @@ export default function UX() {
             <Header />
             {/* <Recruiting /> */}
             {/* <Leaders /> */}
-            <Show if={state.select_units !== undefined}>
+            <Show if={state.view_playing === VIEWS_PLAYING.SEND_UNITS}>
                 <SendUnits
                     units={units}
                     onSend={sendUnits}
-                    onClose={closeGameDialogs}
+                    onClose={closePlayingDialogs}
                 />
             </Show>
             {/* <Info /> */}

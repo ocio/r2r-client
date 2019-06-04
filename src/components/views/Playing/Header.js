@@ -21,7 +21,7 @@ const HeaderSytled = styled.div`
     height: 35px;
     background: linear-gradient(
         to bottom,
-        rgba(0, 0, 0, 0.1) 0%,
+        rgba(0, 0, 0, 0.2) 0%,
         rgba(0, 0, 0, 0) 100%
     );
     & > * {

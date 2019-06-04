@@ -1,7 +1,7 @@
 import React from 'react'
 import { useGlobalState, useAutoObserver } from 'dop-react'
 import { Router, Route } from 'dop-router/react'
-import VIEWS from 'const/views'
+import { VIEWS } from 'const/views'
 // Components
 import ChooseNickName from 'components/views/ChooseNickName'
 import Connecting from 'components/views/Connecting'

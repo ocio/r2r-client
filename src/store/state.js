@@ -1,17 +1,17 @@
 import dop, { register } from 'dop'
-import VIEWS from 'const/views'
+import { VIEWS, VIEWS_PLAYING } from 'const/views'
 
 const state = register({
-    // view: VIEWS.HOME,
-    // select_units: { tile_id_from, tile_id_to }
+    get view() {
+        return this.game.status || VIEWS.HOME
+    },
+    view_playing: VIEWS_PLAYING.NORMAL,
+    // temp: ,
     nickname: '',
     games: {
         // "Game_L6wLS50M8apDdnRN": "SF"
     },
-    game: {}, // Current game we are playing
-    get view() {
-        return this.game.status || VIEWS.HOME
-    }
+    game: {} // Current game we are playing
 })
 
 window.dop = dop
