@@ -1,3 +1,6 @@
+.tileOwner:first-child {
+    transform: scale(1.2);
+}
 .tileOwner {
     background: url(/assets/img/title-background-1.png) 0 0 / 100%;
     min-width: 100px;
