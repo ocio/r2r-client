@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { useGlobalState, useObserver } from 'dop-react'
 import styled from '@emotion/styled'
 import init from 'runandrisk-map'
-import { TILE } from 'runandrisk-common/const'
+import { TILE, ELEMENT_TYPE } from 'runandrisk-common/const'
 import { distance } from 'runandrisk-common/board'
 import { getNicknameFromGame, isMe, getPlayerIndex } from 'store/getters'
 import { selectUnitsToSend, closePlayingDialogs } from 'store/actions'
@@ -24,6 +24,7 @@ export default function Map() {
     }
     const observer = useObserver(observerCallback)
     observer.observeAll(game.board)
+    observer.observeAll(game.troops)
 
     useEffect(() => {
         const canvas = canvas_ref.current
@@ -82,26 +83,53 @@ function manageMutation({ mutation, game, API }) {
             })
         }
     }
+
+    // Troops
+    else if (mutation.path[2] === 'troops') {
+        const id = mutation.value.id
+        const fromTileId = mutation.value.tile_id_from
+        const toTileId = mutation.value.tile_id_to
+        const units = mutation.value.units
+        API.createTroops({
+            id,
+            fromTileId,
+            toTileId
+        })
+        API.changeTroopsUnits({ idTroops: id, units })
+        API.changeTroopsDistance({ idTroops: id, distance: 50 })
+    }
 }
 
 function createBoardAndApi({ canvas, ui, game }) {
     const API = init({ canvas, ui })
     const board = game.board
-    API.shallWeStartAttack = ({ idFrom }) => {
-        const player_index = getPlayerIndex({ game_id: game.id })
-        const owner = board[idFrom].owner[player_index]
-        const result = owner && typeof owner == 'object' && owner.units > 0
-        if (result) closePlayingDialogs()
-        return result
+    API.shallWeStartAttack = ({ idFrom, elementType }) => {
+        if (
+            elementType === ELEMENT_TYPE.COTTAGE ||
+            elementType === ELEMENT_TYPE.VILLAGE
+        ) {
+            const player_index = getPlayerIndex({ game_id: game.id })
+            const owner = board[idFrom].owner[player_index]
+            const result = owner && typeof owner == 'object' && owner.units > 0
+            if (result) closePlayingDialogs()
+            return result
+        }
+        return false
         // const found = API.getTiles().find(tile => tile.id === idFrom)
         // return found !== undefined && found.type === TILE.VILLAGE
     }
-    API.shallWeAttack = ({ idFrom, idTo }) => {
-        const tile1 = board[idFrom]
-        const tile2 = board[idTo]
-        return distance({ tile1, tile2 }) === 1
+    API.shallWeAttack = ({ idFrom, idTo, elementType }) => {
+        if (
+            elementType === ELEMENT_TYPE.COTTAGE ||
+            elementType === ELEMENT_TYPE.VILLAGE
+        ) {
+            const tile1 = board[idFrom]
+            const tile2 = board[idTo]
+            return distance({ tile1, tile2 }) === 1
+        }
+        return false
     }
-    API.getTilesToAttack = ({ idFrom }) => {
+    API.getTilesToAttack = ({ idFrom, elementType }) => {
         const tile1 = board[idFrom]
         return API.getTiles()
             .filter(tile => distance({ tile1, tile2: board[tile.id] }) === 1)

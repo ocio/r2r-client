@@ -17,7 +17,6 @@ export default function UX() {
     const state = useGlobalState()
     const observer = useObserver()
     observer.observeProperty(state, 'view_playing')
-    console.log(state.view_playing)
     let units
     if (state.view_playing === VIEWS_PLAYING.SEND_UNITS) {
         const tile_id = state.temp.tile_id_from
