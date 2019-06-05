@@ -3,7 +3,6 @@ import { useGlobalState, useObserver } from 'dop-react'
 import styled from '@emotion/styled'
 import init from 'runandrisk-map'
 import { TILE, ELEMENT_TYPE } from 'runandrisk-common/const'
-import { now } from 'runandrisk-common/utils'
 import { distance } from 'runandrisk-common/board'
 import { getNicknameFromGame, isMe, getPlayerIndex } from 'store/getters'
 import { selectUnitsToSend, closePlayingDialogs } from 'store/actions'
@@ -106,17 +105,27 @@ function manageMutation({ mutation, game, API }) {
 
     // Troops
     else if (mutation.path[2] === 'troops') {
-        const id = mutation.value.id
-        const fromTileId = mutation.value.tile_id_from
-        const toTileId = mutation.value.tile_id_to
-        const units = mutation.value.units
-        API.createTroops({
-            id,
-            fromTileId,
-            toTileId
-        })
-        API.changeTroopsUnits({ idTroops: id, units })
-        API.changeTroopsDistance({ idTroops: id, distance: 50 })
+        // Remove
+        if (mutation.value === undefined) {
+            const idTroops = mutation.prop
+            API.removeTroops({
+                idTroops
+            })
+        }
+        // Create
+        else {
+            const id = mutation.value.id
+            const fromTileId = mutation.value.tile_id_from
+            const toTileId = mutation.value.tile_id_to
+            const units = mutation.value.units
+            API.createTroops({
+                id,
+                fromTileId,
+                toTileId
+            })
+            API.changeTroopsUnits({ idTroops: id, units })
+            API.changeTroopsDistance({ idTroops: id, distance: 0 })
+        }
     }
 }
 
