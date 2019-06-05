@@ -3,6 +3,7 @@ import { useGlobalState, useObserver } from 'dop-react'
 import styled from '@emotion/styled'
 import init from 'runandrisk-map'
 import { TILE, ELEMENT_TYPE } from 'runandrisk-common/const'
+import { now } from 'runandrisk-common/utils'
 import { distance } from 'runandrisk-common/board'
 import { getNicknameFromGame, isMe, getPlayerIndex } from 'store/getters'
 import { selectUnitsToSend, closePlayingDialogs } from 'store/actions'
@@ -26,12 +27,31 @@ export default function Map() {
     observer.observeAll(game.board)
     observer.observeAll(game.troops)
 
+    // Creating Board of the first time
     useEffect(() => {
         const canvas = canvas_ref.current
         const ui = ui_ref.current
         api_ref.current = createBoardAndApi({ canvas, ui, game })
         observerCallback(pending_mutations)
     })
+
+    // Updating movement of the troops
+    useEffect(() => {
+        const interval = setInterval(() => {
+            const API = api_ref.current
+            Object.keys(game.troops).forEach(troop_id => {
+                const troop = game.troops[troop_id]
+                const total_diff = troop.arrives_at - troop.leaves_at
+                const current_diff = troop.arrives_at - Date.now() / 1000
+                const distance = 100 - (current_diff * 100) / total_diff
+                if (distance < 150) {
+                    API.changeTroopsDistance({ idTroops: troop_id, distance })
+                }
+            })
+        }, 100)
+        return () => clearInterval(interval)
+    })
+
     return (
         <Container>
             <Canvas ref={canvas_ref} />
