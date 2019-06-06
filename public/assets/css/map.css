@@ -1,6 +1,3 @@
-.tileOwner:first-child {
-    transform: scale(1.2);
-}
 .tileOwner {
     background: url(/assets/img/title-background-1.png) 0 0 / 100%;
     min-width: 100px;
@@ -25,11 +22,24 @@
 
     text-align: center;
 }
-.tileOwner.neutral {
+/* .tileOwner.neutral {
     background-image: url(/assets/img/title-background-0.png);
 }
 .tileOwner.neutral > div:last-child {
     display: none;
+} */
+
+.tileOwner:first-child {
+    transform: scale(1.2);
+}
+
+.tileOwner:first-child.me {
+    /* background: url(/assets/img/icon-power.png) no-repeat 4px 4px / auto 16px,
+        url(/assets/img/title-background-1.png) 0 0 / 100%; */
+}
+.tileOwner:first-child.enemy {
+    /* background: url(/assets/img/icon-power.png) no-repeat 4px 4px / auto 16px,
+        url(/assets/img/title-background-2.png) 0 0 / 100%; */
 }
 
 .tileOwner.me {
