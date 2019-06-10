@@ -84,6 +84,10 @@ export async function sendUnits(units) {
 export function closePlayingDialogs() {
     state.view_playing = VIEWS_PLAYING.NORMAL
 }
+
+export function openPlayingDialog({ view }) {
+    state.view_playing = view
+}
 // const village1 = 'village1'
 // API.createVillage({ id: village1, col: 0, row: 0 })
 // API.changeRecruitmentPower({ idTile: village1, power: 22 })

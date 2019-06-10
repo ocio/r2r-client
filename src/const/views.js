@@ -10,5 +10,6 @@ export const VIEWS = {
 
 export const VIEWS_PLAYING = {
     NORMAL: 'NORMAL',
-    SEND_UNITS: 'SEND_UNITS'
+    SEND_UNITS: 'SEND_UNITS',
+    LEADERS: 'LEADERS'
 }

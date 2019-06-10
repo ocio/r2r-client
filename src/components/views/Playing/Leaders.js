@@ -1,4 +1,7 @@
 import React from 'react'
+import { useGlobalState, useObserver } from 'dop-react'
+import { calcScore } from 'runandrisk-common/rules'
+import { getPlayerIndex } from 'store/getters'
 import Div from 'components/styled/Div'
 import { COLOR } from 'const/styles'
 import Window, {
@@ -16,12 +19,33 @@ import {
 } from 'components/styled/Table'
 import IconImage from 'components/styled/IconImage'
 import { ButtonBrown } from 'components/styled/Button'
+import { closePlayingDialogs } from 'store/actions'
 
 export default function Leaders() {
+    const { game } = useGlobalState()
+    const observer = useObserver()
+    const player_index = getPlayerIndex({ game_id: game.id })
+    observer.observeAll(game.players)
+    const players = Object.keys(game.players)
+        .map(id => {
+            const player = game.players[id]
+            return {
+                nickname: player.nickname,
+                is_me: id === player_index,
+                kills: player.kills,
+                power: player.power,
+                units: player.units,
+                score: calcScore(player)
+            }
+        })
+        .sort((a, b) => b.units - a.units)
+        .sort((a, b) => b.kills - a.kills)
+        .sort((a, b) => b.power - a.power)
+        .sort((a, b) => b.score - a.score)
     return (
         <Window width="1000" height="600">
             <WindowTitle>Leaders</WindowTitle>
-            <WindowClose onClick={() => console.log('closa')} />
+            <WindowClose onClick={closePlayingDialogs} />
             <WindowContent>
                 <Div padding="0 30px 30px 30px">
                     <Table>
@@ -35,16 +59,38 @@ export default function Leaders() {
                             <Icon url="assets/img/icon-kills.png">Kills</Icon>
                             <Icon url="assets/img/icon-score.png">Score</Icon>
                         </TableHead>
-                        <TableRow>
-                            <TableText>#1</TableText>
-                            <TableText color={COLOR.BLUE}>Enzo</TableText>
-                            <TableText align="center">1000</TableText>
-                            <TableText align="center">45</TableText>
-                            <TableText align="center">71</TableText>
-                            <TableText color={COLOR.ORANGE} align="center">
-                                213
-                            </TableText>
-                        </TableRow>
+                        {players.map((player, index) => {
+                            return (
+                                <TableRow key={index}>
+                                    <TableText>#{index + 1}</TableText>
+                                    <TableText
+                                        color={
+                                            player.is_me
+                                                ? COLOR.BLUE
+                                                : COLOR.RED
+                                        }
+                                    >
+                                        {player.nickname}
+                                    </TableText>
+                                    <TableText align="center">
+                                        {player.units}
+                                    </TableText>
+                                    <TableText align="center">
+                                        {player.power}
+                                    </TableText>
+                                    <TableText align="center">
+                                        {player.kills}
+                                    </TableText>
+                                    <TableText
+                                        color={COLOR.ORANGE}
+                                        align="center"
+                                    >
+                                        {player.score}
+                                    </TableText>
+                                </TableRow>
+                            )
+                        })}
+                        {/*         
                         <TableRow>
                             <TableText>#2</TableText>
                             <TableText color={COLOR.RED}>
@@ -76,14 +122,12 @@ export default function Leaders() {
                             <TableText color={COLOR.ORANGE} align="center">
                                 313
                             </TableText>
-                        </TableRow>
+                        </TableRow> */}
                     </Table>
                 </Div>
             </WindowContent>
             <WindowButtons>
-                <ButtonBrown onClick={() => console.log('OK')}>
-                    Close
-                </ButtonBrown>
+                <ButtonBrown onClick={closePlayingDialogs}>Close</ButtonBrown>
                 {/* <ButtonRed>Cancel</ButtonRed> */}
             </WindowButtons>
         </Window>

@@ -19,7 +19,6 @@ export function getMyTileUnits({ tile_id }) {
     return board[tile_id].owner[player_index].units
 }
 
-// common
 export function getOwnerFromTile({ tile_id }) {
     const tile = state.game.board[tile_id]
     const owner = tile.owner
@@ -34,6 +33,7 @@ export function getOwnerFromTile({ tile_id }) {
     return player_index
 }
 
+// common
 export function isAllowedToSendUnits({
     game_id,
     player_index,
