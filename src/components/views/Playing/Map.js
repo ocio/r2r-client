@@ -4,7 +4,12 @@ import styled from '@emotion/styled'
 import init from 'runandrisk-map'
 import { TILE, ELEMENT_TYPE } from 'runandrisk-common/const'
 import { distance } from 'runandrisk-common/board'
-import { getNicknameFromGame, isMe, getPlayerIndex } from 'store/getters'
+import {
+    getNicknameFromGame,
+    isMe,
+    getPlayerIndex,
+    isAllowedToSendUnits
+} from 'store/getters'
 import { selectUnitsToSend, closePlayingDialogs } from 'store/actions'
 
 export default function Map() {
@@ -152,16 +157,36 @@ function createBoardAndApi({ canvas, ui, game }) {
             elementType === ELEMENT_TYPE.COTTAGE ||
             elementType === ELEMENT_TYPE.VILLAGE
         ) {
+            const game_id = game.id
             const tile1 = board[idFrom]
             const tile2 = board[idTo]
-            return distance({ tile1, tile2 }) === 1
+            const player_index = getPlayerIndex({ game_id })
+            return (
+                distance({ tile1, tile2 }) === 1 &&
+                isAllowedToSendUnits({
+                    game_id,
+                    player_index,
+                    tile_id_from: tile1.id,
+                    tile_id_to: tile2.id
+                })
+            )
         }
         return false
     }
     API.getTilesToAttack = ({ idFrom, elementType }) => {
         const tile1 = board[idFrom]
+        const game_id = game.id
+        const player_index = getPlayerIndex({ game_id })
         return API.getTiles()
             .filter(tile => distance({ tile1, tile2: board[tile.id] }) === 1)
+            .filter(tile =>
+                isAllowedToSendUnits({
+                    game_id,
+                    player_index,
+                    tile_id_from: tile1.id,
+                    tile_id_to: tile.id
+                })
+            )
             .map(tile => tile.id)
     }
     API.onAttack = ({ idFrom, idTo }) => {

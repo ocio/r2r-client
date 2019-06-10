@@ -67,12 +67,16 @@ export async function sendUnits(units) {
     const collector = collect()
     const { tile_id_from, tile_id_to } = state.temp
     // const confirmed =
-    await Server.sendUnits({
-        game_id: state.game.id,
-        tile_id_from,
-        tile_id_to,
-        units
-    })
+    try {
+        await Server.sendUnits({
+            game_id: state.game.id,
+            tile_id_from,
+            tile_id_to,
+            units
+        })
+    } catch (e) {
+        console.error(e)
+    }
     closePlayingDialogs()
     collector.emit()
 }
