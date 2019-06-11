@@ -1,8 +1,10 @@
 import React from 'react'
 import { useGlobalState, useObserver } from 'dop-react'
 import { Show } from 'dop-router/react'
-import { closePlayingDialogs } from 'store/actions'
+import { closePlayingDialogs, sendClicksRecruiting } from 'store/actions'
+import { getPlayerIndex } from 'store/getters'
 import { now } from 'runandrisk-common/utils'
+import { stopRecruitment } from 'runandrisk-common/rules'
 import Window, {
     WindowTitle,
     WindowContent,
@@ -16,11 +18,29 @@ import IconImage from 'components/styled/IconImage'
 
 export default function Recruiting() {
     const { game } = useGlobalState()
-    const n = game.recruit_at - now()
+    const n = game.recruit_start - now()
     const observer = useObserver()
     observer.observeProperty(game, 'recruiting')
-    // observer.observeProperty(game, 'recruit_at')
-    // console.log(!game.recruiting && n <= 10)
+    observer.observeAll(game, 'players')
+
+    const recruit_start = game.recruit_start
+    const stop_recruiting = stopRecruitment(recruit_start)
+    const recruiting_remain = stopRecruitment(recruit_start) - now()
+    const player_index = getPlayerIndex({ game_id: game.id })
+    const players = Object.keys(game.players)
+        .map(id => {
+            const player = game.players[id]
+            return {
+                nickname: player.nickname,
+                is_me: id === player_index,
+                power: player.power,
+                clicks: player.clicks
+            }
+        })
+        .sort((a, b) => b.power - a.power)
+        .sort((a, b) => b.clicks - a.clicks)
+
+    console.log({ stop_recruiting, recruiting_remain })
     return (
         <Window>
             <WindowTitle>Recruiting Phase</WindowTitle>
@@ -28,46 +48,24 @@ export default function Recruiting() {
                 <WindowClose onClick={closePlayingDialogs} />
             </Show>
             <WindowContent height="370px" margin="0 25px">
-                <RecruitingBar
-                    top="0"
-                    width="100%"
-                    nickname="Agus"
-                    color={COLOR.RED}
-                    metters="313 m"
-                    units="1213"
-                    power="212"
-                />
-                <RecruitingBar
-                    top="90px"
-                    width="75%"
-                    nickname="Roly"
-                    color={COLOR.RED}
-                    metters="313 m"
-                    power="2"
-                    units="2"
-                />
-                <RecruitingBar
-                    top="180px"
-                    width="50%"
-                    nickname="Enzo"
-                    color={COLOR.BLUE}
-                    metters="21 m"
-                    units="321"
-                    power="21"
-                />
-                <RecruitingBar
-                    top="270px"
-                    width="160px"
-                    nickname="Selo"
-                    color={COLOR.RED}
-                    metters="0 m"
-                    units="0"
-                    power="821"
-                />
+                {players.map((player, index) => {
+                    return (
+                        <RecruitingBar
+                            key={index}
+                            top={`${index * 90}px`}
+                            width="100%"
+                            nickname={player.nickname}
+                            color={player.is_me ? COLOR.BLUE : COLOR.RED}
+                            metters={game.recruiting ? player.clicks : 0}
+                            units="?"
+                            power={player.power}
+                        />
+                    )
+                })}
             </WindowContent>
             <Bottom>
                 <Show if={game.recruiting}>
-                    <BigButton />
+                    <BigButton onClick={sendClicksRecruiting} />
                 </Show>
                 <Show if={!game.recruiting && n <= 10}>
                     <CountDown

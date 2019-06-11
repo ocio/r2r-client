@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import { useGlobalState, useObserver } from 'dop-react'
-import { calcScore, stopRecruitment } from 'runandrisk-common/rules'
-import { now } from 'runandrisk-common/utils'
+import { calcScore } from 'runandrisk-common/rules'
 import Score from 'components/styled/Score'
 import { getPlayerIndex } from 'store/getters'
 import { openPlayingDialog } from 'store/actions'
@@ -17,26 +16,31 @@ export default function Header() {
     const score = calcScore(info)
     const observer = useObserver()
     observer.observeAll(game.players)
-    observer.observeProperty(game, 'recruit_at')
 
-    const recruit_at = game.recruit_at
+    const recruit_start = game.recruit_start
     const recruiting = game.recruiting
-    const [n, forceUpdate] = useState(recruit_at - now())
-    useEffect(() => {
-        const interval = setInterval(() => {
-            const newn = recruit_at - now()
-            if (newn > 0) {
-                forceUpdate(newn)
-            } else {
-                forceUpdate(stopRecruitment(recruit_at) - now())
-            }
-        }, 1000)
-        return () => clearTimeout(interval)
-    }, [recruit_at, recruiting])
+    console.log(game.time.now(), new Date(game.time.now()))
+    const n = 1
 
-    if (state.view_playing !== VIEWS_PLAYING.RECRUITING && n <= 10) {
-        openPlayingDialog({ view: VIEWS_PLAYING.RECRUITING })
-    }
+    // observer.observeProperty(game, 'recruiting')
+
+    // const recruit_start = game.recruit_start
+    // const recruiting = game.recruiting
+    // const [n, forceUpdate] = useState(recruit_start - now())
+    // useEffect(() => {
+    //     const interval = setInterval(() => {
+    //         if (recruiting) {
+    //             forceUpdate(recruit_start - now())
+    //         } else {
+    //             forceUpdate(recruit_end - now())
+    //         }
+    //     }, 1000)
+    //     return () => clearTimeout(interval)
+    // }, [recruiting, recruit_start, recruit_end])
+
+    // if (state.view_playing !== VIEWS_PLAYING.RECRUITING && n <= 10) {
+    //     openPlayingDialog({ view: VIEWS_PLAYING.RECRUITING })
+    // }
 
     function openLeaders() {
         openPlayingDialog({ view: VIEWS_PLAYING.LEADERS })

@@ -4,6 +4,7 @@ import { Show } from 'dop-router/react'
 import { getMyTileUnits } from 'store/getters'
 import { closePlayingDialogs, sendUnits } from 'store/actions'
 import { VIEWS_PLAYING } from 'const/views'
+import Time from 'runandrisk-common/utils/time'
 
 // components
 import Content from 'components/styled/Content'
@@ -17,6 +18,8 @@ export default function UX() {
     const state = useGlobalState()
     const observer = useObserver()
     observer.observeProperty(state, 'view_playing')
+    state.game.time = Time(state.game.starts_at * 1000)
+
     let units
     if (state.view_playing === VIEWS_PLAYING.SEND_UNITS) {
         const tile_id = state.temp.tile_id_from

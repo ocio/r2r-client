@@ -88,6 +88,17 @@ export function closePlayingDialogs() {
 export function openPlayingDialog({ view }) {
     state.view_playing = view
 }
+
+export async function sendClicksRecruiting() {
+    try {
+        await Server.sendClicksRecruiting({
+            game_id: state.game.id
+        })
+    } catch (e) {
+        console.error(e)
+    }
+}
+
 // const village1 = 'village1'
 // API.createVillage({ id: village1, col: 0, row: 0 })
 // API.changeRecruitmentPower({ idTile: village1, power: 22 })
