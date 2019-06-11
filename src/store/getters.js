@@ -1,4 +1,5 @@
 import state from 'store/state'
+import { isAllowedToSendUnits as _isAllowedToSendUnits } from 'runandrisk-common/rules'
 
 export function getNicknameFromGame({ player_index }) {
     const game = state.game
@@ -43,9 +44,5 @@ export function isAllowedToSendUnits({
     if (tile_id_from === tile_id_to) return false
     const owner_from = getOwnerFromTile({ game_id, tile_id: tile_id_from })
     const owner_to = getOwnerFromTile({ game_id, tile_id: tile_id_to })
-    return (
-        owner_from === player_index ||
-        owner_to === player_index ||
-        owner_to === undefined
-    )
+    return _isAllowedToSendUnits({ owner_from, owner_to, player_index })
 }

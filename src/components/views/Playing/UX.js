@@ -10,7 +10,7 @@ import Content from 'components/styled/Content'
 import Header from 'components/views/Playing/Header'
 import SendUnits from 'components/views/Playing/SendUnits'
 import Leaders from 'components/views/Playing/Leaders'
-// import Recruiting from 'components/views/Playing/Recruiting'
+import Recruiting from 'components/views/Playing/Recruiting'
 // import Info from 'components/views/Playing/Info'
 
 export default function UX() {
@@ -25,7 +25,6 @@ export default function UX() {
     return (
         <Content>
             <Header />
-            {/* <Recruiting /> */}
             <Show if={state.view_playing === VIEWS_PLAYING.LEADERS}>
                 <Leaders />
             </Show>
@@ -35,6 +34,9 @@ export default function UX() {
                     onSend={sendUnits}
                     onClose={closePlayingDialogs}
                 />
+            </Show>
+            <Show if={state.view_playing === VIEWS_PLAYING.RECRUITING}>
+                <Recruiting />
             </Show>
             {/* <Info /> */}
         </Content>

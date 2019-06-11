@@ -1,17 +1,32 @@
 import React from 'react'
-// import { Show } from 'dop-router/react'
-import Window, { WindowTitle, WindowContent } from 'components/styled/Window'
+import { useGlobalState, useObserver } from 'dop-react'
+import { Show } from 'dop-router/react'
+import { closePlayingDialogs } from 'store/actions'
+import { now } from 'runandrisk-common/utils'
+import Window, {
+    WindowTitle,
+    WindowContent,
+    WindowClose
+} from 'components/styled/Window'
 import styled from '@emotion/styled'
 import Bar from 'components/styled/Bar'
-// import CountDown from 'components/animations/CountDown'
+import CountDown from 'components/animations/CountDown'
 import { COLOR } from 'const/styles'
 import IconImage from 'components/styled/IconImage'
 
 export default function Recruiting() {
-    // const [ready, setReady] = useState(false)
+    const { game } = useGlobalState()
+    const n = game.recruit_at - now()
+    const observer = useObserver()
+    observer.observeProperty(game, 'recruiting')
+    // observer.observeProperty(game, 'recruit_at')
+    // console.log(!game.recruiting && n <= 10)
     return (
         <Window>
             <WindowTitle>Recruiting Phase</WindowTitle>
+            <Show if={!game.recruiting && n > 10}>
+                <WindowClose onClick={closePlayingDialogs} />
+            </Show>
             <WindowContent height="370px" margin="0 25px">
                 <RecruitingBar
                     top="0"
@@ -51,12 +66,16 @@ export default function Recruiting() {
                 />
             </WindowContent>
             <Bottom>
-                <BigButton />
-                {/* <CountDown
-                    from={10}
-                    to={1}
-                    onAnimationEnd={() => console.log('End')}
-                /> */}
+                <Show if={game.recruiting}>
+                    <BigButton />
+                </Show>
+                <Show if={!game.recruiting && n <= 10}>
+                    <CountDown
+                        from={n}
+                        to={1}
+                        // onAnimationEnd={() => console.log('End')}
+                    />
+                </Show>
             </Bottom>
         </Window>
     )

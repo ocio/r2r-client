@@ -52,11 +52,11 @@ export default function Leaders() {
                         <TableHead>
                             <TableCol width="50px" />
                             <TableCol />
-                            <Icon url="assets/img/icon-units.png">Units</Icon>
                             <Icon url="assets/img/icon-power.png">
                                 Recruitment Power
                             </Icon>
                             <Icon url="assets/img/icon-kills.png">Kills</Icon>
+                            <Icon url="assets/img/icon-units.png">Units</Icon>
                             <Icon url="assets/img/icon-score.png">Score</Icon>
                         </TableHead>
                         {players.map((player, index) => {
@@ -73,13 +73,13 @@ export default function Leaders() {
                                         {player.nickname}
                                     </TableText>
                                     <TableText align="center">
-                                        {player.units}
-                                    </TableText>
-                                    <TableText align="center">
                                         {player.power}
                                     </TableText>
                                     <TableText align="center">
                                         {player.kills}
+                                    </TableText>
+                                    <TableText align="center">
+                                        {player.units}
                                     </TableText>
                                     <TableText
                                         color={COLOR.ORANGE}

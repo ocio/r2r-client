@@ -1,10 +1,23 @@
 import React from 'react'
 import styled from '@emotion/styled'
+import { COLOR } from 'const/styles'
 
-export default function Score({ children, icon, highlight = false }) {
+export default function Score({
+    children,
+    float = 'right',
+    icon,
+    highlight = false,
+    onClick,
+    color = COLOR.WHITE
+}) {
     const highlightUrl = highlight ? '-highlight' : ''
     return (
-        <ScoreStyled highlightUrl={highlightUrl}>
+        <ScoreStyled
+            float={float}
+            highlightUrl={highlightUrl}
+            onClick={onClick}
+            color={color}
+        >
             <Icon url={icon} />
             <div>{children}</div>
         </ScoreStyled>
@@ -12,6 +25,7 @@ export default function Score({ children, icon, highlight = false }) {
 }
 
 const ScoreStyled = styled.div`
+    float: ${p => p.float};
     position: relative;
     min-width: 117px;
     height: 38px;
@@ -21,11 +35,14 @@ const ScoreStyled = styled.div`
     background-repeat: no-repeat, no-repeat;
     line-height: 38px;
     text-align: center;
-    color: white;
+    color: ${p => p.color};
     font-size: 24px;
     font-family: Allan;
     text-shadow: 2px 2px black;
     letter-spacing: 1px;
+    & > * {
+        pointer-events: all;
+    }
 `
 
 const Icon = styled.div`
