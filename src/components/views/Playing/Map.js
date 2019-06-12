@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react'
+import { getObjectTarget } from 'dop'
 import { useGlobalState, useObserver } from 'dop-react'
 import styled from '@emotion/styled'
 import init from 'runandrisk-map'
@@ -45,9 +46,9 @@ export default function Map() {
             const API = api_ref.current
             Object.keys(game.troops).forEach(troop_id => {
                 const troop = game.troops[troop_id]
-                const total_diff = troop.arrives_at - troop.leaves_at
-                const current_diff = troop.arrives_at - game.time.now()
-                const distance = 100 - (current_diff * 100) / total_diff
+                const total_diff = (troop.arrives_at - troop.leaves_at) * 1000
+                const current_diff = Date.now() - troop.created
+                const distance = (current_diff * 100) / total_diff
                 if (distance < 150) {
                     API.changeTroopsDistance({ idTroops: troop_id, distance })
                 }
@@ -109,7 +110,7 @@ function manageMutation({ mutation, game, API }) {
     }
 
     // Troops
-    else if (mutation.path[2] === 'troops') {
+    else if (mutation.path[2] === 'troops' && mutation.path.length === 3) {
         // Remove
         if (mutation.value === undefined) {
             const idTroops = mutation.prop
@@ -123,6 +124,8 @@ function manageMutation({ mutation, game, API }) {
             const fromTileId = mutation.value.tile_id_from
             const toTileId = mutation.value.tile_id_to
             const units = mutation.value.units
+            const troop = game.troops[id]
+            getObjectTarget(troop).created = Date.now()
             API.createTroops({
                 id,
                 fromTileId,

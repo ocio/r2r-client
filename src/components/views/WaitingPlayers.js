@@ -80,7 +80,6 @@ function CheckIcon() {
 
 function GameStartsIn({ countdown }) {
     const [n, changeSeconds] = useState(countdown)
-    console.log({ countdown, n })
     useEffect(() => {
         const interval = setTimeout(() => changeSeconds(n - 1), 1000)
         return () => clearTimeout(interval)
