@@ -6,14 +6,13 @@ import { closePlayingDialogs, sendUnits } from 'store/actions'
 import { VIEWS_PLAYING } from 'const/views'
 
 // components
-import Content from 'components/styled/Content'
-import Header from 'components/views/Playing/Header'
+
 import SendUnits from 'components/views/Playing/SendUnits'
 import Leaders from 'components/views/Playing/Leaders'
 import Recruiting from 'components/views/Playing/Recruiting'
 // import Info from 'components/views/Playing/Info'
 
-export default function UX() {
+export default function Dialogs() {
     const state = useGlobalState()
     const observer = useObserver()
     observer.observeProperty(state, 'view_playing')
@@ -25,8 +24,7 @@ export default function UX() {
     }
 
     return (
-        <Content>
-            <Header />
+        <div>
             <Show if={state.view_playing === VIEWS_PLAYING.LEADERS}>
                 <Leaders />
             </Show>
@@ -41,6 +39,6 @@ export default function UX() {
                 <Recruiting />
             </Show>
             {/* <Info /> */}
-        </Content>
+        </div>
     )
 }

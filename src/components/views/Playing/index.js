@@ -3,13 +3,18 @@ import React from 'react'
 // styled
 import Container from 'components/styled/Container'
 import Map from 'components/views/Playing/Map'
-import UX from 'components/views/Playing/UX'
+import Dialogs from 'components/views/Playing/Dialogs'
+import Content from 'components/styled/Content'
+import Header from 'components/views/Playing/Header'
 
 export default function Playing() {
     return (
         <Container>
             <Map />
-            <UX />
+            <Content>
+                <Header />
+                <Dialogs />
+            </Content>
         </Container>
     )
 }
