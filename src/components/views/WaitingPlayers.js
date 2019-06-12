@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useGlobalState, useObserver } from 'dop-react'
 import { Show } from 'dop-router/react'
 import styled from '@emotion/styled'
-import { now } from 'runandrisk-common/utils'
+// import TimeServer from 'runandrisk-common/utils/TimeServer'
 
 // Components
 import Div from 'components/styled/Div'
@@ -22,14 +22,22 @@ export default function WaitingPlayers() {
     const { game, games } = useGlobalState()
     const observer = useObserver()
     observer.observeProperty(game, 'players_total')
-    observer.observeProperty(game, 'starts_at')
+
+    // if (game.created_at !== undefined) {
+    //     game.time = TimeServer({
+    //         timestamp: game.created_at,
+    //         ms: false
+    //     })
+    // }
     return (
         <Window height="550">
             <WindowTitle>Players</WindowTitle>
             <WindowContent>
                 <Div padding={game.starts_at === undefined ? '30px' : '0 30px'}>
                     <Show if={game.starts_at !== undefined}>
-                        <GameStartsIn time={game.starts_at} />
+                        <GameStartsIn
+                            countdown={game.starts_at - game.created_at}
+                        />
                     </Show>
                     <Table>
                         {Object.keys(game.players).map(player_id => {
@@ -70,18 +78,16 @@ function CheckIcon() {
     )
 }
 
-function GameStartsIn({ time }) {
-    const [n, changeSeconds] = useState(getDiff(time))
+function GameStartsIn({ countdown }) {
+    const [n, changeSeconds] = useState(countdown)
+    console.log({ countdown, n })
     useEffect(() => {
-        const interval = setTimeout(() => changeSeconds(getDiff(time)), 1000)
+        const interval = setTimeout(() => changeSeconds(n - 1), 1000)
         return () => clearTimeout(interval)
-    })
-    function getDiff(time) {
-        return time - now()
-    }
+    }, [n])
     return (
         <GameStartsInStyled>
-            Game starts in {n > 0 ? n - 1 : 0} seconds
+            Game starts in {n < 0 ? 0 : n} seconds
         </GameStartsInStyled>
     )
 }

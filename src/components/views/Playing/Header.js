@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import styled from '@emotion/styled'
 import { useGlobalState, useObserver } from 'dop-react'
 import { calcScore } from 'runandrisk-common/rules'
@@ -17,9 +17,9 @@ export default function Header() {
     const observer = useObserver()
     observer.observeAll(game.players)
 
-    const recruit_start = game.recruit_start
+    // const recruit_start = game.recruit_start
     const recruiting = game.recruiting
-    console.log(game.time.now(), new Date(game.time.now()))
+    // console.log(game.time.now(), new Date(game.time.now()))
     const n = 1
 
     // observer.observeProperty(game, 'recruiting')

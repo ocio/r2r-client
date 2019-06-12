@@ -46,7 +46,7 @@ export default function Map() {
             Object.keys(game.troops).forEach(troop_id => {
                 const troop = game.troops[troop_id]
                 const total_diff = troop.arrives_at - troop.leaves_at
-                const current_diff = troop.arrives_at - Date.now() / 1000
+                const current_diff = troop.arrives_at - game.time.now()
                 const distance = 100 - (current_diff * 100) / total_diff
                 if (distance < 150) {
                     API.changeTroopsDistance({ idTroops: troop_id, distance })
