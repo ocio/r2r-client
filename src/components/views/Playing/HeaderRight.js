@@ -8,7 +8,6 @@ import { openPlayingDialog } from 'store/actions'
 import { VIEWS_PLAYING } from 'const/views'
 
 export default function HeaderRight() {
-    console.log('HeaderRight')
     const state = useGlobalState()
     const { game } = state
     const player_index = getPlayerIndex({ game_id: game.id })

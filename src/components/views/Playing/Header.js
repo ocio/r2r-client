@@ -4,7 +4,6 @@ import HeaderLeft from 'components/views/Playing/HeaderLeft'
 import HeaderRight from 'components/views/Playing/HeaderRight'
 
 export default function Header() {
-    console.log('Header')
     return (
         <HeaderStyled>
             <HeaderLeft />

@@ -22,13 +22,6 @@ export default function WaitingPlayers() {
     const { game, games } = useGlobalState()
     const observer = useObserver()
     observer.observeProperty(game, 'players_total')
-
-    // if (game.created_at !== undefined) {
-    //     game.time = TimeServer({
-    //         timestamp: game.created_at,
-    //         ms: false
-    //     })
-    // }
     return (
         <Window height="550">
             <WindowTitle>Players</WindowTitle>
