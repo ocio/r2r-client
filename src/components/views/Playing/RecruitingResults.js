@@ -14,13 +14,12 @@ import RecruitingBar from 'components/styled/RecruitingBar'
 import { ButtonBrown } from 'components/styled/Button'
 
 export default function RecruitingResults() {
+    const { game } = useGlobalState()
     const [showclose, setShowclose] = useState(false)
     useEffect(() => {
         const interval = setTimeout(() => setShowclose(true), 3000)
         return () => clearTimeout(interval)
     })
-
-    const { game } = useGlobalState()
     const player_index = getPlayerIndex({ game_id: game.id })
     const players = Object.keys(game.players)
         .map(id => {
@@ -29,7 +28,8 @@ export default function RecruitingResults() {
                 nickname: player.nickname,
                 is_me: id === player_index,
                 power: player.power,
-                clicks: player.clicks
+                clicks: player.clicks,
+                recruited: player.recruited
             }
         })
         .sort((a, b) => b.power - a.power)
@@ -51,7 +51,7 @@ export default function RecruitingResults() {
                             nickname={player.nickname}
                             color={player.is_me ? COLOR.BLUE : COLOR.RED}
                             metters={player.clicks}
-                            units="?"
+                            units={player.recruited}
                             power={player.power}
                         />
                     )

@@ -29,6 +29,7 @@ export function resetState() {
     state.game = {}
     state.games = {}
     state.player_id = ''
+    state.view_playing = VIEWS_PLAYING.NORMAL
     delete state.temp
     collector.emit()
 }

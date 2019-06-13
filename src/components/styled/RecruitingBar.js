@@ -18,8 +18,6 @@ export default function RecruitingBar({
         units === undefined
             ? `${percentage}%`
             : `calc(${percentage}% - ${rightBarWidth})`
-
-    console.log({ width, units })
     return (
         <ContainerBar top={top}>
             <HeaderBar>
