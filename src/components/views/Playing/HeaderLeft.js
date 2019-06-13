@@ -8,11 +8,10 @@ export default function HeaderLeft() {
     const { game } = state
     const observer = useObserver()
     observer.observeProperty(state, 'recruit_counter')
-    const diff1 = game.recruit_end - game.recruit_start
-    const diff2 = game.recruit_start - game.recruit_last
-    const diff = game.recruiting ? diff1 + diff2 : diff2
+    const diff1 = game.recruit_start - game.recruit_last
+    const diff2 = game.recruit_end - game.recruit_start
+    const diff = game.recruiting ? diff1 + diff2 : diff1
     const second = diff - state.recruit_counter
-    console.log({ diff }, game.recruiting)
     return (
         <div>
             <Score

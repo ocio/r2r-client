@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react'
 import { useGlobalState, useObserver } from 'dop-react'
 
+import { VIEWS_PLAYING } from 'const/views'
+import { openPlayingDialog } from 'store/actions'
+
 // styled
 import Container from 'components/styled/Container'
 import Map from 'components/views/Playing/Map'
@@ -21,7 +24,7 @@ export default function Playing() {
     )
 }
 
-// This hook is used to manage the state for the recruitment phase
+// We use this hook to manage the state of the recruitment phase
 function useRecruitingManager() {
     const state = useGlobalState()
     const { game } = state
@@ -31,23 +34,28 @@ function useRecruitingManager() {
     })
     // observer.observeProperty(game, 'recruiting')
     observer.observeProperty(game, 'recruit_last')
-    observer.observeProperty(game, 'recruit_start')
-    observer.observeProperty(game, 'recruit_end')
+    // observer.observeProperty(game, 'recruit_start')
+    // observer.observeProperty(game, 'recruit_end')
 
-    // console.log({ recruiting, recruit_last, recruit_start, recruit_end })
-
+    // initial state
+    state.recruit_counter = 0
     useEffect(() => {
         const interval = setInterval(() => {
-            state.recruit_counter += 1
+            const seconds = state.recruit_counter++
+            const diff1 = game.recruit_start - game.recruit_last
+            // const diff2 = game.recruit_end - game.recruit_start
+            // const diff3 = diff1 + diff2
+            if (seconds >= diff1 - 10) {
+                openPlayingDialog({ view: VIEWS_PLAYING.RECRUITING })
+            }
+            if (
+                seconds === 0 &&
+                state.view_playing === VIEWS_PLAYING.RECRUITING
+            ) {
+                openPlayingDialog({ view: VIEWS_PLAYING.RECRUITING_RESULTS })
+            }
+            // console.log({ diff1, diff2, diff3, seconds })
         }, 1000)
         return () => clearTimeout(interval)
     })
-
-    // if (
-    //     state.view_playing !== VIEWS_PLAYING.RECRUITING &&
-    //     typeof n === 'number' &&
-    //     n <= 10
-    // ) {
-    //     openPlayingDialog({ view: VIEWS_PLAYING.RECRUITING })
-    // }
 }

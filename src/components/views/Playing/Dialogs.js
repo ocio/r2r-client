@@ -10,7 +10,7 @@ import { VIEWS_PLAYING } from 'const/views'
 import SendUnits from 'components/views/Playing/SendUnits'
 import Leaders from 'components/views/Playing/Leaders'
 import Recruiting from 'components/views/Playing/Recruiting'
-// import Info from 'components/views/Playing/Info'
+import RecruitingResults from 'components/views/Playing/RecruitingResults'
 
 export default function Dialogs() {
     const state = useGlobalState()
@@ -39,7 +39,7 @@ export default function Dialogs() {
                 <Recruiting />
             </Show>
             <Show if={state.view_playing === VIEWS_PLAYING.RECRUITING_RESULTS}>
-                <div>RECRUITING_RESULTS</div>
+                <RecruitingResults />
             </Show>
             {/* <Info /> */}
         </div>
