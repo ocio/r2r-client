@@ -1,27 +1,19 @@
 import React, { useMemo } from 'react'
 import { useGlobalState, useObserver } from 'dop-react'
 import { Show } from 'dop-router/react'
-import { sendClicksRecruiting, openPlayingDialog } from 'store/actions'
+import { sendClicksRecruiting } from 'store/actions'
 import { getPlayerIndex } from 'store/getters'
 import Window, { WindowTitle, WindowContent } from 'components/styled/Window'
 import styled from '@emotion/styled'
 import CountDown from 'components/animations/CountDown'
 import RecruitingBar from 'components/styled/RecruitingBar'
 import { COLOR } from 'const/styles'
-import { VIEWS_PLAYING } from 'const/views'
 
 export default function Recruiting() {
     const { game } = useGlobalState()
     const observer = useObserver()
     observer.observeProperty(game, 'recruiting')
     const recruiting = game.recruiting
-    const recruit_end = useMemo(() => game.recruit_end, [game.recruit_end])
-    console.log('Recruiting', recruiting, recruit_end, game.recruit_end)
-
-    // if (recruiting === false) {
-    //     openPlayingDialog({ view: VIEWS_PLAYING.RECRUITING_RESULTS })
-    // }
-
     return (
         <Window>
             <WindowTitle>Recruiting Phase</WindowTitle>
@@ -35,7 +27,7 @@ export default function Recruiting() {
                     <BigButton onClick={sendClicksRecruiting} />
                 </Show>
                 <Show if={!recruiting}>
-                    <CountDown from={10} to={1} />
+                    <CountDown from={9} to={1} />
                 </Show>
             </Bottom>
         </Window>
@@ -70,15 +62,15 @@ function RecruitingBarState({ id }) {
     const clicks_percentage = (clicks * 100) / clicks_max || 0
     const percentage = seconds_percentage * (clicks_percentage / 100)
 
-    if (color === COLOR.BLUE)
-        console.log({
-            seconds_max,
-            seconds,
-            seconds_percentage,
-            clicks_max,
-            clicks,
-            clicks_percentage
-        })
+    // if (color === COLOR.BLUE)
+    //     console.log({
+    //         seconds_max,
+    //         seconds,
+    //         seconds_percentage,
+    //         clicks_max,
+    //         clicks,
+    //         clicks_percentage
+    //     })
 
     return (
         <RecruitingBar

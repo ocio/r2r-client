@@ -11,7 +11,8 @@ const state = register({
     games: {
         // "Game_L6wLS50M8apDdnRN": "SF"
     },
-    game: {} // Current game we are playing
+    game: {}, // Current game we are playing
+    recruit_counter: 0
 })
 
 window.dop = dop
