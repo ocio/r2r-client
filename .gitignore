@@ -7,6 +7,7 @@ package-lock.json
 .pnp.js
 src/map
 state.json
+testing.js
 
 # testing
 /coverage

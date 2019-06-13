@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useMemo } from 'react'
 import { useGlobalState, useObserver } from 'dop-react'
 import { Show } from 'dop-router/react'
 import { sendClicksRecruiting } from 'store/actions'
@@ -38,10 +38,15 @@ function RecruitingBarState({ id }) {
     const { game } = useGlobalState()
     const observer = useObserver()
     observer.observeAll(game.players)
+    observer.observeProperty(game, 'recruiting')
+
+    const recruiting = game.recruiting
+    const recruit_end = game.recruit_end
+    const recruit_start = game.recruit_start
     const player_index = getPlayerIndex({ game_id: game.id })
     const color = player_index === id ? COLOR.BLUE : COLOR.RED
     const player = game.players[id]
-
+    const now_init = useMemo(() => Date.now(), [recruiting])
     const players = Object.keys(game.players)
         .map(id => ({
             id,
@@ -53,13 +58,31 @@ function RecruitingBarState({ id }) {
         if (id === players[index].id) break
     }
 
+    const seconds_max = recruit_end - recruit_start
+    const seconds = (Date.now() - now_init) / 1000
+    const seconds_percentage = (seconds * 100) / seconds_max
+
+    const clicks_max = players[0].clicks
+    const clicks = player.clicks
+    const clicks_percentage = (clicks * 100) / clicks_max
+
+    const percentage = seconds_percentage * (clicks_percentage / 100)
+
+    // // if (color === COLOR.BLUE)
+    // console.log({
+    //     id,
+    //     percentage,
+    //     seconds_percentage,
+    //     clicks_percentage
+    // })
+
     return (
         <RecruitingBar
             top={`${index * 90}px`}
-            width="100%"
+            width={`${percentage}%`}
             nickname={player.nickname}
             color={color}
-            metters={player.clicks}
+            metters={clicks || 0}
             units="?"
             power={player.power}
         />

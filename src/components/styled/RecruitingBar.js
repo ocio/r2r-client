@@ -17,27 +17,28 @@ export default function RecruitingBar({
         <ContainerBar top={top}>
             <HeaderBar>
                 <HeaderLeft color={color}>{nickname}</HeaderLeft>
-                <HeaderRight>
+                {/* <HeaderRight>
                     <IconImage
                         url="assets/img/icon-power.png"
                         size="20px"
                         topDivision="6"
                     />
                     {power}
-                </HeaderRight>
+                </HeaderRight> */}
             </HeaderBar>
             <BackgroundBar>
-                <Bar color={color} width={`calc(${width} - ${rightBarWidth})`}>
+                {/* <Bar color={color} width={`calc(${width} - ${rightBarWidth})`}> */}
+                <Bar color={color} width={`calc(${width})`}>
                     {metters}
                 </Bar>
-                <RightBar>
+                {/* <RightBar>
                     <IconImage
                         url="assets/img/icon-units.png"
                         size="24px"
                         topDivision="5"
                     />
                     <RightBarValue>{units}</RightBarValue>
-                </RightBar>
+                </RightBar> */}
             </BackgroundBar>
         </ContainerBar>
     )

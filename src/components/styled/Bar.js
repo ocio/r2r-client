@@ -14,6 +14,7 @@ export default function Bar({ children, color, width }) {
 
 const BarContainer = styled.div`
     width: ${p => p.width};
+    min-width: 70px;
     position: relative;
     height: 45px;
     background: ${p => p.color};
