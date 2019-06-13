@@ -1,4 +1,5 @@
 import React from 'react'
+import { Show } from 'dop-router/react'
 import styled from '@emotion/styled'
 import Bar from 'components/styled/Bar'
 import IconImage from 'components/styled/IconImage'
@@ -11,34 +12,41 @@ export default function RecruitingBar({
     units,
     power,
     color,
-    width
+    percentage
 }) {
+    const width =
+        units === undefined
+            ? `calc(${percentage}% - ${rightBarWidth})`
+            : `${percentage}%`
     return (
         <ContainerBar top={top}>
             <HeaderBar>
                 <HeaderLeft color={color}>{nickname}</HeaderLeft>
-                {/* <HeaderRight>
-                    <IconImage
-                        url="assets/img/icon-power.png"
-                        size="20px"
-                        topDivision="6"
-                    />
-                    {power}
-                </HeaderRight> */}
+                <Show if={power !== undefined}>
+                    <HeaderRight>
+                        <IconImage
+                            url="assets/img/icon-power.png"
+                            size="20px"
+                            topDivision="6"
+                        />
+                        {power}
+                    </HeaderRight>
+                </Show>
             </HeaderBar>
             <BackgroundBar>
-                {/* <Bar color={color} width={`calc(${width} - ${rightBarWidth})`}> */}
-                <Bar color={color} width={`calc(${width})`}>
+                <Bar color={color} width={width}>
                     {metters}
                 </Bar>
-                {/* <RightBar>
-                    <IconImage
-                        url="assets/img/icon-units.png"
-                        size="24px"
-                        topDivision="5"
-                    />
-                    <RightBarValue>{units}</RightBarValue>
-                </RightBar> */}
+                <Show if={units !== undefined}>
+                    <RightBar>
+                        <IconImage
+                            url="assets/img/icon-units.png"
+                            size="24px"
+                            topDivision="5"
+                        />
+                        <RightBarValue>{units}</RightBarValue>
+                    </RightBar>
+                </Show>
             </BackgroundBar>
         </ContainerBar>
     )

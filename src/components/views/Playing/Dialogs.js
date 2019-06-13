@@ -38,6 +38,9 @@ export default function Dialogs() {
             <Show if={state.view_playing === VIEWS_PLAYING.RECRUITING}>
                 <Recruiting />
             </Show>
+            <Show if={state.view_playing === VIEWS_PLAYING.RECRUITING_RESULTS}>
+                <div>RECRUITING_RESULTS</div>
+            </Show>
             {/* <Info /> */}
         </div>
     )

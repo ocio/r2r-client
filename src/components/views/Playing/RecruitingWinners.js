@@ -47,7 +47,7 @@ export default function Recruiting() {
                         <RecruitingBar
                             key={index}
                             top={`${index * 90}px`}
-                            width="100%"
+                            percentage={100}
                             nickname={player.nickname}
                             color={player.is_me ? COLOR.BLUE : COLOR.RED}
                             metters={recruiting ? player.clicks : 0}
