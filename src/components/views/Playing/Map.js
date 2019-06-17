@@ -106,6 +106,16 @@ function manageMutation({ mutation, game, API }) {
                 idTile: tile_id,
                 idOwner: player_index
             })
+            if (isMe({ game_id, player_index })) {
+                const owners = game.board[tile_id].owner
+                for (const owner_id in owners) {
+                    API.changeUnits({
+                        idTile: tile_id,
+                        idOwner: owner_id,
+                        units: null
+                    })
+                }
+            }
         }
     }
 
