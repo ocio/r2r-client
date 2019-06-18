@@ -1,29 +1,25 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React from 'react'
 import styled from '@emotion/styled'
 import { keyframes } from 'emotion'
 import { COLOR } from 'const/styles'
 
-export default function CountDown({ from, to, onAnimationEnd }) {
-    const [number, changeNumber] = useState(from)
-    const element = useRef(null)
-    to = to - 1
-    useEffect(() => {
-        const interval = setTimeout(() => {
-            if (to + 1 < number) changeNumber(number - 1)
-            else if (onAnimationEnd) onAnimationEnd()
-        }, 1000)
-        return () => clearTimeout(interval)
-    })
+export default function CountDown({ children }) {
+    // const [number, changeNumber] = useState(from)
+    // const element = useRef(null)
+    // to = to - 1
+    // useEffect(() => {
+    //     const interval = setTimeout(() => {
+    //         if (to + 1 < number) changeNumber(number - 1)
+    //         else if (onAnimationEnd) onAnimationEnd()
+    //     }, 1000)
+    //     return () => clearTimeout(interval)
+    // })
     return (
-        <Container>
-            <Number ref={element} count={from - to}>
-                {number}
-            </Number>
-        </Container>
+        <div>
+            <Number>{children}</Number>
+        </div>
     )
 }
-
-const Container = styled.div``
 
 const toBig = keyframes`
   0% {
@@ -42,7 +38,7 @@ const Number = styled.div`
         -5px 5px 0px white; */
     color: ${COLOR.BROWN_LIGHT};
     animation: ${toBig} 1s ease infinite;
-    animation-iteration-count: ${p => p.count};
+    animation-iteration-count: infinite;
     animation-delay: 0.2s;
 `
 

@@ -12,14 +12,12 @@ import { COLOR } from 'const/styles'
 export default function Recruiting() {
     const state = useGlobalState()
     const { game } = state
-    const observer = useObserver()
-    observer.observeProperty(game, 'recruiting')
-    const recruiting = game.recruiting
-
-    const seconds = state.recruit_counter
-    const diff1 = game.recruit_start - game.recruit_last
-    const show_buttons = seconds >= diff1 - 10
-
+    // const observer = useObserver()
+    // observer.observeProperty(game, 'recruiting')
+    // const recruiting = game.recruiting
+    const { now, recruit_end, recruit_start } = game
+    const show_buttons = now <= recruit_end && now >= recruit_start
+    const number = recruit_start - now
     return (
         <Window>
             <WindowTitle>Recruiting Phase</WindowTitle>
@@ -29,11 +27,11 @@ export default function Recruiting() {
                 ))}
             </WindowContent>
             <Bottom>
-                <Show if={show_buttons && recruiting}>
+                <Show if={show_buttons}>
                     <BigButton onClick={sendClicksRecruiting} />
                 </Show>
-                <Show if={show_buttons && !recruiting}>
-                    <CountDown from={9} to={1} />
+                <Show if={!show_buttons}>
+                    <CountDown>{number}</CountDown>
                 </Show>
             </Bottom>
         </Window>

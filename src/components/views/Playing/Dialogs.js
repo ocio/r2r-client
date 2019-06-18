@@ -16,10 +16,8 @@ export default function Dialogs() {
     const state = useGlobalState()
     const { game } = state
     const observer = useObserver()
+    observer.observeProperty(game, 'now')
     observer.observeProperty(state, 'view_playing')
-    observer.observeProperty(state, 'counter')
-
-    const ends = game.ends_at - game.starts_at - state.counter
 
     let units
     if (state.view_playing === VIEWS_PLAYING.SEND_UNITS) {
@@ -27,22 +25,47 @@ export default function Dialogs() {
         units = getMyTileUnits({ tile_id })
     }
 
+    const { now, recruit_end, recruit_start } = game
+    const is_recruit_view = now <= recruit_end && now + 10 >= recruit_start
+
+    if (
+        is_recruit_view &&
+        state.view_playing !== VIEWS_PLAYING.RECRUITING_RESULTS
+    ) {
+        state.view_playing = VIEWS_PLAYING.RECRUITING_RESULTS
+    }
+
     return (
         <div>
-            <Show if={state.view_playing === VIEWS_PLAYING.LEADERS || ends < 0}>
+            <Show
+                if={
+                    !is_recruit_view &&
+                    state.view_playing === VIEWS_PLAYING.LEADERS
+                }
+            >
                 <Leaders />
             </Show>
-            <Show if={state.view_playing === VIEWS_PLAYING.SEND_UNITS}>
+            <Show
+                if={
+                    !is_recruit_view &&
+                    state.view_playing === VIEWS_PLAYING.SEND_UNITS
+                }
+            >
                 <SendUnits
                     units={units}
                     onSend={sendUnits}
                     onClose={closePlayingDialogs}
                 />
             </Show>
-            <Show if={state.view_playing === VIEWS_PLAYING.RECRUITING}>
+            <Show if={is_recruit_view}>
                 <Recruiting />
             </Show>
-            <Show if={state.view_playing === VIEWS_PLAYING.RECRUITING_RESULTS}>
+            <Show
+                if={
+                    !is_recruit_view &&
+                    state.view_playing === VIEWS_PLAYING.RECRUITING_RESULTS
+                }
+            >
                 <RecruitingResults />
             </Show>
             {/* <Info /> */}

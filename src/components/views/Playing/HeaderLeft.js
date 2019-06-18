@@ -10,12 +10,10 @@ export default function HeaderLeft() {
     const state = useGlobalState()
     const { game } = state
     const observer = useObserver()
-    observer.observeProperty(state, 'counter')
-    const ends = game.ends_at - game.starts_at - state.counter
-    const diff1 = game.recruit_start - game.recruit_last
-    const diff2 = game.recruit_end - game.recruit_start
-    const diff = game.recruiting ? diff1 + diff2 : diff1
-    const second = diff - state.recruit_counter
+    observer.observeProperty(game, 'now')
+    const ends = game.ends_at - game.now
+    const recruit =
+        (game.recruiting ? game.recruit_end : game.recruit_start) - game.now
     return (
         <Show if={ends > 0}>
             <HeaderStyled>
@@ -32,7 +30,7 @@ export default function HeaderLeft() {
                     float="left"
                     color={game.recruiting ? COLOR.RED : COLOR.WHITE}
                 >
-                    {fmtMSS(second)}
+                    {fmtMSS(recruit)}
                 </Score>
             </HeaderStyled>
         </Show>

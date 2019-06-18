@@ -21,6 +21,7 @@ import IconImage from 'components/styled/IconImage'
 export default function WaitingPlayers() {
     const { game, games } = useGlobalState()
     const observer = useObserver()
+    observer.observeProperty(game, 'now')
     observer.observeProperty(game, 'players_total')
     return (
         <Window height="550">
@@ -28,9 +29,7 @@ export default function WaitingPlayers() {
             <WindowContent>
                 <Div padding={game.starts_at === undefined ? '30px' : '0 30px'}>
                     <Show if={game.starts_at !== undefined}>
-                        <GameStartsIn
-                            countdown={game.starts_at - game.created_at}
-                        />
+                        <GameStartsIn countdown={game.starts_at - game.now} />
                     </Show>
                     <Table>
                         {Object.keys(game.players).map(player_id => {
