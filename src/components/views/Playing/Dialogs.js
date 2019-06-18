@@ -14,8 +14,12 @@ import RecruitingResults from 'components/views/Playing/RecruitingResults'
 
 export default function Dialogs() {
     const state = useGlobalState()
+    const { game } = state
     const observer = useObserver()
     observer.observeProperty(state, 'view_playing')
+    observer.observeProperty(state, 'counter')
+
+    const ends = game.ends_at - game.starts_at - state.counter
 
     let units
     if (state.view_playing === VIEWS_PLAYING.SEND_UNITS) {
@@ -25,7 +29,7 @@ export default function Dialogs() {
 
     return (
         <div>
-            <Show if={state.view_playing === VIEWS_PLAYING.LEADERS}>
+            <Show if={state.view_playing === VIEWS_PLAYING.LEADERS || ends < 0}>
                 <Leaders />
             </Show>
             <Show if={state.view_playing === VIEWS_PLAYING.SEND_UNITS}>

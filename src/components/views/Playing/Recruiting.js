@@ -10,10 +10,16 @@ import RecruitingBar from 'components/styled/RecruitingBar'
 import { COLOR } from 'const/styles'
 
 export default function Recruiting() {
-    const { game } = useGlobalState()
+    const state = useGlobalState()
+    const { game } = state
     const observer = useObserver()
     observer.observeProperty(game, 'recruiting')
     const recruiting = game.recruiting
+
+    const seconds = state.recruit_counter
+    const diff1 = game.recruit_start - game.recruit_last
+    const show_buttons = seconds >= diff1 - 10
+
     return (
         <Window>
             <WindowTitle>Recruiting Phase</WindowTitle>
@@ -23,10 +29,10 @@ export default function Recruiting() {
                 ))}
             </WindowContent>
             <Bottom>
-                <Show if={recruiting}>
+                <Show if={show_buttons && recruiting}>
                     <BigButton onClick={sendClicksRecruiting} />
                 </Show>
-                <Show if={!recruiting}>
+                <Show if={show_buttons && !recruiting}>
                     <CountDown from={9} to={1} />
                 </Show>
             </Bottom>

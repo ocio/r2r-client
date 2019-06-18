@@ -12,6 +12,7 @@ const state = register({
         // "Game_L6wLS50M8apDdnRN": "SF"
     },
     game: {}, // Current game we are playing
+    counter: 0,
     recruit_counter: 0
 })
 
