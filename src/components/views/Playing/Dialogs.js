@@ -1,6 +1,6 @@
 import React from 'react'
 import { useGlobalState, useObserver } from 'dop-react'
-import { Show } from 'dop-router/react'
+import { Router, Route } from 'dop-router/react'
 import { getMyTileUnits } from 'store/getters'
 import { closePlayingDialogs, sendUnits } from 'store/actions'
 import { VIEWS_PLAYING } from 'const/views'
@@ -9,67 +9,50 @@ import { VIEWS_PLAYING } from 'const/views'
 import SendUnits from 'components/views/Playing/SendUnits'
 import Leaders from 'components/views/Playing/Leaders'
 import Recruiting from 'components/views/Playing/Recruiting'
-import RecruitingResults from 'components/views/Playing/RecruitingResults'
 
 export default function Dialogs() {
     const state = useGlobalState()
     const { game } = state
     const observer = useObserver()
-    observer.observeProperty(game, 'now')
     observer.observeProperty(state, 'view_playing')
 
+    console.log('Dialogs')
+
+    const observer_now = useObserver(() => {
+        const { now, recruit_end, recruit_start } = game
+        if (now <= recruit_end && now + 1 >= recruit_start) {
+            state.view_playing = VIEWS_PLAYING.RECRUITING
+        }
+        if (game.now >= game.ends_at) {
+            state.view_playing = VIEWS_PLAYING.LEADERS
+        }
+        return false
+    })
+    observer_now.observeProperty(state.game, 'now')
+
+    const view = state.view_playing
+
     let units = 0
-    if (state.view_playing === VIEWS_PLAYING.SEND_UNITS) {
+    if (view === VIEWS_PLAYING.SEND_UNITS) {
         const tile_id = state.temp.tile_id_from
         units = getMyTileUnits({ tile_id })
     }
 
-    const { now, recruit_end, recruit_start } = game
-    const is_recruit_view = now <= recruit_end && now + 10 >= recruit_start
-
-    if (
-        is_recruit_view &&
-        state.view_playing !== VIEWS_PLAYING.RECRUITING_RESULTS
-    ) {
-        state.view_playing = VIEWS_PLAYING.RECRUITING_RESULTS
-    }
-
     return (
-        <div>
-            <Show
-                if={
-                    (!is_recruit_view &&
-                        state.view_playing === VIEWS_PLAYING.LEADERS) ||
-                    game.now >= game.ends_at
-                }
-            >
+        <Router>
+            <Route if={view === VIEWS_PLAYING.LEADERS}>
                 <Leaders />
-            </Show>
-            <Show
-                if={
-                    !is_recruit_view &&
-                    units > 0 &&
-                    state.view_playing === VIEWS_PLAYING.SEND_UNITS
-                }
-            >
+            </Route>
+            <Route if={view === VIEWS_PLAYING.RECRUITING}>
+                <Recruiting />
+            </Route>
+            <Route if={view === VIEWS_PLAYING.SEND_UNITS && units > 0}>
                 <SendUnits
                     units={units}
                     onSend={sendUnits}
                     onClose={closePlayingDialogs}
                 />
-            </Show>
-            <Show if={is_recruit_view}>
-                <Recruiting />
-            </Show>
-            <Show
-                if={
-                    !is_recruit_view &&
-                    state.view_playing === VIEWS_PLAYING.RECRUITING_RESULTS
-                }
-            >
-                <RecruitingResults />
-            </Show>
-            {/* <Info /> */}
-        </div>
+            </Route>
+        </Router>
     )
 }

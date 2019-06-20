@@ -1,23 +1,25 @@
 import React, { useMemo } from 'react'
 import { useGlobalState, useObserver } from 'dop-react'
 import { Show } from 'dop-router/react'
-import { sendClicksRecruiting } from 'store/actions'
+import { sendClicksRecruiting, closePlayingDialogs } from 'store/actions'
 import { getPlayerIndex } from 'store/getters'
-import Window, { WindowTitle, WindowContent } from 'components/styled/Window'
+import Window, {
+    WindowTitle,
+    WindowContent,
+    WindowClose
+} from 'components/styled/Window'
 import styled from '@emotion/styled'
-import CountDown from 'components/animations/CountDown'
 import RecruitingBar from 'components/styled/RecruitingBar'
 import { COLOR } from 'const/styles'
 
 export default function Recruiting() {
+    console.log('Recruiting')
+
     const state = useGlobalState()
     const { game } = state
-    // const observer = useObserver()
-    // observer.observeProperty(game, 'recruiting')
-    // const recruiting = game.recruiting
-    const { now, recruit_end, recruit_start } = game
-    const show_buttons = now <= recruit_end && now >= recruit_start
-    const number = recruit_start - now
+    const observer = useObserver()
+    observer.observeProperty(game, 'recruiting')
+    const recruiting = game.recruiting
 
     function preventKeyboard(e) {
         e.preventDefault()
@@ -26,22 +28,26 @@ export default function Recruiting() {
     return (
         <Window onContextMenu={preventKeyboard}>
             <WindowTitle>Recruiting Phase</WindowTitle>
+            <Show if={!recruiting}>
+                <WindowClose onClick={closePlayingDialogs} />
+            </Show>
+
             <WindowContent height="370px" margin="0 25px">
                 {Object.keys(game.players).map((id, index) => (
                     <RecruitingBarState key={index} id={id} />
                 ))}
             </WindowContent>
             <Bottom>
-                <Show if={show_buttons}>
+                <Show if={recruiting}>
                     <BigButton
                         onClick={sendClicksRecruiting}
                         onKeyPress={preventKeyboard}
                         onKeyDown={preventKeyboard}
                     />
                 </Show>
-                <Show if={!show_buttons}>
+                {/* <Show if={!show_button}>
                     <CountDown>{number}</CountDown>
-                </Show>
+                </Show> */}
             </Bottom>
         </Window>
     )
