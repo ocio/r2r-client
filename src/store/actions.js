@@ -114,7 +114,7 @@ window.bot = async function bot() {
             const game_id = game.id
 
             if (game.recruiting) {
-                for (let i = 0; i < 10000; i++) {
+                for (let i = 0; i < 1000; i++) {
                     Server.sendClicksRecruiting({ game_id })
                 }
             }
@@ -134,12 +134,14 @@ window.bot = async function bot() {
                                 1,
                                 Math.round(tile1.owner[player_index].units / 2)
                             )
-                            await Server.sendUnits({
-                                game_id,
-                                tile_id_from,
-                                tile_id_to,
-                                units
-                            })
+                            try {
+                                await Server.sendUnits({
+                                    game_id,
+                                    tile_id_from,
+                                    tile_id_to,
+                                    units
+                                })
+                            } catch (e) {}
                             break
                         }
                     }
@@ -149,4 +151,4 @@ window.bot = async function bot() {
         }
     }, 1000)
 }
-window.bot()
+// window.bot()
