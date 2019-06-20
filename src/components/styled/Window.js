@@ -8,7 +8,8 @@ export default function Window({
     maxWidth = window.innerWidth,
     maxHeight = window.innerHeight,
     scale = 1,
-    children
+    children,
+    ...props
 }) {
     const scaleWidth = (maxWidth / width) * 0.9
     const scaleHeight = (maxHeight / height) * 0.9
@@ -16,7 +17,7 @@ export default function Window({
     if (scaleHeight < scale) scale = scaleHeight
     // console.log({ scale, width, height, maxWidth, maxHeight })
     return (
-        <Container>
+        <Container {...props}>
             <Background width={width} height={height} scale={scale}>
                 <Background0 width={width} height={height} />
                 <Background1 />

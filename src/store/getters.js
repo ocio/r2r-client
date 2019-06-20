@@ -17,7 +17,9 @@ export function getPlayerIndex({ game_id }) {
 export function getMyTileUnits({ tile_id }) {
     const board = state.game.board
     const player_index = getPlayerIndex({ game_id: state.game.id })
-    return board[tile_id].owner[player_index].units
+    return board[tile_id].owner.hasOwnProperty(player_index)
+        ? board[tile_id].owner[player_index].units
+        : 0
 }
 
 export function getOwnerFromTile({ tile_id }) {

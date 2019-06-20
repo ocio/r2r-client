@@ -18,8 +18,13 @@ export default function Recruiting() {
     const { now, recruit_end, recruit_start } = game
     const show_buttons = now <= recruit_end && now >= recruit_start
     const number = recruit_start - now
+
+    function preventKeyboard(e) {
+        e.preventDefault()
+    }
+
     return (
-        <Window>
+        <Window onContextMenu={preventKeyboard}>
             <WindowTitle>Recruiting Phase</WindowTitle>
             <WindowContent height="370px" margin="0 25px">
                 {Object.keys(game.players).map((id, index) => (
@@ -28,7 +33,11 @@ export default function Recruiting() {
             </WindowContent>
             <Bottom>
                 <Show if={show_buttons}>
-                    <BigButton onClick={sendClicksRecruiting} />
+                    <BigButton
+                        onClick={sendClicksRecruiting}
+                        onKeyPress={preventKeyboard}
+                        onKeyDown={preventKeyboard}
+                    />
                 </Show>
                 <Show if={!show_buttons}>
                     <CountDown>{number}</CountDown>

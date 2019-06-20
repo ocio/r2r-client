@@ -6,7 +6,6 @@ import { closePlayingDialogs, sendUnits } from 'store/actions'
 import { VIEWS_PLAYING } from 'const/views'
 
 // components
-
 import SendUnits from 'components/views/Playing/SendUnits'
 import Leaders from 'components/views/Playing/Leaders'
 import Recruiting from 'components/views/Playing/Recruiting'
@@ -19,7 +18,7 @@ export default function Dialogs() {
     observer.observeProperty(game, 'now')
     observer.observeProperty(state, 'view_playing')
 
-    let units
+    let units = 0
     if (state.view_playing === VIEWS_PLAYING.SEND_UNITS) {
         const tile_id = state.temp.tile_id_from
         units = getMyTileUnits({ tile_id })
@@ -39,8 +38,9 @@ export default function Dialogs() {
         <div>
             <Show
                 if={
-                    !is_recruit_view &&
-                    state.view_playing === VIEWS_PLAYING.LEADERS
+                    (!is_recruit_view &&
+                        state.view_playing === VIEWS_PLAYING.LEADERS) ||
+                    game.now >= game.ends_at
                 }
             >
                 <Leaders />
@@ -48,6 +48,7 @@ export default function Dialogs() {
             <Show
                 if={
                     !is_recruit_view &&
+                    units > 0 &&
                     state.view_playing === VIEWS_PLAYING.SEND_UNITS
                 }
             >

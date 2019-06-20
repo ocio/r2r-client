@@ -38,7 +38,7 @@ export default function RecruitingResults() {
     const clicks_max = players[0].clicks
     return (
         <Window>
-            <WindowTitle>Recruiting Phase</WindowTitle>
+            <WindowTitle>Results</WindowTitle>
             <WindowClose onClick={closePlayingDialogs} />
             <WindowContent height="370px" margin="0 25px">
                 {players.map((player, index) => {
