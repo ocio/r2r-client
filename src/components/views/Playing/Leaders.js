@@ -1,4 +1,5 @@
 import React from 'react'
+import { Show } from 'dop-router/react'
 import { useGlobalState, useObserver } from 'dop-react'
 import { calcScore } from 'runandrisk-common/rules'
 import { getPlayerIndex } from 'store/getters'
@@ -19,7 +20,7 @@ import {
 } from 'components/styled/Table'
 import IconImage from 'components/styled/IconImage'
 import { ButtonBrown } from 'components/styled/Button'
-import { closePlayingDialogs } from 'store/actions'
+import { closePlayingDialogs, playAgain } from 'store/actions'
 
 export default function Leaders() {
     const { game } = useGlobalState()
@@ -42,10 +43,14 @@ export default function Leaders() {
         .sort((a, b) => b.kills - a.kills)
         .sort((a, b) => b.power - a.power)
         .sort((a, b) => b.score - a.score)
+
+    const game_ended = game.now >= game.ends_at
     return (
         <Window width="1000" height="600">
-            <WindowTitle>Leaders</WindowTitle>
-            <WindowClose onClick={closePlayingDialogs} />
+            <WindowTitle>{game_ended ? 'Results' : 'Leaders'}</WindowTitle>
+            <Show if={!game_ended}>
+                <WindowClose onClick={closePlayingDialogs} />
+            </Show>
             <WindowContent>
                 <Div padding="0 30px 30px 30px">
                     <Table>
@@ -90,45 +95,13 @@ export default function Leaders() {
                                 </TableRow>
                             )
                         })}
-                        {/*         
-                        <TableRow>
-                            <TableText>#2</TableText>
-                            <TableText color={COLOR.RED}>
-                                Agustin Jamardo
-                            </TableText>
-                            <TableText align="center">314</TableText>
-                            <TableText align="center">131</TableText>
-                            <TableText align="center">71</TableText>
-                            <TableText color={COLOR.ORANGE} align="center">
-                                114
-                            </TableText>
-                        </TableRow>
-                        <TableRow>
-                            <TableText>#3</TableText>
-                            <TableText color={COLOR.RED}>Roly</TableText>
-                            <TableText align="center">314</TableText>
-                            <TableText align="center">131</TableText>
-                            <TableText align="center">71</TableText>
-                            <TableText color={COLOR.ORANGE} align="center">
-                                212
-                            </TableText>
-                        </TableRow>
-                        <TableRow>
-                            <TableText>#4</TableText>
-                            <TableText color={COLOR.RED}>Selo</TableText>
-                            <TableText align="center">314</TableText>
-                            <TableText align="center">131</TableText>
-                            <TableText align="center">71</TableText>
-                            <TableText color={COLOR.ORANGE} align="center">
-                                313
-                            </TableText>
-                        </TableRow> */}
                     </Table>
                 </Div>
             </WindowContent>
             <WindowButtons>
-                <ButtonBrown onClick={closePlayingDialogs}>Close</ButtonBrown>
-                {/* <ButtonRed>Cancel</ButtonRed> */}
+                <Show if={game_ended}>
+                    <ButtonBrown onClick={playAgain}>Play Again</ButtonBrown>
+                </Show>
             </WindowButtons>
         </Window>
     )

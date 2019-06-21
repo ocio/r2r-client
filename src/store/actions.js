@@ -42,8 +42,16 @@ export async function subscribeEndpoints({ node }) {
     loginGuest({ nickname: state.nickname })
 }
 
+export async function playAgain() {
+    const collector = collect()
+    resetState()
+    loginGuest({ nickname: state.nickname })
+    collector.emit()
+}
+
 export async function loginGuest({ nickname }) {
     const logged = await Server.loginGuest({ nickname })
+    const collector = collect()
     state.player_id = logged.player_id
     state.nickname = logged.nickname
     state.games = logged.games
@@ -51,6 +59,7 @@ export async function loginGuest({ nickname }) {
     state.games[game_id] = player_index
     // console.log('loginGuest', JSON.parse(JSON.stringify(state)))
     subscribeGame({ game_id })
+    collector.emit()
 }
 
 export async function subscribeGame({ game_id }) {
