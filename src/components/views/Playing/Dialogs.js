@@ -16,11 +16,9 @@ export default function Dialogs() {
     const observer = useObserver()
     observer.observeProperty(state, 'view_playing')
 
-    console.log('Dialogs')
-
     const observer_now = useObserver(() => {
         const { now, recruit_end, recruit_start } = game
-        if (now <= recruit_end && now + 1 >= recruit_start) {
+        if (now <= recruit_end && now >= recruit_start) {
             state.view_playing = VIEWS_PLAYING.RECRUITING
         }
         if (game.now >= game.ends_at) {
@@ -40,7 +38,7 @@ export default function Dialogs() {
 
     return (
         <Router>
-            <Route if={view === VIEWS_PLAYING.LEADERS}>
+            <Route if={view === VIEWS_PLAYING.LEADERS && !game.recruiting}>
                 <Leaders />
             </Route>
             <Route if={view === VIEWS_PLAYING.RECRUITING}>

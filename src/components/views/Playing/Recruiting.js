@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'
 import { useGlobalState, useObserver } from 'dop-react'
 import { Show } from 'dop-router/react'
+import { calcRecruitment } from 'runandrisk-common/rules'
 import { sendClicksRecruiting, closePlayingDialogs } from 'store/actions'
 import { getPlayerIndex } from 'store/getters'
 import Window, {
@@ -13,49 +14,56 @@ import RecruitingBar from 'components/styled/RecruitingBar'
 import { COLOR } from 'const/styles'
 
 export default function Recruiting() {
-    console.log('Recruiting')
-
-    const state = useGlobalState()
-    const { game } = state
-    const observer = useObserver()
-    observer.observeProperty(game, 'recruiting')
-    const recruiting = game.recruiting
-
-    function preventKeyboard(e) {
-        e.preventDefault()
-    }
-
+    const { game } = useGlobalState()
     return (
         <Window onContextMenu={preventKeyboard}>
             <WindowTitle>Recruiting Phase</WindowTitle>
-            <Show if={!recruiting}>
-                <WindowClose onClick={closePlayingDialogs} />
-            </Show>
-
+            <CloseRecruiting />
             <WindowContent height="370px" margin="0 25px">
                 {Object.keys(game.players).map((id, index) => (
                     <RecruitingBarState key={index} id={id} />
                 ))}
             </WindowContent>
             <Bottom>
-                <Show if={recruiting}>
-                    <BigButton
-                        onClick={sendClicksRecruiting}
-                        onKeyPress={preventKeyboard}
-                        onKeyDown={preventKeyboard}
-                    />
-                </Show>
-                {/* <Show if={!show_button}>
-                    <CountDown>{number}</CountDown>
-                </Show> */}
+                <ShowButton />
             </Bottom>
         </Window>
     )
 }
 
-function RecruitingBarState({ id }) {
+function preventKeyboard(e) {
+    e.preventDefault()
+}
+
+function CloseRecruiting() {
     const { game } = useGlobalState()
     const observer = useObserver()
+    observer.observeProperty(game, 'recruiting')
+    return (
+        <Show if={!game.recruiting}>
+            <WindowClose onClick={closePlayingDialogs} />
+        </Show>
+    )
+}
+
+function ShowButton() {
+    const { game } = useGlobalState()
+    const observer = useObserver()
+    observer.observeProperty(game, 'recruiting')
+    return (
+        <Show if={game.recruiting}>
+            <BigButton
+                onClick={sendClicksRecruiting}
+                onKeyPress={preventKeyboard}
+                onKeyDown={preventKeyboard}
+            />
+        </Show>
+    )
+}
+
+function RecruitingBarState({ id }) {
+    const { game } = useGlobalState()
+    const observer = useObserver(() => game.recruiting)
     observer.observeAll(game.players)
 
     const recruiting = game.recruiting
@@ -77,19 +85,10 @@ function RecruitingBarState({ id }) {
     const seconds = (Date.now() - now_init) / 1000
     const seconds_percentage = (seconds * 100) / seconds_max
     const clicks_max = players[0].clicks
-    const clicks = recruiting ? player.clicks : 0
+    const clicks = player.clicks || 0
     const clicks_percentage = (clicks * 100) / clicks_max || 0
     const percentage = seconds_percentage * (clicks_percentage / 100)
-
-    // if (color === COLOR.BLUE)
-    //     console.log({
-    //         seconds_max,
-    //         seconds,
-    //         seconds_percentage,
-    //         clicks_max,
-    //         clicks,
-    //         clicks_percentage
-    //     })
+    const recruited = calcRecruitment({ clicks, power: player.power })
 
     return (
         <RecruitingBar
@@ -98,6 +97,8 @@ function RecruitingBarState({ id }) {
             nickname={player.nickname}
             color={color}
             metters={clicks}
+            units={recruited}
+            power={player.power}
         />
     )
 }

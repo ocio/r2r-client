@@ -114,7 +114,7 @@ window.bot = async function bot() {
             const game_id = game.id
 
             if (game.recruiting) {
-                for (let i = 0; i < 1000; i++) {
+                for (let i = 0; i < 100; i++) {
                     Server.sendClicksRecruiting({ game_id })
                 }
             }
