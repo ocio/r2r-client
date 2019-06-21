@@ -36,10 +36,12 @@ const Number = styled.div`
     line-height: 125px;
     /* text-shadow: 5px 5px 0px white, -5px -5px 0px white, 5px -5px 0px white,
         -5px 5px 0px white; */
-    color: ${COLOR.BROWN_LIGHT};
+    font-family: 'Allan';
+    color: ${COLOR.WHITE};
+    text-shadow: 0px 0px 9px;
     animation: ${toBig} 1s ease infinite;
     animation-iteration-count: infinite;
-    animation-delay: 0.2s;
+    /* animation-delay: 0.2s; */
 `
 
 // const bounce = keyframes`
