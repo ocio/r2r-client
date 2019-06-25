@@ -11,7 +11,11 @@ import {
     getPlayerIndex,
     isAllowedToSendUnits
 } from 'store/getters'
-import { selectUnitsToSend, closePlayingDialogs } from 'store/actions'
+import {
+    selectUnitsToSend,
+    closePlayingDialogs,
+    updateTileUnits
+} from 'store/actions'
 
 export default function Map() {
     const canvas_ref = useRef()
@@ -70,21 +74,36 @@ function manageMutation({ mutation, game, API }) {
     if (mutation.path[4] === 'owner') {
         const game_id = game.id
         const tile_id = mutation.path[3]
-        const tile = game.board[tile_id]
         const player_index = mutation.prop
+        const tile = game.board[tile_id]
+        const owners = tile.owner
+        const owners_keys = Object.keys(owners)
+        const me_index = getPlayerIndex({ game_id })
+        const am_i_in_tile = owners.hasOwnProperty(me_index)
         if (mutation.hasOwnProperty('value')) {
-            // const owners =
-            Object.keys(tile.owner)
+            owners_keys
                 .map(player_index => ({
                     player_index,
-                    index: tile.owner[player_index].index,
-                    units: tile.owner[player_index].units
+                    index: owners[player_index].index,
+                    units: owners[player_index].units
                 }))
                 .sort((a, b) => a.index - b.index)
                 .forEach(({ player_index, units }) => {
                     const nickname = getNicknameFromGame({
                         player_index: player_index
                     })
+
+                    // If player just arrive to a new tile and does not have
+                    // info of the units we must fetch it to be up to date
+                    if (
+                        isMe({ game_id, player_index }) &&
+                        mutation.old_value === undefined &&
+                        owners_keys.length > 1
+                    ) {
+                        // console.log('fetch')
+                        updateTileUnits({ game_id, tile_id })
+                    }
+
                     const addOwner = isMe({ game_id, player_index })
                         ? API.addOwnerAsMe
                         : API.addOwnerAsEnemy
@@ -96,7 +115,7 @@ function manageMutation({ mutation, game, API }) {
                     API.changeUnits({
                         idTile: tile_id,
                         idOwner: player_index,
-                        units
+                        units: am_i_in_tile ? units : null
                     })
                 })
         }
@@ -106,8 +125,7 @@ function manageMutation({ mutation, game, API }) {
                 idTile: tile_id,
                 idOwner: player_index
             })
-            if (isMe({ game_id, player_index })) {
-                const owners = game.board[tile_id].owner
+            if (!am_i_in_tile) {
                 for (const owner_id in owners) {
                     API.changeUnits({
                         idTile: tile_id,

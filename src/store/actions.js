@@ -1,4 +1,4 @@
-import { connect, action, collect } from 'dop'
+import dop, { connect, action, collect } from 'dop'
 import state from 'store/state'
 import { VIEWS } from 'const/views'
 import { VIEWS_PLAYING } from 'const/views'
@@ -111,7 +111,27 @@ export async function sendClicksRecruiting() {
     }
 }
 
+export async function updateTileUnits({ game_id, tile_id }) {
+    const collector = collect()
+    try {
+        const owners = await Server.getUnitsTile({ game_id, tile_id })
+        Object.keys(owners).forEach(owner_id => {
+            // console.log(owners[owner_id])
+            const owner = owners[owner_id]
+            const game = state.game
+            game.board[tile_id].owner[owner_id].units = owner.units
+            game.board[tile_id].owner[owner_id].index = owner.index
+        })
+    } catch (e) {
+        // console.error(e)
+    }
+    collector.emit()
+}
+
 let interval
+window.dop = dop
+window.state = state
+window.Server = Server
 window.stopbot = () => clearInterval(interval)
 window.bot = async function bot() {
     const { shuffle, randomInt } = require('runandrisk-common/utils')

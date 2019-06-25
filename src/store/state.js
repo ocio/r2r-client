@@ -1,4 +1,4 @@
-import dop, { register } from 'dop'
+import { register } from 'dop'
 import { VIEWS, VIEWS_PLAYING } from 'const/views'
 
 const state = register({
@@ -13,8 +13,5 @@ const state = register({
     },
     game: {} // Current game we are playing
 })
-
-window.dop = dop
-window.state = state
 
 export default state
