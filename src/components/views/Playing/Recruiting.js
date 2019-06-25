@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useRef } from 'react'
 import { useGlobalState, useObserver } from 'dop-react'
 import { Show } from 'dop-router/react'
 import { calcRecruitment } from 'runandrisk-common/rules'
@@ -65,8 +65,13 @@ function RecruitingBarState({ id }) {
     const { game } = useGlobalState()
     const observer = useObserver(() => game.recruiting)
     observer.observeAll(game.players)
+    const observer2 = useObserver(() => {
+        now_init.current = Date.now()
+        return false
+    })
+    observer2.observeProperty(game, 'recruiting')
 
-    const recruiting = game.recruiting
+    // const recruiting = game.recruiting
     const player_index = getPlayerIndex({ game_id: game.id })
     const color = player_index === id ? COLOR.BLUE : COLOR.RED
     const player = game.players[id]
@@ -80,9 +85,9 @@ function RecruitingBarState({ id }) {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    const now_init = useMemo(() => Date.now(), [recruiting])
+    const now_init = useRef(Date.now())
     const seconds_max = game.recruit_end - game.recruit_start
-    const seconds = (Date.now() - now_init) / 1000
+    const seconds = (Date.now() - now_init.current) / 1000
     const seconds_percentage = (seconds * 100) / seconds_max
     const clicks_max = players[0].clicks
     const clicks = player.clicks || 0
