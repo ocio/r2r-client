@@ -38,7 +38,7 @@ const Number = styled.div`
         -5px 5px 0px white; */
     font-family: 'Allan';
     color: ${COLOR.WHITE};
-    text-shadow: 0px 0px 9px;
+    text-shadow: 0px 0px 3px;
     animation: ${toBig} 1s ease infinite;
     animation-iteration-count: infinite;
     /* animation-delay: 0.2s; */

@@ -11,7 +11,9 @@ export default function HeaderLeft() {
     const { game } = state
     const observer = useObserver()
     observer.observeProperty(game, 'now')
+
     const ends = game.ends_at - game.now
+    const show_recruiting = game.ends_at > game.recruit_end
     const recruit =
         (game.recruiting ? game.recruit_end : game.recruit_start) - game.now
     return (
@@ -25,13 +27,15 @@ export default function HeaderLeft() {
                     {fmtMSS(ends)}
                 </Score>
 
-                <Score
-                    icon="assets/img/icon-button.png"
-                    float="left"
-                    color={game.recruiting ? COLOR.RED : COLOR.WHITE}
-                >
-                    {fmtMSS(recruit)}
-                </Score>
+                <Show if={show_recruiting}>
+                    <Score
+                        icon="assets/img/icon-button.png"
+                        float="left"
+                        color={game.recruiting ? COLOR.RED : COLOR.WHITE}
+                    >
+                        {fmtMSS(recruit)}
+                    </Score>
+                </Show>
             </HeaderStyled>
         </Show>
     )
