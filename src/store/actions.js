@@ -1,7 +1,8 @@
-import dop, { connect, action, collect } from 'dop'
+import { connect, action, collect } from 'dop'
 import state from 'store/state'
 import { VIEWS } from 'const/views'
 import { VIEWS_PLAYING } from 'const/views'
+import { localStorageSet } from 'utils/browser'
 
 const Server = {}
 
@@ -128,56 +129,65 @@ export async function updateTileUnits({ game_id, tile_id }) {
     collector.emit()
 }
 
-let interval
-window.dop = dop
-window.state = state
-window.Server = Server
-window.stopbot = () => clearInterval(interval)
-window.bot = async function bot() {
-    const { shuffle, randomInt } = require('runandrisk-common/utils')
-    const { distance } = require('runandrisk-common/board')
-
-    interval = setInterval(async function() {
-        if (state.view === VIEWS.PLAYING) {
-            const game = state.game
-            const game_id = game.id
-
-            if (game.recruiting) {
-                for (let i = 0; i < 100; i++) {
-                    Server.sendClicksRecruiting({ game_id })
-                }
-            }
-
-            const player_index = state.games[game_id]
-            const board = game.board
-            const tiles = shuffle(Object.keys(board))
-            for (let i = 0; i < tiles.length; i += 1) {
-                const tile_id_from = tiles[i]
-                const tile1 = board[tile_id_from]
-                if (tile1.owner.hasOwnProperty(player_index)) {
-                    for (let i = 0; i < tiles.length; i += 1) {
-                        const tile_id_to = tiles[i]
-                        const tile2 = board[tile_id_to]
-                        if (distance({ tile1, tile2 }) === 1) {
-                            const units = randomInt(
-                                1,
-                                Math.round(tile1.owner[player_index].units / 2)
-                            )
-                            try {
-                                await Server.sendUnits({
-                                    game_id,
-                                    tile_id_from,
-                                    tile_id_to,
-                                    units
-                                })
-                            } catch (e) {}
-                            break
-                        }
-                    }
-                    break
-                }
-            }
-        }
-    }, 1000)
+export function changeNickname(nickname) {
+    state.nickname = nickname
+    localStorageSet('nickname', nickname)
 }
+
+//
+// DEV
+//
+// const dop = require('dop')
+// let interval
+// window.dop = dop
+// window.state = state
+// window.Server = Server
+// window.stopbot = () => clearInterval(interval)
+// window.bot = async function bot() {
+//     const { shuffle, randomInt } = require('runandrisk-common/utils')
+//     const { distance } = require('runandrisk-common/board')
+
+//     interval = setInterval(async function() {
+//         if (state.view === VIEWS.PLAYING) {
+//             const game = state.game
+//             const game_id = game.id
+
+//             if (game.recruiting) {
+//                 for (let i = 0; i < 100; i++) {
+//                     Server.sendClicksRecruiting({ game_id })
+//                 }
+//             }
+
+//             const player_index = state.games[game_id]
+//             const board = game.board
+//             const tiles = shuffle(Object.keys(board))
+//             for (let i = 0; i < tiles.length; i += 1) {
+//                 const tile_id_from = tiles[i]
+//                 const tile1 = board[tile_id_from]
+//                 if (tile1.owner.hasOwnProperty(player_index)) {
+//                     for (let i = 0; i < tiles.length; i += 1) {
+//                         const tile_id_to = tiles[i]
+//                         const tile2 = board[tile_id_to]
+//                         if (distance({ tile1, tile2 }) === 1) {
+//                             const units = randomInt(
+//                                 1,
+//                                 Math.round(tile1.owner[player_index].units / 2)
+//                             )
+//                             try {
+//                                 await Server.sendUnits({
+//                                     game_id,
+//                                     tile_id_from,
+//                                     tile_id_to,
+//                                     units
+//                                 })
+//                             } catch (e) {}
+//                             break
+//                         }
+//                     }
+//                     break
+//                 }
+//             }
+//         }
+//     }, 1000)
+// }
 // window.bot()

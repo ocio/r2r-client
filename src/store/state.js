@@ -1,5 +1,6 @@
 import { register } from 'dop'
 import { VIEWS, VIEWS_PLAYING } from 'const/views'
+import { localStorageGet } from 'utils/browser'
 
 const state = register({
     get view() {
@@ -7,7 +8,7 @@ const state = register({
     },
     view_playing: VIEWS_PLAYING.NORMAL,
     // temp: ,
-    nickname: '',
+    nickname: localStorageGet('nickname') || '',
     games: {
         // "Game_L6wLS50M8apDdnRN": "SF"
     },

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import styled from '@emotion/styled'
 import { useGlobalState, useObserver } from 'dop-react'
-import { connectToServer } from 'store/actions'
+import { connectToServer, changeNickname } from 'store/actions'
 // Components
 import Window, { WindowContent, WindowButtons } from 'components/styled/Window'
 import { ButtonGreen } from 'components/styled/Button'
@@ -25,7 +25,7 @@ export default function ChooseNickName() {
                         ref={inputEl}
                         width="100%"
                         value={state.nickname}
-                        onChange={e => (state.nickname = e.target.value)}
+                        onChange={e => changeNickname(e.target.value)}
                     />
                 </Div>
             </WindowContent>
