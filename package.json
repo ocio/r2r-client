@@ -6,7 +6,7 @@
         "@emotion/styled": "^10.0.10",
         "@tweenjs/tween.js": "^17.3.0",
         "dop": "1.0.0-rc2",
-        "dop-router": "^2.0.0",
+        "dop-router": "^2.0.1",
         "emotion": "^10.0.9",
         "react": "^16.8.5",
         "react-dom": "^16.8.5",
