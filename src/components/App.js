@@ -8,8 +8,8 @@ import Views from 'components/Views'
 function App() {
     return (
         <Provider store={state}>
-            <Background />
             <Views />
+            <Background />
         </Provider>
     )
 }

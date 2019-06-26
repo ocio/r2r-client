@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react'
+import styled from '@emotion/styled'
 import { useGlobalState, useObserver } from 'dop-react'
 import { connectToServer } from 'store/actions'
 // Components
@@ -16,6 +17,7 @@ export default function ChooseNickName() {
     useEffect(() => inputEl.current.focus())
     return (
         <Window height={400}>
+            <Logo />
             <WindowContent>
                 <Div padding="100px">
                     <Label>Choose your NickName</Label>
@@ -38,3 +40,14 @@ export default function ChooseNickName() {
         </Window>
     )
 }
+
+const Logo = styled.div`
+    width: 100%;
+    height: 300px;
+    background-image: url(/assets/img/logo.png);
+    position: absolute;
+    top: -159px;
+    background-repeat: no-repeat;
+    background-size: auto 180px;
+    background-position: center;
+`
