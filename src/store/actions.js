@@ -7,8 +7,9 @@ import { localStorageSet } from 'utils/browser'
 const Server = {}
 
 export function connectToServer() {
+    console.log('wss://' + window.location.hostname + '/')
     const transport = connect({
-        url: 'ws://' + window.location.hostname + ':4444/'
+        url: 'wss://' + window.location.hostname + '/'
     })
     state.view = VIEWS.CONNECTING
     transport.on('connect', async node => {
