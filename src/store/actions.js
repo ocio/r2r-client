@@ -5,11 +5,10 @@ import { VIEWS_PLAYING } from 'const/views'
 import { localStorageSet } from 'utils/browser'
 
 const Server = {}
-
+window.wss = 'wss://' + window.location.hostname + '/'
 export function connectToServer() {
-    console.log('wss://' + window.location.hostname + '/')
     const transport = connect({
-        url: 'wss://' + window.location.hostname + '/'
+        url: window.wss
     })
     state.view = VIEWS.CONNECTING
     transport.on('connect', async node => {
