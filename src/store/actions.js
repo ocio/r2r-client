@@ -5,10 +5,9 @@ import { VIEWS_PLAYING } from 'const/views'
 import { localStorageSet } from 'utils/browser'
 
 const Server = {}
+let url = 'wss://' + window.location.hostname + '/ws'
 export function connectToServer() {
-    const transport = connect({
-        url: 'wss://' + window.location.hostname + '/ws'
-    })
+    const transport = connect({ url })
     state.view = VIEWS.CONNECTING
     transport.on('connect', async node => {
         subscribeEndpoints({ node })
@@ -133,10 +132,13 @@ export function changeNickname(nickname) {
     localStorageSet('nickname', nickname)
 }
 
-//
-// DEV
-//
+// // DEV
+// // DEV
+// // DEV
+// // DEV
+
 // const dop = require('dop')
+// url = 'ws://' + window.location.hostname + ':4444'
 // let interval
 // window.dop = dop
 // window.state = state
@@ -189,4 +191,3 @@ export function changeNickname(nickname) {
 //         }
 //     }, 1000)
 // }
-// window.bot()
