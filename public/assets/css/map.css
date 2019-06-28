@@ -33,27 +33,41 @@
     transform: scale(1.2);
 }
 
-.tileOwner:first-child.me {
+.tileOwner:first-child.color1 {
     /* background: url(/assets/img/icon-power.png) no-repeat 4px 4px / auto 16px,
         url(/assets/img/title-background-1.png) 0 0 / 100%; */
 }
-.tileOwner:first-child.enemy {
+.tileOwner:first-child.color2 {
     /* background: url(/assets/img/icon-power.png) no-repeat 4px 4px / auto 16px,
         url(/assets/img/title-background-2.png) 0 0 / 100%; */
 }
 
-.tileOwner.me {
+.tileOwner.color1 {
     background-image: url(/assets/img/title-background-1.png);
 }
-.tileOwner.me > div:last-child {
+.tileOwner.color1 > div:last-child {
     background-image: url(/assets/img/units-background-1.png);
 }
 
-.tileOwner.enemy {
+.tileOwner.color2 {
     background-image: url(/assets/img/title-background-2.png);
 }
-.tileOwner.enemy > div:last-child {
+.tileOwner.color2 > div:last-child {
     background-image: url(/assets/img/units-background-2.png);
+}
+
+.tileOwner.color3 {
+    background-image: url(/assets/img/title-background-3.png);
+}
+.tileOwner.color3 > div:last-child {
+    background-image: url(/assets/img/units-background-3.png);
+}
+
+.tileOwner.color4 {
+    background-image: url(/assets/img/title-background-4.png);
+}
+.tileOwner.color4 > div:last-child {
+    background-image: url(/assets/img/units-background-4.png);
 }
 
 .recruitmentPower {

@@ -1,5 +1,4 @@
 import React from 'react'
-
 // styled
 import Container from 'components/styled/Container'
 import Map from 'components/views/Playing/Map'

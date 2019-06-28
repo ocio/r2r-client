@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { useGlobalState, useObserver } from 'dop-react'
 import { Show } from 'dop-router/react'
 import styled from '@emotion/styled'
+import { isMe } from 'store/getters'
+import { PLAYER_COLOR } from 'runandrisk-common/const'
+
 // import TimeServer from 'runandrisk-common/utils/TimeServer'
 
 // Components
@@ -19,10 +22,20 @@ import {
 import IconImage from 'components/styled/IconImage'
 
 export default function WaitingPlayers() {
-    const { game, games } = useGlobalState()
+    const { game } = useGlobalState()
     const observer = useObserver()
     observer.observeProperty(game, 'now')
     observer.observeProperty(game, 'players_total')
+
+    const players = game.players
+    const game_id = game.id
+    let color = 2
+    Object.keys(players).forEach(player_index => {
+        players[player_index].color = isMe({ game_id, player_index })
+            ? 1
+            : color++
+    })
+
     return (
         <Window height="550">
             <WindowTitle>Players</WindowTitle>
@@ -32,17 +45,14 @@ export default function WaitingPlayers() {
                         <GameStartsIn countdown={game.starts_at - game.now} />
                     </Show>
                     <Table>
-                        {Object.keys(game.players).map(player_id => {
+                        {Object.keys(players).map(player_index => {
+                            const player = players[player_index]
                             return (
-                                <TableRow key={player_id}>
+                                <TableRow key={player_index}>
                                     <TableText
-                                        color={
-                                            games[game.id] === player_id
-                                                ? COLOR.BLUE
-                                                : COLOR.RED
-                                        }
+                                        color={PLAYER_COLOR[player.color]}
                                     >
-                                        {game.players[player_id].nickname}
+                                        {player.nickname}
                                     </TableText>
                                     <CheckIcon />
                                     <TableCol />

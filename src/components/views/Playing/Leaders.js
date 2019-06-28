@@ -2,7 +2,6 @@ import React from 'react'
 import { Show } from 'dop-router/react'
 import { useGlobalState, useObserver } from 'dop-react'
 import { calcScore } from 'runandrisk-common/rules'
-import { getPlayerIndex } from 'store/getters'
 import Div from 'components/styled/Div'
 import { COLOR } from 'const/styles'
 import Window, {
@@ -21,18 +20,18 @@ import {
 import IconImage from 'components/styled/IconImage'
 import { ButtonBrown } from 'components/styled/Button'
 import { closePlayingDialogs, playAgain } from 'store/actions'
+import { PLAYER_COLOR } from 'runandrisk-common/const'
 
 export default function Leaders() {
     const { game } = useGlobalState()
     const observer = useObserver()
-    const player_index = getPlayerIndex({ game_id: game.id })
     observer.observeAll(game.players)
     const players = Object.keys(game.players)
         .map(id => {
             const player = game.players[id]
             return {
                 nickname: player.nickname,
-                is_me: id === player_index,
+                color: player.color,
                 kills: player.kills,
                 power: player.power,
                 units: player.units,
@@ -69,11 +68,7 @@ export default function Leaders() {
                                 <TableRow key={index}>
                                     <TableText>#{index + 1}</TableText>
                                     <TableText
-                                        color={
-                                            player.is_me
-                                                ? COLOR.BLUE
-                                                : COLOR.RED
-                                        }
+                                        color={PLAYER_COLOR[player.color]}
                                     >
                                         {player.nickname}
                                     </TableText>

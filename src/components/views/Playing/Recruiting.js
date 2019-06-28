@@ -3,7 +3,6 @@ import { useGlobalState, useObserver } from 'dop-react'
 import { Show } from 'dop-router/react'
 import { calcRecruitment } from 'runandrisk-common/rules'
 import { sendClicksRecruiting, closePlayingDialogs } from 'store/actions'
-import { getPlayerIndex } from 'store/getters'
 import Window, {
     WindowTitle,
     WindowContent,
@@ -11,7 +10,7 @@ import Window, {
 } from 'components/styled/Window'
 import styled from '@emotion/styled'
 import RecruitingBar from 'components/styled/RecruitingBar'
-import { COLOR } from 'const/styles'
+import { PLAYER_COLOR } from 'runandrisk-common/const'
 
 export default function Recruiting() {
     const { game } = useGlobalState()
@@ -72,9 +71,9 @@ function RecruitingBarState({ id }) {
     observer2.observeProperty(game, 'recruiting')
 
     // const recruiting = game.recruiting
-    const player_index = getPlayerIndex({ game_id: game.id })
-    const color = player_index === id ? COLOR.BLUE : COLOR.RED
+    // const player_index = getPlayerIndex({ game_id: game.id })
     const player = game.players[id]
+    const color = PLAYER_COLOR[player.color]
     const ps = game.players
     const players = Object.keys(game.players)
         .map(id => ({ id, clicks: ps[id].clicks || 0 }))

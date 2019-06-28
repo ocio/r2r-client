@@ -132,62 +132,80 @@ export function changeNickname(nickname) {
     localStorageSet('nickname', nickname)
 }
 
-// // DEV
-// // DEV
-// // DEV
-// // DEV
+// DEV
+// DEV
+// DEV
+// DEV
 
-// const dop = require('dop')
-// url = 'ws://' + window.location.hostname + ':4444'
-// let interval
-// window.dop = dop
-// window.state = state
-// window.Server = Server
-// window.stopbot = () => clearInterval(interval)
-// window.bot = async function bot() {
-//     const { shuffle, randomInt } = require('runandrisk-common/utils')
-//     const { distance } = require('runandrisk-common/board')
+const dop = require('dop')
+url = 'ws://' + window.location.hostname + ':4444'
+let interval
+window.dop = dop
+window.state = state
+window.Server = Server
+window.stopbot = () => clearInterval(interval)
+window.bot = async function bot() {
+    const { shuffle, randomInt } = require('runandrisk-common/utils')
+    const { distance } = require('runandrisk-common/board')
 
-//     interval = setInterval(async function() {
-//         if (state.view === VIEWS.PLAYING) {
-//             const game = state.game
-//             const game_id = game.id
+    interval = setInterval(async function() {
+        if (state.view === VIEWS.PLAYING) {
+            const game = state.game
+            const game_id = game.id
 
-//             if (game.recruiting) {
-//                 for (let i = 0; i < 100; i++) {
-//                     Server.sendClicksRecruiting({ game_id })
-//                 }
-//             }
+            if (game.recruiting) {
+                for (let i = 0; i < 100; i++) {
+                    Server.sendClicksRecruiting({ game_id })
+                }
+            }
 
-//             const player_index = state.games[game_id]
-//             const board = game.board
-//             const tiles = shuffle(Object.keys(board))
-//             for (let i = 0; i < tiles.length; i += 1) {
-//                 const tile_id_from = tiles[i]
-//                 const tile1 = board[tile_id_from]
-//                 if (tile1.owner.hasOwnProperty(player_index)) {
-//                     for (let i = 0; i < tiles.length; i += 1) {
-//                         const tile_id_to = tiles[i]
-//                         const tile2 = board[tile_id_to]
-//                         if (distance({ tile1, tile2 }) === 1) {
-//                             const units = randomInt(
-//                                 1,
-//                                 Math.round(tile1.owner[player_index].units / 2)
-//                             )
-//                             try {
-//                                 await Server.sendUnits({
-//                                     game_id,
-//                                     tile_id_from,
-//                                     tile_id_to,
-//                                     units
-//                                 })
-//                             } catch (e) {}
-//                             break
-//                         }
-//                     }
-//                     break
-//                 }
-//             }
-//         }
-//     }, 1000)
-// }
+            const player_index = state.games[game_id]
+            const board = game.board
+            const tiles = shuffle(Object.keys(board))
+            for (let i = 0; i < tiles.length; i += 1) {
+                const tile_id_from = tiles[i]
+                const tile1 = board[tile_id_from]
+                if (tile1.owner.hasOwnProperty(player_index)) {
+                    for (let i = 0; i < tiles.length; i += 1) {
+                        const tile_id_to = tiles[i]
+                        const tile2 = board[tile_id_to]
+                        if (distance({ tile1, tile2 }) === 1) {
+                            const units = randomInt(
+                                1,
+                                Math.round(tile1.owner[player_index].units / 2)
+                            )
+                            try {
+                                await Server.sendUnits({
+                                    game_id,
+                                    tile_id_from,
+                                    tile_id_to,
+                                    units
+                                })
+                            } catch (e) {}
+                            break
+                        }
+                    }
+                    break
+                }
+            }
+        }
+    }, 1000)
+}
+window.onload = () => {
+    var script = document.createElement('script')
+    script.onload = function() {
+        var stats = new window.Stats()
+        document.body.appendChild(stats.dom)
+        requestAnimationFrame(function loop() {
+            stats.update()
+            requestAnimationFrame(loop)
+        })
+    }
+    script.src = '//mrdoob.github.io/stats.js/build/stats.min.js'
+    document.head.appendChild(script)
+}
+
+// DEV
+// DEV
+// DEV
+// DEV

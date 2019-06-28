@@ -89,6 +89,7 @@ function manageMutation({ mutation, game, API }) {
                 }))
                 .sort((a, b) => a.index - b.index)
                 .forEach(({ player_index, units }) => {
+                    const player = game.players[player_index]
                     const nickname = getNicknameFromGame({
                         player_index: player_index
                     })
@@ -104,12 +105,11 @@ function manageMutation({ mutation, game, API }) {
                         updateTileUnits({ game_id, tile_id })
                     }
 
-                    const addOwner = isMe({ game_id, player_index })
-                        ? API.addOwnerAsMe
-                        : API.addOwnerAsEnemy
-                    addOwner({
+                    console.log(player.color)
+                    API.addOwner({
                         idTile: tile_id,
                         idOwner: player_index,
+                        color: player.color,
                         name: nickname
                     })
                     API.changeUnits({
