@@ -105,7 +105,6 @@ function manageMutation({ mutation, game, API }) {
                         updateTileUnits({ game_id, tile_id })
                     }
 
-                    console.log(player.color)
                     API.addOwner({
                         idTile: tile_id,
                         idOwner: player_index,
