@@ -105,30 +105,30 @@ function manageMutation({ mutation, game, API }) {
                         updateTileUnits({ game_id, tile_id })
                     }
 
-                    API.addOwner({
+                    API.addPlayer({
                         idTile: tile_id,
-                        idOwner: player_index,
+                        idPlayer: player_index,
                         color: player.color,
                         name: nickname
                     })
                     API.changeUnits({
                         idTile: tile_id,
-                        idOwner: player_index,
+                        idPlayer: player_index,
                         units: am_i_in_tile ? units : null
                     })
                 })
         }
         // Remove owner
         else {
-            API.removeOwner({
+            API.removePlayer({
                 idTile: tile_id,
-                idOwner: player_index
+                idPlayer: player_index
             })
             if (!am_i_in_tile) {
                 for (const owner_id in owners) {
                     API.changeUnits({
                         idTile: tile_id,
-                        idOwner: owner_id,
+                        idPlayer: owner_id,
                         units: null
                     })
                 }

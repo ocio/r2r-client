@@ -4,7 +4,7 @@ import { register, createObserver, collectGetters } from 'dop'
 const stores = {}
 
 export function useObserver(beforeUpdate) {
-    const [, forceUpdate] = useState(true) // forceUpdate() trick
+    const [, forceUpdate] = useState() // forceUpdate() trick
     const observer = useEmpty(() => {
         const is_function = typeof beforeUpdate == 'function'
         return createObserver(m => {
@@ -17,6 +17,7 @@ export function useObserver(beforeUpdate) {
     return observer
 }
 
+// Experimental
 export function useAutoObserver(beforeUpdate, filter) {
     const observer = useObserver(beforeUpdate)
     const stopAutoObserver = useMemo(() => {

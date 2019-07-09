@@ -1,16 +1,16 @@
-.tileOwner {
+.tilePlayer {
     background: url(/assets/img/title-background-1.png) 0 0 / 100%;
     min-width: 100px;
     min-height: 28px;
     text-transform: uppercase;
     position: relative;
 }
-.tileOwner > div:first-child {
+.tilePlayer > div:first-child {
     line-height: 28px;
     font-size: 14px;
     text-align: center;
 }
-.tileOwner > div:last-child {
+.tilePlayer > div:last-child {
     position: absolute;
     width: 32px;
     height: 32px;
@@ -22,51 +22,51 @@
 
     text-align: center;
 }
-/* .tileOwner.neutral {
+/* .tilePlayer.neutral {
     background-image: url(/assets/img/title-background-0.png);
 }
-.tileOwner.neutral > div:last-child {
+.tilePlayer.neutral > div:last-child {
     display: none;
 } */
 
-.tileOwner:first-child {
+.tilePlayer:first-child {
     transform: scale(1.2);
 }
 
-.tileOwner:first-child.color1 {
+.tilePlayer:first-child.color1 {
     /* background: url(/assets/img/icon-power.png) no-repeat 4px 4px / auto 16px,
         url(/assets/img/title-background-1.png) 0 0 / 100%; */
 }
-.tileOwner:first-child.color2 {
+.tilePlayer:first-child.color2 {
     /* background: url(/assets/img/icon-power.png) no-repeat 4px 4px / auto 16px,
         url(/assets/img/title-background-2.png) 0 0 / 100%; */
 }
 
-.tileOwner.color1 {
+.tilePlayer.color1 {
     background-image: url(/assets/img/title-background-1.png);
 }
-.tileOwner.color1 > div:last-child {
+.tilePlayer.color1 > div:last-child {
     background-image: url(/assets/img/units-background-1.png);
 }
 
-.tileOwner.color2 {
+.tilePlayer.color2 {
     background-image: url(/assets/img/title-background-2.png);
 }
-.tileOwner.color2 > div:last-child {
+.tilePlayer.color2 > div:last-child {
     background-image: url(/assets/img/units-background-2.png);
 }
 
-.tileOwner.color3 {
+.tilePlayer.color3 {
     background-image: url(/assets/img/title-background-3.png);
 }
-.tileOwner.color3 > div:last-child {
+.tilePlayer.color3 > div:last-child {
     background-image: url(/assets/img/units-background-3.png);
 }
 
-.tileOwner.color4 {
+.tilePlayer.color4 {
     background-image: url(/assets/img/title-background-4.png);
 }
-.tileOwner.color4 > div:last-child {
+.tilePlayer.color4 > div:last-child {
     background-image: url(/assets/img/units-background-4.png);
 }
 
