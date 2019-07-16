@@ -7,7 +7,7 @@ export default function Window({
     height = HEIGHT,
     maxWidth = window.innerWidth,
     maxHeight = window.innerHeight,
-    scale = 1,
+    scale = 0.9,
     children,
     ...props
 }) {

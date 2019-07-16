@@ -25,9 +25,10 @@ export default function Score({
 }
 
 const ScoreStyled = styled.div`
+    transform: scale(0.9);
     float: ${p => p.float};
     position: relative;
-    min-width: 117px;
+    min-width: 116px;
     height: 38px;
     background-image: url('assets/img/score-left${p => p.highlightUrl}.png'),
         url('assets/img/score-right${p => p.highlightUrl}.png');
