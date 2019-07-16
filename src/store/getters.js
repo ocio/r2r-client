@@ -17,23 +17,20 @@ export function getPlayerIndex({ game_id }) {
 export function getMyTileUnits({ tile_id }) {
     const board = state.game.board
     const player_index = getPlayerIndex({ game_id: state.game.id })
-    return board[tile_id].owner.hasOwnProperty(player_index)
-        ? board[tile_id].owner[player_index].units
+    return board[tile_id].fighters.hasOwnProperty(player_index)
+        ? board[tile_id].fighters[player_index].units
         : 0
 }
 
-export function getOwnerFromTile({ tile_id }) {
-    const tile = state.game.board[tile_id]
-    const owner = tile.owner
-    let player_index
-    let index = Infinity
-    for (const id in owner) {
-        if (owner[id].index < index) {
-            player_index = id
-            index = owner[id].index
+export function getOwnerFromTile({ game_id, tile_id }) {
+    const game = state.games[game_id]
+    const tile = game.sub.board[tile_id]
+    const fighters = tile.fighters
+    for (const player_index in fighters) {
+        if (fighters[player_index].conquered === 100) {
+            return player_index
         }
     }
-    return player_index
 }
 
 // common

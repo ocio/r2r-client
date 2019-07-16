@@ -113,13 +113,13 @@ export async function sendClicksRecruiting() {
 export async function updateTileUnits({ game_id, tile_id }) {
     const collector = collect()
     try {
-        const owners = await Server.getUnitsTile({ game_id, tile_id })
-        Object.keys(owners).forEach(owner_id => {
-            // console.log(owners[owner_id])
-            const owner = owners[owner_id]
+        const fighters = await Server.getUnitsTile({ game_id, tile_id })
+        Object.keys(fighters).forEach(fighter_id => {
+            // console.log(fighters[fighter_id])
+            const fighter = fighters[fighter_id]
             const game = state.game
-            game.board[tile_id].owner[owner_id].units = owner.units
-            game.board[tile_id].owner[owner_id].index = owner.index
+            game.board[tile_id].fighters[fighter_id].units = fighter.units
+            game.board[tile_id].fighters[fighter_id].index = fighter.index
         })
     } catch (e) {
         // console.error(e)
@@ -165,14 +165,16 @@ window.bot = async function bot() {
             for (let i = 0; i < tiles.length; i += 1) {
                 const tile_id_from = tiles[i]
                 const tile1 = board[tile_id_from]
-                if (tile1.owner.hasOwnProperty(player_index)) {
+                if (tile1.fighters.hasOwnProperty(player_index)) {
                     for (let i = 0; i < tiles.length; i += 1) {
                         const tile_id_to = tiles[i]
                         const tile2 = board[tile_id_to]
                         if (distance({ tile1, tile2 }) === 1) {
                             const units = randomInt(
                                 1,
-                                Math.round(tile1.owner[player_index].units / 2)
+                                Math.round(
+                                    tile1.fighters[player_index].units / 2
+                                )
                             )
                             try {
                                 await Server.sendUnits({

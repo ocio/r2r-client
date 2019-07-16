@@ -71,21 +71,21 @@ export default function Map() {
 
 function manageMutation({ mutation, game, API }) {
     // Change units
-    if (mutation.path[4] === 'owner') {
+    if (mutation.path[4] === 'fighters') {
         const game_id = game.id
         const tile_id = mutation.path[3]
         const player_index = mutation.prop
         const tile = game.board[tile_id]
-        const owners = tile.owner
-        const owners_keys = Object.keys(owners)
+        const fighters = tile.fighters
+        const fighters_keys = Object.keys(fighters)
         const me_index = getPlayerIndex({ game_id })
-        const am_i_in_tile = owners.hasOwnProperty(me_index)
+        const am_i_in_tile = fighters.hasOwnProperty(me_index)
         if (mutation.hasOwnProperty('value')) {
-            owners_keys
+            fighters_keys
                 .map(player_index => ({
                     player_index,
-                    index: owners[player_index].index,
-                    units: owners[player_index].units
+                    index: fighters[player_index].index,
+                    units: fighters[player_index].units
                 }))
                 .sort((a, b) => a.index - b.index)
                 .forEach(({ player_index, units }) => {
@@ -99,7 +99,7 @@ function manageMutation({ mutation, game, API }) {
                     if (
                         isMe({ game_id, player_index }) &&
                         mutation.old_value === undefined &&
-                        owners_keys.length > 1
+                        fighters_keys.length > 1
                     ) {
                         // console.log('fetch')
                         updateTileUnits({ game_id, tile_id })
@@ -118,17 +118,17 @@ function manageMutation({ mutation, game, API }) {
                     })
                 })
         }
-        // Remove owner
+        // Remove fighters
         else {
             API.removePlayer({
                 idTile: tile_id,
                 idPlayer: player_index
             })
             if (!am_i_in_tile) {
-                for (const owner_id in owners) {
+                for (const fighter_id in fighters) {
                     API.changeUnits({
                         idTile: tile_id,
-                        idPlayer: owner_id,
+                        idPlayer: fighter_id,
                         units: null
                     })
                 }
@@ -173,8 +173,9 @@ function createBoardAndApi({ canvas, ui, game }) {
             elementType === ELEMENT_TYPE.VILLAGE
         ) {
             const player_index = getPlayerIndex({ game_id: game.id })
-            const owner = board[idFrom].owner[player_index]
-            const result = owner && typeof owner == 'object' && owner.units > 0
+            const fighters = board[idFrom].fighters[player_index]
+            const result =
+                fighters && typeof fighters == 'object' && fighters.units > 0
             if (result) closePlayingDialogs()
             return result
         }
