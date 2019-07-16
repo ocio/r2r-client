@@ -45,6 +45,6 @@ export default function HeaderRight() {
 const HeaderStyled = styled.div`
     pointer-events: all;
     & > * {
-        margin-left: 30px;
+        margin-left: 10px;
     }
 `

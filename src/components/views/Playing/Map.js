@@ -3,7 +3,7 @@ import { getObjectTarget } from 'dop'
 import { useGlobalState, useObserver } from 'dop-react'
 import styled from '@emotion/styled'
 import init from 'runandrisk-map'
-import { TILE, ELEMENT_TYPE } from 'runandrisk-common/const'
+import { TILE, ELEMENT_TYPE, PLAYER_COLOR } from 'runandrisk-common/const'
 import { distance } from 'runandrisk-common/board'
 import {
     getNicknameFromGame,
@@ -80,6 +80,11 @@ function manageMutation({ mutation, game, API }) {
         const fighters_keys = Object.keys(fighters)
         const me_index = getPlayerIndex({ game_id })
         const am_i_in_tile = fighters.hasOwnProperty(me_index)
+
+        // if (mutation.prop === 'conquered') {
+        // console.log('conquered', { mutation })
+        // } else
+
         if (mutation.hasOwnProperty('value')) {
             fighters_keys
                 .map(player_index => ({
@@ -104,7 +109,7 @@ function manageMutation({ mutation, game, API }) {
                         // console.log('fetch')
                         updateTileUnits({ game_id, tile_id })
                     }
-
+                    console.log({ player })
                     API.addPlayer({
                         idTile: tile_id,
                         idPlayer: player_index,
@@ -116,6 +121,15 @@ function manageMutation({ mutation, game, API }) {
                         idPlayer: player_index,
                         units: am_i_in_tile ? units : null
                     })
+                    if (mutation.value.hasOwnProperty('conquered')) {
+                        changeTileConqueredStatus({
+                            API,
+                            idTile: tile_id,
+                            idPlayer: player_index,
+                            color: PLAYER_COLOR[player.color],
+                            conquered: mutation.value.conquered
+                        })
+                    }
                 })
         }
         // Remove fighters
@@ -161,6 +175,19 @@ function manageMutation({ mutation, game, API }) {
             API.changeTroopsUnits({ idTroops: id, units })
             API.changeTroopsDistance({ idTroops: id, distance: 0 })
         }
+    }
+}
+
+function changeTileConqueredStatus({
+    API,
+    idTile,
+    idPlayer,
+    color,
+    conquered
+}) {
+    console.log({ idTile, idPlayer, color, conquered })
+    if (conquered === 100) {
+        API.changeColor({ idTile, color })
     }
 }
 

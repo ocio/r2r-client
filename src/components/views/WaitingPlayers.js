@@ -27,6 +27,7 @@ export default function WaitingPlayers() {
     observer.observeProperty(game, 'starts_at')
     observer.observeProperty(game, 'players_total')
 
+    console.log('WaitingPlayers')
     const players = game.players
     const game_id = game.id
     let color = 2
