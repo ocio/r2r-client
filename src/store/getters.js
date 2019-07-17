@@ -22,12 +22,11 @@ export function getMyTileUnits({ tile_id }) {
         : 0
 }
 
-export function getOwnerFromTile({ game_id, tile_id }) {
-    const game = state.games[game_id]
-    const tile = game.sub.board[tile_id]
+export function getOwnerFromTile({ tile_id }) {
+    const tile = state.game.board[tile_id]
     const fighters = tile.fighters
     for (const player_index in fighters) {
-        if (fighters[player_index].conquered === 100) {
+        if (fighters[player_index].conquered >= 100) {
             return player_index
         }
     }

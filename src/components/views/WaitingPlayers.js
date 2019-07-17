@@ -2,7 +2,7 @@ import React from 'react'
 import { useGlobalState, useObserver } from 'dop-react'
 import { Show } from 'dop-router/react'
 import styled from '@emotion/styled'
-import { isMe } from 'store/getters'
+import { generateColors } from 'store/actions'
 import { PLAYER_COLOR } from 'runandrisk-common/const'
 
 // import TimeServer from 'runandrisk-common/utils/TimeServer'
@@ -27,15 +27,8 @@ export default function WaitingPlayers() {
     observer.observeProperty(game, 'starts_at')
     observer.observeProperty(game, 'players_total')
 
-    console.log('WaitingPlayers')
     const players = game.players
-    const game_id = game.id
-    let color = 2
-    Object.keys(players).forEach(player_index => {
-        players[player_index].color = isMe({ game_id, player_index })
-            ? 1
-            : color++
-    })
+    generateColors({ game })
 
     return (
         <Window height="550">

@@ -14,8 +14,10 @@ import {
 import {
     selectUnitsToSend,
     closePlayingDialogs,
-    updateTileUnits
+    updateTileUnits,
+    generateColors
 } from 'store/actions'
+// import { getOwnerFromTile } from 'store/getters'
 
 export default function Map() {
     const canvas_ref = useRef()
@@ -98,6 +100,7 @@ function manageMutation({ mutation, game, API }) {
                     const nickname = getNicknameFromGame({
                         player_index: player_index
                     })
+                    const color = PLAYER_COLOR[player.color]
 
                     // If player just arrive to a new tile and does not have
                     // info of the units we must fetch it to be up to date
@@ -109,7 +112,11 @@ function manageMutation({ mutation, game, API }) {
                         // console.log('fetch')
                         updateTileUnits({ game_id, tile_id })
                     }
-                    console.log({ player })
+
+                    if (player.color === undefined) {
+                        generateColors({ game })
+                    }
+
                     API.addPlayer({
                         idTile: tile_id,
                         idPlayer: player_index,
@@ -121,23 +128,46 @@ function manageMutation({ mutation, game, API }) {
                         idPlayer: player_index,
                         units: am_i_in_tile ? units : null
                     })
-                    if (mutation.value.hasOwnProperty('conquered')) {
+
+                    if (
+                        typeof mutation.value == 'object' &&
+                        mutation.value.hasOwnProperty('conquered')
+                    ) {
                         changeTileConqueredStatus({
                             API,
                             idTile: tile_id,
                             idPlayer: player_index,
-                            color: PLAYER_COLOR[player.color],
+                            color,
                             conquered: mutation.value.conquered
+                        })
+                    } else if (mutation.prop === 'conquered') {
+                        changeTileConqueredStatus({
+                            API,
+                            idTile: tile_id,
+                            idPlayer: player_index,
+                            color,
+                            conquered: mutation.value
                         })
                     }
                 })
         }
         // Remove fighters
         else {
+            // console.log(
+            //     player_index,
+            //     getOwnerFromTile({ tile_id }),
+            //     fighters_keys
+            // )
+            if (mutation.old_value.conquered >= 100) {
+                // console.log('color')
+                removeTileConqueredStatus({ API, idTile: tile_id })
+            }
+
             API.removePlayer({
                 idTile: tile_id,
                 idPlayer: player_index
             })
+
             if (!am_i_in_tile) {
                 for (const fighter_id in fighters) {
                     API.changeUnits({
@@ -185,10 +215,20 @@ function changeTileConqueredStatus({
     color,
     conquered
 }) {
-    console.log({ idTile, idPlayer, color, conquered })
-    if (conquered === 100) {
+    // console.log({ idTile, idPlayer, color, conquered })
+    if (conquered >= 100) {
         API.changeColor({ idTile, color })
+        API.hideTileProgress({ idTile })
+    } else if (conquered > 0) {
+        API.showTileProgress({ idTile })
+        API.changeColorTileProgress({ idTile, color })
+        API.changePercentageTileProgress({ idTile, percentage: conquered })
     }
+}
+
+function removeTileConqueredStatus({ API, idTile }) {
+    API.deleteColor({ idTile })
+    API.hideTileProgress({ idTile })
 }
 
 function createBoardAndApi({ canvas, ui, game }) {

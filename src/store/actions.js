@@ -3,6 +3,7 @@ import state from 'store/state'
 import { VIEWS } from 'const/views'
 import { VIEWS_PLAYING } from 'const/views'
 import { localStorageSet } from 'utils/browser'
+import { isMe } from 'store/getters'
 
 const Server = {}
 let url = 'wss://' + window.location.hostname + '/ws'
@@ -130,6 +131,17 @@ export async function updateTileUnits({ game_id, tile_id }) {
 export function changeNickname(nickname) {
     state.nickname = nickname
     localStorageSet('nickname', nickname)
+}
+
+export function generateColors({ game }) {
+    const players = game.players
+    const game_id = game.id
+    let color = 2
+    Object.keys(players).forEach(player_index => {
+        players[player_index].color = isMe({ game_id, player_index })
+            ? 1
+            : color++
+    })
 }
 
 // DEV
