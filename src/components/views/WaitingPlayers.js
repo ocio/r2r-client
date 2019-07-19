@@ -25,7 +25,7 @@ export default function WaitingPlayers() {
     const { game } = useGlobalState()
     const observer = useObserver()
     observer.observeProperty(game, 'starts_at')
-    observer.observeProperty(game, 'players_total')
+    observer.observeObject(game, 'players')
 
     const players = game.players
     generateColors({ game })

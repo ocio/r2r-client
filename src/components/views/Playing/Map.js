@@ -100,7 +100,6 @@ function manageMutation({ mutation, game, API }) {
                     const nickname = getNicknameFromGame({
                         player_index: player_index
                     })
-                    const color = PLAYER_COLOR[player.color]
 
                     // If player just arrive to a new tile and does not have
                     // info of the units we must fetch it to be up to date
@@ -137,7 +136,7 @@ function manageMutation({ mutation, game, API }) {
                             API,
                             idTile: tile_id,
                             idPlayer: player_index,
-                            color,
+                            color: PLAYER_COLOR[player.color],
                             conquered: mutation.value.conquered
                         })
                     } else if (mutation.prop === 'conquered') {
@@ -145,7 +144,7 @@ function manageMutation({ mutation, game, API }) {
                             API,
                             idTile: tile_id,
                             idPlayer: player_index,
-                            color,
+                            color: PLAYER_COLOR[player.color],
                             conquered: mutation.value
                         })
                     }
