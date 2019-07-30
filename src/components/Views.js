@@ -2,6 +2,8 @@ import React from 'react'
 import { useGlobalState, useObserver } from 'dop-react'
 import { Router, Route } from 'dop-router/react'
 import { VIEWS } from 'const/views'
+import { GAME_STATUS } from 'runandrisk-common/const'
+
 // Components
 import ChooseNickName from 'components/views/ChooseNickName'
 import Connecting from 'components/views/Connecting'
@@ -11,7 +13,9 @@ import Playing from 'components/views/Playing'
 
 function Views() {
     const state = useGlobalState()
-    const observer = useObserver()
+    const observer = useObserver(() => {
+        return state.view !== GAME_STATUS.FINISHED
+    })
     observer.observeProperty(state, 'view')
     return (
         <Router>
